@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@nuxt/ui": "^0.3.3",
+    "@supabase/supabase-js": "^1.35.7",
     "gsap": "^3.11.2",
     "uuid": "^9.0.0"
   }
