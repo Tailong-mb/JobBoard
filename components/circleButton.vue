@@ -97,4 +97,27 @@ const animationButtonMouseOut = () => {
     transform: rotate(360deg);
   }
 }
+
+@media (max-width: 600px) {
+  .button-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+  }
+  .button-container > span {
+    font-size: 1rem;
+    letter-spacing: 0.2rem;
+  }
+
+  .line {
+    height: 2rem;
+    transform: translateY(-1.5rem) translateX(0.2rem);
+  }
+  .circle {
+    width: 3rem;
+    height: 3rem;
+  }
+}
 </style>
