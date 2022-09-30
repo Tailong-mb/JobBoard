@@ -4,7 +4,7 @@ const { supabase } = useSupabase();
 
 <template>
     <RectangleButton>
-        bonjour
+        
     </RectangleButton>
 </template>
 
