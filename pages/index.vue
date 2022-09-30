@@ -2,4 +2,6 @@
 const { supabase } = useSupabase();
 </script>
 
-<template></template>
+<template>
+  <CircleButton text="Hello"></CircleButton>
+</template>
