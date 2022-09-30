@@ -6,6 +6,7 @@
     url("../fonts/GT-America/GT-America-Standard-Black-Italic-Trial.woff2")
       format("woff2");
   font-weight: 900;
+  font-style: italic;
 }
 
 @font-face {

@@ -2,4 +2,10 @@
 const { supabase } = useSupabase();
 </script>
 
-<template></template>
+<template>
+    <RectangleButton>
+        bonjour
+    </RectangleButton>
+</template>
+
+
