@@ -4,5 +4,6 @@ const { supabase } = useSupabase();
 </script>
 
 <template>
+  <NavBar />
   <Logo />
 </template>
