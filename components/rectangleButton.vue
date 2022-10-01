@@ -4,13 +4,17 @@ import { gsap } from "gsap";
 const animationButton = () => {
     const timeline = gsap.timeline({defaults: {duration : 0.4}});
 
-    timeline.to('.losange', {x: '3.2rem', width:'1rem', height:'1rem', ease: 'power1'}) 
+    timeline.to('.losange', {x: '3.2rem', width:'1rem', height:'1rem', ease: 'power1'});
+    timeline.to('.arrow', {x: '-1.2rem', ease: 'power1'}, '-=0.4');
+    timeline.to('.text', {x: '1.2rem', ease: 'power1'}, '-=0.4');
 }
 
 const animationButtonReturn = () => {
     const timeline = gsap.timeline({defaults: {duration : 0.4}});
 
-    timeline.to('.losange', {x: '0rem', width:'1.5rem', height:'1.5rem', ease: 'power1'}) 
+    timeline.to('.losange', {x: '0rem', width:'1.5rem', height:'1.5rem', ease: 'power1'});
+    timeline.to('.arrow', {x: '0rem', ease: 'power1'}, '-=0.4');
+    timeline.to('.text', {x: '0rem', ease: 'power1'}, '-=0.4');
 }
 
 </script>
