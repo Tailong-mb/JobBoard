@@ -57,7 +57,7 @@ const toggleNavBar = () => {
         borderColor: "#00454f",
       })
       .to(".navbar", {
-        duration: 1,
+        duration: 1.3,
         ease: "power4.out",
         transform: "translateX(40rem)",
       })
