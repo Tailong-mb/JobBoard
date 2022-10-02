@@ -11,12 +11,10 @@ const { supabase } = useSupabase();
 
         <div class="subscribe">
             <div class="signIn">
-                <CircleButton></CircleButton>
-                <div class="subTitle">Sign In</div>
+                <CircleButton text="Sign In"></CircleButton>
             </div>
             <div class="signUp">
-                <CircleButton></CircleButton>
-                <div class="subTitle">Sign Up</div>
+                <CircleButton text="Sign Up"></CircleButton>
             </div>
         </div>
 
@@ -27,6 +25,12 @@ const { supabase } = useSupabase();
             <div class="wordYou">
                 YOU
             </div>
+        </div>
+
+        <div class="text">
+            <span class="nearYou">Near <span class="you">You</span></span> is the first platform in numerics allowing meetings between companies and encoders.<br />
+            Average hiring rate lower than three weeks and average salary is equal to 50k$ per year.<br />
+            In partnership with <span class="epi">Epi<span class="steak">Steak</span></span>.
         </div>
     </div>
 
@@ -53,7 +57,7 @@ const { supabase } = useSupabase();
         width: 100%;
         height: 100%;
         position: absolute;
-        bottom: -10rem;
+        bottom: -15rem;
         color: #00454f;
     }
 
@@ -63,7 +67,7 @@ const { supabase } = useSupabase();
         justify-content: space-around;
         align-items: center;
         position: absolute;
-        bottom:-30rem;
+        bottom:-35rem;
     }
 
     .wordNear{
@@ -74,6 +78,111 @@ const { supabase } = useSupabase();
         color: #8F71BE;
     }
 
+    .text{
+        display: none;
+    }
+
+    .nearYou{
+        color: #00454f;
+        font-style: italic;
+    }
+
+    .you{
+        color: #8F71BE;
+    }
+    .steak{
+        color: #8F71BE;
+        font-style: italic;
+    }
+
+@media screen and (min-width: 600px) {
+
+    .container{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        position: relative;
+    }
+
+    .logo{
+        position: absolute;
+        right: 5rem;
+    }
+    
+    .bigTitle{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+        position: absolute;
+        left: 5rem;
+    }
+
+    .subscribe{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        bottom: -42rem;
+        color: #00454f;
+    }
+
+    .text{
+        display: block;
+        position: absolute;
+        right: 5rem;
+        top: 20rem;
+        width: 20rem;
+    }
+
+}
+
+
+    
+@media screen and (min-width: 1900px) {
+
+    .logo{
+        position: absolute;
+        right: 10rem;
+    }
+    .text{
+        display: block;
+        position: absolute;
+        right: 5rem;
+        top: 20rem;
+        width: 20rem;
+    }
+
+    .bigTitle{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+        position: absolute;
+        left: 10rem;
+        top: 15rem;
+    }
+
+    .subscribe{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        bottom: -60rem;
+        color: #00454f;
+    }
+}   
+
+    
 
 </style>
 
