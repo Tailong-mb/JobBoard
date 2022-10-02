@@ -3,9 +3,5 @@ const { supabase } = useSupabase();
 </script>
 
 <template>
-    <RectangleButton>
-        
-    </RectangleButton>
+  <Logo></Logo>
 </template>
-
-

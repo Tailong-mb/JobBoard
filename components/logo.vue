@@ -48,6 +48,7 @@ const mouseOut = () => {
   display: flex;
   flex-direction: row;
   align-items: center;
+  max-width: 100px;
 }
 .letter {
   font-family: "SuisseIntl", sans-serif;
