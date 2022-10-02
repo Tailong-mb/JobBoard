@@ -1,6 +1,13 @@
 <script setup lang="ts">
-import CircleButton1 from "~~/components/circleButton.vue";
+import { gsap } from "gsap";
+
+// Composables
+const auth = useAuth();
+const { supabase } = useSupabase();
+
+const showConfirmEmailMessage = ref(false);
 const choiceSignUp = ref(true);
+const authError = ref("");
 
 const signUpProfessionnal = reactive({
   email: "",
@@ -11,16 +18,54 @@ const signUpProfessionnal = reactive({
   description: "",
 });
 
+const handleSubmit = async () => {
+  try {
+    const user = await auth.signUp({
+      email: signUpProfessionnal.email,
+      password: signUpProfessionnal.password,
+      role: "company",
+    });
+    showConfirmEmailMessage.value = true;
+    insertIntoTableCompany(user.id);
+  } catch (err) {
+    authError.value = err.message;
+  }
+};
+
+const insertIntoTableCompany = async (user) => {
+  const { error } = await supabase.from("company").insert([
+    {
+      id_company: user,
+      name: signUpProfessionnal.name,
+      siret: signUpProfessionnal.siret,
+      location: signUpProfessionnal.location,
+      description: signUpProfessionnal.description,
+    },
+  ]);
+  if (error) {
+    console.log(error);
+  }
+};
+
 const professionalChoice = ref(false);
 
 const professionalChoiceClick = () => {
-  choiceSignUp.value = false;
   professionalChoice.value = true;
+  gsap.to(".container-choice", {
+    ease: "power4.out",
+    transform: "translateX(-100%)",
+    duration: 1,
+  });
+
+  setTimeout(() => {
+    choiceSignUp.value = false;
+  }, 800);
 };
 </script>
 
 <template>
   <logo></logo>
+  <!-- CHOICE -->
   <div class="container-choice" v-if="choiceSignUp">
     <div class="subTitle">Type of account</div>
     <div class="container-choice-button">
@@ -32,65 +77,138 @@ const professionalChoiceClick = () => {
     </div>
   </div>
 
-  <div class="professional-choice" v-if="professionalChoice">
+  <!-- PROFESSIONAL SIGNUP -->
+  <div
+    class="professional-choice"
+    v-if="professionalChoice && !showConfirmEmailMessage"
+  >
     <div class="subTitle">Professional</div>
     <div class="professional-form">
       <div class="professional-form-data">
-        <input
-          class="text"
-          placeholder="Email"
-          v-model="signUpProfessionnal.email"
-        />
-        <input
-          class="text"
-          placeholder="Password"
-          v-model="signUpProfessionnal.password"
-        />
+        <div class="input-data">
+          <input
+            type="text"
+            name="email"
+            class="text"
+            required
+            v-model="signUpProfessionnal.email"
+          />
+          <div class="underline"></div>
+          <label class="text">Email</label>
+        </div>
+        <div class="input-data">
+          <input
+            class="text"
+            type="text"
+            name="password"
+            required
+            v-model="signUpProfessionnal.password"
+          />
+          <div class="underline"></div>
+          <label class="text">Password</label>
+        </div>
       </div>
       <div class="professional-form-data">
-        <input
-          class="text"
-          placeholder="Name"
-          v-model="signUpProfessionnal.name"
-        />
-        <input
-          class="text"
-          placeholder="Siret"
-          v-model="signUpProfessionnal.siret"
-        />
+        <div class="input-data">
+          <input
+            class="text"
+            type="text"
+            name="name"
+            required
+            v-model="signUpProfessionnal.name"
+          />
+          <div class="underline"></div>
+          <label class="text">Name</label>
+        </div>
+        <div class="input-data">
+          <input
+            class="text"
+            type="text"
+            name="siret"
+            required
+            v-model="signUpProfessionnal.siret"
+          />
+          <div class="underline"></div>
+          <label class="text">Siret</label>
+        </div>
       </div>
-      <input
-        class="text"
-        placeholder="Location"
-        v-model="signUpProfessionnal.location"
-      />
+      <div class="input-data">
+        <input
+          class="text"
+          type="text"
+          name="location"
+          required
+          v-model="signUpProfessionnal.location"
+        />
+        <div class="underline"></div>
+        <label class="text">Location</label>
+      </div>
       <textarea
         class="text"
         placeholder="Description"
         v-model="signUpProfessionnal.description"
       />
-      <CircleButton text="Submit"></CircleButton>
+      <CircleButton text="Submit" @click="handleSubmit"></CircleButton>
+    </div>
+  </div>
+
+  <!-- CONFIRM EMAIL -->
+  <div class="email-send" v-if="showConfirmEmailMessage">
+    <div class="subTitle">Email send</div>
+    <div class="text">
+      <p>
+        A confirmation email has been sent to your email address. Please click
+        on the link in the email to complete your registration.
+      </p>
+    </div>
+  </div>
+
+  <!-- ERROR MESSAGE -->
+  <div class="error-message" v-if="authError">
+    <div class="subTitle">Error</div>
+    <div class="text">
+      <p>{{ authError }}</p>
     </div>
   </div>
 </template>
 
 <style scoped>
-input,
-textarea {
-  border: 2px solid #8f71be;
-  border-radius: 0.5rem;
-  padding: 0.5rem;
-  min-width: 300px;
+.error-message {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #f8d7da;
+  color: #721c24;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 300;
 }
-
-textarea {
-  min-height: 200px;
+.email-send {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 90vh;
 }
-
+textarea {
+  background-color: white;
+  padding: 1em;
+  border-radius: 0.626rem;
+  border: 0.125rem solid #8f71be;
+  outline: none;
+  line-height: 1.4;
+  width: calc(100% - 2em);
+  min-height: 5rem;
+  transition: all 0.2s;
+}
 .professional-form {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 3rem;
   align-items: center;
 }
 
@@ -105,7 +223,20 @@ textarea {
   align-items: center;
   gap: 2rem;
   margin-top: 2rem;
+  animation: 1s ease-in slideInFromLeft;
 }
+
+@keyframes slideInFromLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-150%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
 .container-choice {
   margin-top: 5rem;
   display: flex;
@@ -121,6 +252,83 @@ textarea {
   gap: 5rem;
   justify-content: space-between;
   align-items: center;
+}
+
+.input-data {
+  height: 2.5rem;
+  width: 100%;
+  position: relative;
+}
+
+input {
+  height: 100%;
+  width: 100%;
+  border: none !important;
+  border-bottom: 2px solid silver;
+}
+
+input[type="text"],
+input[type="email"] {
+  background: transparent;
+  border: none !important;
+}
+
+input:focus ~ label,
+input:valid ~ label {
+  transform: translateY(-1.25rem);
+  color: rgb(81, 79, 79);
+}
+
+label {
+  position: absolute;
+  bottom: 0.626rem;
+  left: 0;
+  color: #00454f;
+  pointer-events: none;
+  transition: all 0.3s ease;
+}
+
+.underline {
+  position: absolute;
+  bottom: 0;
+  height: 0.125rem;
+  width: 100%;
+  background: #8f71be;
+}
+
+.underline:before {
+  position: absolute;
+  content: "";
+  height: 100%;
+  width: 100%;
+  background: #8f71be;
+  transition: transform 0.3s linear;
+  transform: scaleX(0);
+}
+
+input:focus ~ .underline:before,
+input:valid ~ .underline::before {
+  transform: scaleX(1);
+}
+
+.textarea {
+  background-color: #ddd;
+  color: #00454f;
+  border-radius: 0.626rem;
+  border: 0.125rem solid transparent;
+  outline: none;
+  line-height: 1.4;
+  width: 100%;
+  min-height: 12rem;
+  transition: all 0.2s;
+}
+
+.textarea:valid,
+.textarea:focus {
+  cursor: text;
+  color: #00454f;
+  background-color: white;
+  border-color: #8f71be;
 }
 
 @media (max-width: 512px) {

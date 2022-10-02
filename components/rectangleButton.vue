@@ -11,7 +11,7 @@ const animationButton = () => {
     ease: "power1",
   });
   timeline.to(".arrow", { x: "-1.2rem", ease: "power1" }, "-=0.4");
-  timeline.to(".text", { x: "1.2rem", ease: "power1" }, "-=0.4");
+  timeline.to(".button-square-text", { x: "1.2rem", ease: "power1" }, "-=0.4");
   gsap.to(".button-square-text", { letterSpacing: "0.1rem", duration: 0.4 });
 };
 
@@ -25,7 +25,7 @@ const animationButtonReturn = () => {
     ease: "power1",
   });
   timeline.to(".arrow", { x: "0rem", ease: "power1" }, "-=0.4");
-  timeline.to(".text", { x: "0rem", ease: "power1" }, "-=0.4");
+  timeline.to(".button-square-text", { x: "0rem", ease: "power1" }, "-=0.4");
   gsap.to(".button-square-text", { letterSpacing: "0.3rem", duration: 0.4 });
 };
 
