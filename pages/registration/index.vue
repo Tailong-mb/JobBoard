@@ -72,6 +72,15 @@ const handleSubmitPro = async () => {
     insertIntoTableCompany(user.id);
   } catch (err) {
     authError.value = err.message;
+    setTimeout(() => {
+      authError.value = "";
+    }, 4000);
+    setTimeout(() => {
+      gsap.to(".error-message", {
+        opacity: 0,
+        duration: 0.5,
+      });
+    }, 3000);
   }
 };
 
@@ -86,6 +95,15 @@ const handleSubmitUser = async () => {
     insertIntoTableUser(user.id);
   } catch (err) {
     authError.value = err.message;
+    setTimeout(() => {
+      authError.value = "";
+    }, 4000);
+    setTimeout(() => {
+      gsap.to(".error-message", {
+        opacity: 0,
+        duration: 0.5,
+      });
+    }, 3000);
   }
 };
 
