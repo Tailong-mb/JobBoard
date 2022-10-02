@@ -8,6 +8,40 @@ const { supabase } = useSupabase();
 const showConfirmEmailMessage = ref(false);
 const choiceSignUp = ref(true);
 const authError = ref("");
+const professionalChoice = ref(false);
+const userChoice = ref(false);
+
+const goBackProToChoice = () => {
+  setTimeout(() => {
+    professionalChoice.value = false;
+    choiceSignUp.value = true;
+  }, 1000);
+  gsap.to(".professional-choice", {
+    ease: "power4.out",
+    transform: "translateX(-200%)",
+    duration: 1,
+  });
+  gsap.to(".arrow", {
+    opacity: 0,
+    duration: 1,
+  });
+};
+
+const goBackUserToChoice = () => {
+  setTimeout(() => {
+    userChoice.value = false;
+    choiceSignUp.value = true;
+  }, 1000);
+  gsap.to(".user-choice", {
+    ease: "power4.out",
+    transform: "translateX(200%)",
+    duration: 1,
+  });
+  gsap.to(".arrow", {
+    opacity: 0,
+    duration: 1,
+  });
+};
 
 const signUpProfessionnal = reactive({
   email: "",
@@ -18,7 +52,16 @@ const signUpProfessionnal = reactive({
   description: "",
 });
 
-const handleSubmit = async () => {
+const signUpUser = reactive({
+  email: "",
+  password: "",
+  firstName: "",
+  lastName: "",
+  grade: "",
+  phoneNumber: "",
+});
+
+const handleSubmitPro = async () => {
   try {
     const user = await auth.signUp({
       email: signUpProfessionnal.email,
@@ -32,6 +75,34 @@ const handleSubmit = async () => {
   }
 };
 
+const handleSubmitUser = async () => {
+  try {
+    const user = await auth.signUp({
+      email: signUpUser.email,
+      password: signUpUser.password,
+      role: "user",
+    });
+    showConfirmEmailMessage.value = true;
+    insertIntoTableUser(user.id);
+  } catch (err) {
+    authError.value = err.message;
+  }
+};
+
+const insertIntoTableUser = async (userId) => {
+  const { error } = await supabase.from("worker").insert([
+    {
+      id_worker: userId,
+      first_name: signUpUser.firstName,
+      last_name: signUpUser.lastName,
+      grade: signUpUser.grade,
+      phone_number: signUpUser.phoneNumber,
+    },
+  ]);
+  if (error) {
+    console.log(error);
+  }
+};
 const insertIntoTableCompany = async (user) => {
   const { error } = await supabase.from("company").insert([
     {
@@ -47,8 +118,6 @@ const insertIntoTableCompany = async (user) => {
   }
 };
 
-const professionalChoice = ref(false);
-
 const professionalChoiceClick = () => {
   professionalChoice.value = true;
   gsap.to(".container-choice", {
@@ -61,9 +130,31 @@ const professionalChoiceClick = () => {
     choiceSignUp.value = false;
   }, 800);
 };
+
+const userChoiceClick = () => {
+  userChoice.value = true;
+  gsap.to(".container-choice", {
+    ease: "power4.out",
+    transform: "translateX(200%)",
+    duration: 1,
+  });
+
+  setTimeout(() => {
+    choiceSignUp.value = false;
+  }, 800);
+};
 </script>
 
 <template>
+  <!-- GO BACK -->
+  <div class="arrow" v-if="!choiceSignUp && professionalChoice">
+    <arrow @click="goBackProToChoice"></arrow>
+  </div>
+
+  <div class="arrow" v-if="!choiceSignUp && userChoice">
+    <arrow @click="goBackUserToChoice"></arrow>
+  </div>
+
   <logo></logo>
   <!-- CHOICE -->
   <div class="container-choice" v-if="choiceSignUp">
@@ -73,18 +164,18 @@ const professionalChoiceClick = () => {
         text="Professional"
         @click="professionalChoiceClick"
       ></CircleButton>
-      <rectangle-button text="User"></rectangle-button>
+      <rectangle-button text="User" @click="userChoiceClick"></rectangle-button>
     </div>
   </div>
 
   <!-- PROFESSIONAL SIGNUP -->
   <div
-    class="professional-choice"
+    class="professional-choice signup"
     v-if="professionalChoice && !showConfirmEmailMessage"
   >
     <div class="subTitle">Professional</div>
     <div class="professional-form">
-      <div class="professional-form-data">
+      <div class="form-data">
         <div class="input-data">
           <input
             type="text"
@@ -108,7 +199,7 @@ const professionalChoiceClick = () => {
           <label class="text">Password</label>
         </div>
       </div>
-      <div class="professional-form-data">
+      <div class="form-data">
         <div class="input-data">
           <input
             class="text"
@@ -148,7 +239,87 @@ const professionalChoiceClick = () => {
         placeholder="Description"
         v-model="signUpProfessionnal.description"
       />
-      <CircleButton text="Submit" @click="handleSubmit"></CircleButton>
+      <CircleButton text="Submit" @click="handleSubmitPro"></CircleButton>
+    </div>
+  </div>
+
+  <!-- USER SIGNUP -->
+  <div class="user-choice signup" v-if="userChoice && !showConfirmEmailMessage">
+    <div class="subTitle">User</div>
+    <div class="user-form">
+      <div class="form-data">
+        <div class="input-data">
+          <input
+            type="text"
+            name="email"
+            class="text"
+            required
+            v-model="signUpUser.email"
+          />
+          <div class="underline"></div>
+          <label class="text">Email</label>
+        </div>
+        <div class="input-data">
+          <input
+            class="text"
+            type="text"
+            name="password"
+            required
+            v-model="signUpUser.password"
+          />
+          <div class="underline"></div>
+          <label class="text">Password</label>
+        </div>
+      </div>
+      <div class="form-data">
+        <div class="input-data">
+          <input
+            class="text"
+            type="text"
+            name="firstName"
+            required
+            v-model="signUpUser.firstName"
+          />
+          <div class="underline"></div>
+          <label class="text">First Name</label>
+        </div>
+        <div class="input-data">
+          <input
+            class="text"
+            type="text"
+            name="lastName"
+            required
+            v-model="signUpUser.lastName"
+          />
+          <div class="underline"></div>
+          <label class="text">Last Name</label>
+        </div>
+      </div>
+      <div class="form-data">
+        <div class="input-data">
+          <input
+            class="text"
+            type="text"
+            name="location"
+            required
+            v-model="signUpUser.grade"
+          />
+          <div class="underline"></div>
+          <label class="text">Grade</label>
+        </div>
+        <div class="input-data">
+          <input
+            class="text"
+            type="text"
+            name="phone"
+            required
+            v-model="signUpUser.phoneNumber"
+          />
+          <div class="underline"></div>
+          <label class="text">Phone</label>
+        </div>
+      </div>
+      <CircleButton text="Submit" @click="handleSubmitUser"></CircleButton>
     </div>
   </div>
 
@@ -173,6 +344,25 @@ const professionalChoiceClick = () => {
 </template>
 
 <style scoped>
+/* ARROW */
+.arrow {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 300;
+  animation: 2s ease-in-out fadeIn-animation;
+}
+
+@keyframes fadeIn-animation {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* ERROR */
 .error-message {
   position: absolute;
   top: 0;
@@ -187,13 +377,22 @@ const professionalChoiceClick = () => {
   align-items: center;
   z-index: 300;
 }
+
+/* EMAIL SEND */
 .email-send {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   height: 90vh;
+  z-index: 400;
 }
+
+p {
+  text-align: center;
+}
+
+/* CHOICE PRO*/
 textarea {
   background-color: white;
   padding: 1em;
@@ -212,21 +411,46 @@ textarea {
   align-items: center;
 }
 
-.professional-form-data {
+.user-form {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  align-items: center;
+}
+
+.form-data {
   display: flex;
   flex-direction: row;
   gap: 3rem;
 }
-.professional-choice {
+
+.user-choice {
+  animation: 1s ease-in slideInFromLeft;
+}
+
+@keyframes slideInFromLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(150%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.signup {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 2rem;
   margin-top: 2rem;
-  animation: 1s ease-in slideInFromLeft;
+}
+.professional-choice {
+  animation: 1s ease-in slideInFromRight;
 }
 
-@keyframes slideInFromLeft {
+@keyframes slideInFromRight {
   0% {
     opacity: 0;
     transform: translateX(-150%);
@@ -244,6 +468,7 @@ textarea {
   align-items: center;
   justify-content: center;
   gap: 10rem;
+  animation: 1s ease-in-out fadeIn-animation;
 }
 
 .container-choice-button {
@@ -311,18 +536,6 @@ input:valid ~ .underline::before {
   transform: scaleX(1);
 }
 
-.textarea {
-  background-color: #ddd;
-  color: #00454f;
-  border-radius: 0.626rem;
-  border: 0.125rem solid transparent;
-  outline: none;
-  line-height: 1.4;
-  width: 100%;
-  min-height: 12rem;
-  transition: all 0.2s;
-}
-
 .textarea:valid,
 .textarea:focus {
   cursor: text;
@@ -332,7 +545,7 @@ input:valid ~ .underline::before {
 }
 
 @media (max-width: 512px) {
-  .professional-form-data {
+  .form-data {
     display: flex;
     flex-direction: row;
     gap: 1rem;
