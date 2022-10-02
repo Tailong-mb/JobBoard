@@ -19,7 +19,6 @@ const useAuth = () => {
         data: {
           role: role,
         },
-        // redirectTo: ,
       }
     );
     if (error) throw error;

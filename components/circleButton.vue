@@ -34,13 +34,13 @@ const animationButtonMouseOut = () => {
 </script>
 
 <template>
-  <div class="button-container">
+  <div
+    class="button-container"
+    @mouseenter="animationButtonMouseEnter"
+    @mouseleave="animationButtonMouseOut"
+  >
     <span class="button-text">{{ text }}</span>
-    <div
-      @mouseenter="animationButtonMouseEnter"
-      @mouseleave="animationButtonMouseOut"
-      class="circle"
-    >
+    <div class="circle">
       <div class="line"></div>
       <div class="square"></div>
     </div>
@@ -78,7 +78,6 @@ const animationButtonMouseOut = () => {
   font-family: "SuisseIntl";
   font-weight: 200;
   letter-spacing: 0.3rem;
-  font-style: uppercase;
 }
 
 .circle {
@@ -113,7 +112,7 @@ const animationButtonMouseOut = () => {
 
   .line {
     height: 2rem;
-    transform: translateY(-1.5rem) translateX(0.2rem);
+    transform: translateY(-1.5rem) translateX(0.25rem);
   }
   .circle {
     width: 3rem;

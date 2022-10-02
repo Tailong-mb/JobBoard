@@ -1,3 +1,23 @@
+.subTitle {
+  color: #00454f;
+}
+
+.bigTitle {
+  color: #00454f;
+}
+
+h1 {
+  color: #00454f;
+}
+
+h2 {
+  color: #00454f;
+}
+
+.text {
+  color: #00454f;
+}
+
 @media screen and (max-width: 600px) {
   .bigTitle {
     font-family: "GT-America";
@@ -25,7 +45,7 @@
 
   .text {
     font-family: "Staff";
-    font-size: 1.5rem;
+    font-size: 0.777rem;
     font-weight: 50;
   }
 }
@@ -57,7 +77,7 @@
 
   .text {
     font-family: "Staff";
-    font-size: 1.5rem;
+    font-size: 0.777rem;
     font-weight: 50;
   }
 }
@@ -89,7 +109,7 @@
 
   .text {
     font-family: "Staff";
-    font-size: 2rem;
+    font-size: 1rem;
     font-weight: 50;
   }
 }
@@ -121,7 +141,7 @@
 
   .text {
     font-family: "Staff";
-    font-size: 3.5rem;
-    font-weight: 50;
+    font-size: 1.5rem;
+    font-weight: 100;
   }
 }
