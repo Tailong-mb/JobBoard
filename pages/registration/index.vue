@@ -313,29 +313,26 @@ const userChoiceClick = () => {
           <label class="text">Last Name</label>
         </div>
       </div>
-      <div class="form-data">
-        <div class="input-data">
-          <input
-            class="text"
-            type="text"
-            name="location"
-            required
-            v-model="signUpUser.grade"
-          />
-          <div class="underline"></div>
-          <label class="text">Grade</label>
-        </div>
-        <div class="input-data">
-          <input
-            class="text"
-            type="text"
-            name="phone"
-            required
-            v-model="signUpUser.phoneNumber"
-          />
-          <div class="underline"></div>
-          <label class="text">Phone</label>
-        </div>
+      <div class="input-data">
+        <input
+          class="text"
+          type="text"
+          name="phone"
+          required
+          v-model="signUpUser.phoneNumber"
+        />
+        <div class="underline"></div>
+        <label class="text">Phone</label>
+      </div>
+      <div class="select">
+        <select required class="text">
+          <option selected disabled>Select your degree</option>
+          <option value="pdf">PDF</option>
+          <option value="txt">txt</option>
+          <option value="epub">ePub</option>
+          <option value="fb2">fb2</option>
+          <option value="mobi">mobi</option>
+        </select>
       </div>
       <CircleButton text="Submit" @click="handleSubmitUser"></CircleButton>
     </div>
@@ -394,6 +391,54 @@ const userChoiceClick = () => {
   justify-content: center;
   align-items: center;
   z-index: 300;
+}
+
+/* SELECT */
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  appearance: none;
+  outline: 0;
+  box-shadow: none;
+  border: 0 !important;
+  background: white;
+  background-image: none;
+  flex: 1;
+  padding: 0 0.5em;
+  color: #fff;
+  cursor: pointer;
+  color: #00454f;
+}
+select::-ms-expand {
+  display: none;
+}
+.select {
+  margin-right: 2em;
+  margin-left: 2em;
+  position: relative;
+  display: flex;
+  width: 30em;
+  height: 3em;
+  line-height: 3;
+  background: white;
+  overflow: hidden;
+  border-radius: 0.25em;
+  border: #8f71be solid 1px;
+}
+.select::after {
+  content: "\25BC";
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 0 1em;
+  background: #8f71be;
+  cursor: pointer;
+  pointer-events: none;
+  transition: 0.25s all ease;
+}
+.select:hover::after {
+  color: white;
 }
 
 /* EMAIL SEND */
@@ -577,6 +622,12 @@ input:valid ~ .underline::before {
   textarea {
     min-width: 150px;
   }
+
+  .select {
+    margin-right: 0;
+    margin-left: 0;
+    width: 100%;
+  }
 }
 
 @media (min-width: 512px) and (max-width: 700px) {
@@ -585,9 +636,25 @@ input:valid ~ .underline::before {
     gap: 2rem;
   }
 
+  .select {
+    width: 20em;
+  }
+
   input,
   textarea {
     min-width: 200px;
+  }
+}
+
+@media (min-width: 700px) and (max-width: 1370px) {
+  .container-choice-button {
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  input,
+  textarea {
+    min-width: 300px;
   }
 }
 </style>
