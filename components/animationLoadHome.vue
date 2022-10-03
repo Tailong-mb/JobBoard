@@ -11,7 +11,7 @@ import {gsap} from 'gsap';
             <circle cx="50" cy="50" r="30"></circle>
         </svg>
         <div class="title">
-            <div class="subTitle">find the job of your life !</div>
+            <div class="text">find the job of your life !</div>
         </div>
     </div>
 </template>
@@ -44,9 +44,10 @@ svg{
     animation: translate 2s ease-in-out forwards;
 }
 
-.title > h2{
+.title > .text{
     color: #00454f;
-    font-weight: 900 !important;
+    font-weight: 600 !important;
+    font-size: 2rem;
 }
 
 circle{
@@ -68,7 +69,7 @@ circle{
 
 @keyframes translate{
     100%{
-        transform: translateY(-1.5rem);
+        transform: translateY(-0.5rem);
 
     }
 }
@@ -81,5 +82,13 @@ circle{
         opacity: 0;
     }
 }
+
+
+@media screen and (max-width: 768px){
+    .title > .text{
+        font-size: 1rem;
+    }
+}
+    
 
 </style>
