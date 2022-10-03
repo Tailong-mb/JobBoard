@@ -17,15 +17,23 @@ const jobCardValue = defineProps<{
         <div class="square-logo"></div>
       </div>
       <div class="card-title-container">
-        <div class="subTitle">{{ jobTitle }}</div>
-        <span class="subTitle">-</span>
-        <span class="subTitle">{{ companyName }}</span>
+        <div class="subsubTitle">{{ jobTitle }}</div>
+        <span class="subsubTitle">-</span>
+        <span class="subsubTitle">{{ companyName }}</span>
       </div>
     </div>
-    <div class="job-information">
-      <div class="text">{{ jobLocation }}</div>
-      <div class="text">{{ date }}</div>
+    <div class="job-information-container">
+      <div class="job-information">
+        <div class="text">Location : {{ jobLocation }}</div>
+        <div class="text">Date : {{ date }}</div>
+      </div>
+      <div class="job-information">
+        <div class="text">Degree Required : {{ degreeRequired }}</div>
+        <div class="text">Salary : {{ salary }}$/month</div>
+      </div>
     </div>
+    <p class="text">{{ jobDescription }}</p>
+    <RectangleButton text="Apply"></RectangleButton>
   </div>
 </template>
 
@@ -42,14 +50,9 @@ const jobCardValue = defineProps<{
 
 .job-information {
   display: flex;
-  flex-direction: row;
-  gap: 2rem;
-  align-items: center;
+  flex-direction: column;
 }
 
-.job-information > div {
-  color: #8f71be;
-}
 .job-card-header-logo {
   border: 2px solid #8f71be;
   animation: 10s linear infinite squareRotationOut;
@@ -90,14 +93,30 @@ const jobCardValue = defineProps<{
   flex-wrap: wrap;
 }
 
+p {
+  text-align: justify;
+}
+
 /* GLOBAL CARD */
 .job-card {
   display: flex;
   flex-direction: column;
   gap: 1rem;
   margin: 1rem;
+  padding: 1rem;
+  border: 1px solid #8f71be;
+  align-items: center;
+  border-radius: 1rem;
+  max-width: 800px;
 }
+/** CARD INFORMATION */
 
+.job-information-container {
+  display: flex;
+  flex-direction: row;
+  gap: 5rem;
+  align-items: center;
+}
 @media (min-width: 1367px) {
   .square-logo {
     width: 0.77rem;

@@ -6,6 +6,11 @@
   color: #00454f;
 }
 
+.subsubTitle {
+  color: #00454f;
+  font-family: "SuisseIntl";
+}
+
 h1 {
   color: #00454f;
 }
@@ -19,6 +24,11 @@ h2 {
 }
 
 @media screen and (max-width: 600px) {
+  .subsubTitle {
+    font-size: 1.5rem;
+    font-weight: 300;
+  }
+
   .bigTitle {
     font-family: "GT-America";
     font-size: 4rem;
@@ -57,6 +67,11 @@ h2 {
     font-weight: 500;
   }
 
+  .subsubTitle {
+    font-size: 1.5rem;
+    font-weight: 300;
+  }
+
   h1 {
     font-family: "GT-America";
     font-size: 5rem;
@@ -87,6 +102,11 @@ h2 {
     font-family: "GT-America";
     font-size: 10rem;
     font-weight: 500;
+  }
+
+  .subsubTitle {
+    font-size: 2rem;
+    font-weight: 300;
   }
 
   h1 {
@@ -137,6 +157,11 @@ h2 {
     font-family: "SuisseIntl";
     font-size: 5rem;
     font-weight: 200;
+  }
+
+  .subsubTitle {
+    font-size: 3rem;
+    font-weight: 300;
   }
 
   .text {
