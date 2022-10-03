@@ -4,6 +4,11 @@ const { supabase } = useSupabase();
 </script>
 
 <template>
+
+    <animation-load-home>
+
+    </animation-load-home>
+
     <div class="container">
         <div class="logo">
             <logo></logo>
@@ -47,8 +52,18 @@ const { supabase } = useSupabase();
         width: 100%;
         height: 100%;
         position: relative;
+        opacity: 0;
+        animation: vanish 2s 3.5s ease-in-out forwards;
     }
 
+    @keyframes vanish{
+        0%{
+            opacity: 0;
+        }
+        100%{
+            opacity: 1;
+        }
+    }
     .subscribe{
         display: flex;
         flex-direction: row;
@@ -156,7 +171,7 @@ const { supabase } = useSupabase();
         position: absolute;
         right: 5rem;
         top: 20rem;
-        width: 20rem;
+        width: 40rem;
     }
 
     .bigTitle{
