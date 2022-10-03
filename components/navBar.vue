@@ -173,6 +173,7 @@ const leaveNavBarClose = () => {
 .navbar {
   gap: 2rem;
   position: fixed;
+  top: 0;
   right: 0;
   background: linear-gradient(
     90deg,
