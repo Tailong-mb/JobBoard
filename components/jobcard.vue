@@ -117,6 +117,25 @@ p {
   gap: 5rem;
   align-items: center;
 }
+
+@media (max-width: 650px) {
+  .job-card {
+    max-width: 400px;
+  }
+}
+
+@media (min-width: 651px) and (max-width: 900px) {
+  .job-card {
+    max-width: 500px;
+  }
+}
+
+@media (min-width: 901px) and (max-width: 1200px) {
+  .job-card {
+    max-width: 600px;
+  }
+}
+
 @media (min-width: 1367px) {
   .square-logo {
     width: 0.77rem;
