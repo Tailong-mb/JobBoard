@@ -64,6 +64,7 @@ const buttonText = defineProps<{ text: string }>();
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    gap: 0.5rem;
     border-bottom: 1px solid #8f71be;
     padding: 0.5rem;
     margin: 0.1rem;
