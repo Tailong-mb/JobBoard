@@ -4,6 +4,7 @@ const infoCandidate = defineProps<{
   name: string;
   degree: string;
   email: string;
+  description: string;
 }>();
 
 const cardCandidateCrossEnter = () => {
@@ -80,6 +81,7 @@ const cardCandidateCrossClick = () => {
           email
         }}</a>
       </div>
+      <div class="text">{{ description }}</div>
       <div class="card-candidate-button">
         <RectangleButton text="See more"></RectangleButton>
       </div>
@@ -116,7 +118,7 @@ const cardCandidateCrossClick = () => {
   display: flex;
   flex-direction: row;
   gap: 1em;
-  max-width: 400px;
+  max-width: 500px;
 }
 
 .send-email-candidate {
@@ -125,6 +127,7 @@ const cardCandidateCrossClick = () => {
 
 .send-email-candidate:hover {
   text-decoration: underline;
+  text-decoration-color: #8f71be;
 }
 
 .card-candidate-left {
@@ -161,5 +164,11 @@ const cardCandidateCrossClick = () => {
   justify-content: space-between;
   gap: 0.5rem;
   width: 100%;
+}
+
+@media (max-width: 600px) {
+  .card-candidate {
+    max-width: 400px;
+  }
 }
 </style>

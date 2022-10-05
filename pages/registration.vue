@@ -69,19 +69,24 @@ const handleSubmitPro = async () => {
       role: "company",
     });
     showConfirmEmailMessage.value = true;
+    console.log(auth.user.value);
     insertIntoTableCompany(user.id);
   } catch (err) {
     authError.value = err.message;
-    setTimeout(() => {
-      authError.value = "";
-    }, 4000);
-    setTimeout(() => {
-      gsap.to(".error-message", {
-        opacity: 0,
-        duration: 0.5,
-      });
-    }, 3000);
+    triggerErrorMessage();
   }
+};
+
+const triggerErrorMessage = () => {
+  setTimeout(() => {
+    authError.value = "";
+  }, 4000);
+  setTimeout(() => {
+    gsap.to(".error-message", {
+      opacity: 0,
+      duration: 0.5,
+    });
+  }, 3000);
 };
 
 const handleSubmitUser = async () => {
@@ -117,8 +122,14 @@ const insertIntoTableUser = async (userId) => {
       phone_number: signUpUser.phoneNumber,
     },
   ]);
-  if (error) {
-    console.log(error);
+  if (error !== null) {
+    if (error.code === "23503" || error.code === "23505") {
+      authError.value =
+        "This email already exists if you didn't receive the confirmation email another one has been send";
+    } else {
+      authError.value = error.message;
+    }
+    triggerErrorMessage();
   }
 };
 const insertIntoTableCompany = async (user) => {
@@ -131,8 +142,14 @@ const insertIntoTableCompany = async (user) => {
       description: signUpProfessionnal.description,
     },
   ]);
-  if (error) {
-    console.log(error);
+  if (error !== null) {
+    if (error.code === "23503" || error.code === "23505") {
+      authError.value =
+        "This email already exists if you didn't receive the confirmation email another one has been send";
+    } else {
+      authError.value = error.message;
+    }
+    triggerErrorMessage();
   }
 };
 
