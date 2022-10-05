@@ -1,23 +1,10 @@
 <script setup lang="ts">
-    import {gsap} from "gsap";
 
-    const auth = useAuth();
-    const { supabase } = useSupabase();
-    
-    const signUpUser = reactive({
-        email: "",
-        password: "",
-        name: "",
-        surname: "",
-        location: "",
-        description: "",
-    });
+    import users from "@/data.json"
 
-    const editButton = () => {
-        gsap.to('.container', {opacity: "0"})
-        gsap.to('.edit-profil',{display: "flex", opacity: 1, delay: 1})
-    }
-
+    const route = useRoute();
+    const name = route.params.name;
+    const user = users.find(r => r.name === name);
 
 
     
@@ -29,21 +16,23 @@
         <div class="container">
             <div class="container-info">
                 <div class="header">
-                    <div class="subTitle">grade</div>
+                    <div class="subTitle">{{user.degree}}</div>
                     <div class="informations">
-                        <div class="text">mail</div>
-                        <div class="text">phone number</div>
+                        <div class="text">{{user.mail}}</div>
+                        <div class="text">{{user.phone}}</div>
                     </div>
                     
                 </div>
-                <h2>Name</h2>
-                <text class="text">Description text</text>
+                <h2>{{user.name}}</h2>
+                <text class="text">{{user.description}}</text>
             </div>
-            <rectangle-button class="button" text="edit profil" @click="editButton"></rectangle-button>
+            <rectangle-button class="button" text="edit" @click=""></rectangle-button>
+            <rectangle-button class="confirm" text="confirm" @click=""></rectangle-button>
+
         </div>
 
         <edit-profil-user class="edit-profil" ></edit-profil-user>
-            
+        
     </template>
     
     <style scoped>
@@ -86,7 +75,19 @@
     .edit-profil{
         display: none;
         position: absolute;
-        top: 2rem;
+        top: 3rem;
+    }
+
+    h2{
+        color: #8f71be;
+    }
+
+    .confirm{
+        display: none;
+        position: absolute;
+        bottom: -18rem;
+        opacity: 0;
+
     }
 
     </style>

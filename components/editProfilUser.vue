@@ -1,14 +1,5 @@
 <script setup lang="ts">
 
-import {gsap} from "gsap";
-
-const returnButton = () => {
-
-    const timeline = gsap.timeline({default: {duration: 1}})
-    timeline.to('.container', {opacity: "0", ease: 'power1'});
-
-}
-
 </script>
 
 
@@ -16,7 +7,7 @@ const returnButton = () => {
 
     <div class="container">
         <div
-        class="sign-in"
+        class="sign-in"  
         >
         <div class="subTitle">Profil</div>
         <div class="sign-in-form">
@@ -72,11 +63,10 @@ const returnButton = () => {
                     <label class="text">grade</label>
                 </div>
             </div>
+            
         </div>
 
-        <div class="confirm">
-            <rectangle-button text="confirm" @click="returnButton"></rectangle-button>
-        </div>
+        
     </div>
     </div>
 </template>
@@ -91,15 +81,23 @@ const returnButton = () => {
     width: 100%;
     height: 100%;
     gap: 3rem;
+    position: relative;
 }
 
 .sign-in {
     display: flex;
     flex-direction: column;
     align-items: center;
+    position: absolute;
+    top: 2rem;
     gap: 2rem;
     margin-top: 2rem;
+    padding: 2rem;
+    border: 2px;
+    border-color: #8f71be;
+    border-style: solid;
 }
+
 
 .sign-in-form {
     display: flex;
@@ -111,7 +109,7 @@ const returnButton = () => {
 .sign-in-form-data {
     display: flex;
     flex-direction: column;
-    gap: 2rem;
+    gap: 0.5rem;
 }
 
 .subTitle{
@@ -160,9 +158,6 @@ label {
     background: #8f71be;
 }
 
-.confirm{
-    bottom: 7rem;
-}
 
 .password-forgotten{
     margin-top: 2rem;
