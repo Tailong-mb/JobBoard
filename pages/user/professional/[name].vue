@@ -1,4 +1,4 @@
-<!-- profil candidate which can be edit -->
+<!-- candidate profil without edit profil -->
 
 <script setup lang="ts">
 
@@ -28,12 +28,8 @@
                 <h2>{{user.name}}</h2>
                 <text class="text">{{user.description}}</text>
             </div>
-            <rectangle-button class="button" text="edit" @click=""></rectangle-button>
-            <rectangle-button class="confirm" text="confirm" @click=""></rectangle-button>
 
         </div>
-
-        <edit-profil-user class="edit-profil" ></edit-profil-user>
         
     </template>
     
@@ -74,22 +70,12 @@
         bottom: -15rem;
     }
 
-    .edit-profil{
-        display: none;
-        position: absolute;
-        top: 3rem;
-    }
+    
 
     h2{
         color: #8f71be;
     }
 
-    .confirm{
-        display: none;
-        position: absolute;
-        bottom: -18rem;
-        opacity: 0;
-
-    }
+   
 
     </style>

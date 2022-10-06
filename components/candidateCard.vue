@@ -78,7 +78,7 @@
           </div>
           <div class="text">{{ user.description }}</div>
           <div class="card-candidate-button">
-            <a :href="`/user/candidate/${user.name}`">
+            <a :href="`/user/professional/${user.name}`">
                 <RectangleButton text="See more"></RectangleButton>
             </a>
           </div>
@@ -152,6 +152,9 @@
       justify-content: space-between;
       gap: 0.5rem;
       width: 100%;
+    }
+    a{
+        text-decoration: none;
     }
     @media (max-width: 600px) {
       .card-candidate {
