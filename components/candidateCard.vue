@@ -78,7 +78,7 @@
           </div>
           <div class="text">{{ user.description }}</div>
           <div class="card-candidate-button">
-            <a :href="`/user/${user.name}`">
+            <a :href="`/user/candidate/${user.name}`">
                 <RectangleButton text="See more"></RectangleButton>
             </a>
           </div>
