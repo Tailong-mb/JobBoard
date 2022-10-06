@@ -57,11 +57,13 @@ const signUpUser = reactive({
   password: "",
   firstName: "",
   lastName: "",
-  grade: "",
+  degree: "",
   phoneNumber: "",
 });
 
 const handleSubmitPro = async () => {
+  if (checkValuesPro()) return;
+
   try {
     const user = await auth.signUp({
       email: signUpProfessionnal.email,
@@ -69,7 +71,6 @@ const handleSubmitPro = async () => {
       role: "company",
     });
     showConfirmEmailMessage.value = true;
-    console.log(auth.user.value);
     insertIntoTableCompany(user.id);
   } catch (err) {
     authError.value = err.message;
@@ -90,6 +91,18 @@ const triggerErrorMessage = () => {
 };
 
 const handleSubmitUser = async () => {
+  if (
+    !signUpUser.phoneNumber.match(
+      "^(?:(?:\+|00)33|0)\s*[1-9](?:[\s.-]*\d{2}){4}$"
+    )
+  ) {
+    authError.value = "Invalid Phone Number";
+    triggerErrorMessage();
+    return;
+  }
+
+  if (checkValuesUser()) return;
+
   try {
     const user = await auth.signUp({
       email: signUpUser.email,
@@ -118,7 +131,7 @@ const insertIntoTableUser = async (userId) => {
       id_worker: userId,
       first_name: signUpUser.firstName,
       last_name: signUpUser.lastName,
-      grade: signUpUser.grade,
+      degree: signUpUser.degree,
       phone_number: signUpUser.phoneNumber,
     },
   ]);
@@ -178,6 +191,36 @@ const userChoiceClick = () => {
     choiceSignUp.value = false;
   }, 800);
 };
+
+const checkValuesPro = () => {
+  if (
+    signUpProfessionnal.email === "" ||
+    signUpProfessionnal.password === "" ||
+    signUpProfessionnal.name === "" ||
+    signUpProfessionnal.siret === "" ||
+    signUpProfessionnal.location === "" ||
+    signUpProfessionnal.description === ""
+  ) {
+    return true;
+  } else {
+    return false;
+  }
+};
+
+const checkValuesUser = () => {
+  if (
+    signUpUser.email === "" ||
+    signUpUser.password === "" ||
+    signUpUser.firstName === "" ||
+    signUpUser.lastName === "" ||
+    signUpUser.degree === "" ||
+    signUpUser.phoneNumber === ""
+  ) {
+    return true;
+  } else {
+    return false;
+  }
+};
 </script>
 
 <template>
@@ -193,7 +236,7 @@ const userChoiceClick = () => {
   <logo></logo>
   <!-- CHOICE -->
   <div class="container-choice" v-if="choiceSignUp">
-    <div class="subTitle">Type of account</div>
+    <div class="subTitle">TYPE OF ACCOUNT</div>
     <div class="container-choice-button">
       <CircleButton
         text="Professional"
@@ -208,7 +251,7 @@ const userChoiceClick = () => {
     class="professional-choice signup"
     v-if="professionalChoice && !showConfirmEmailMessage"
   >
-    <div class="subTitle">Professional</div>
+    <div class="subTitle">PROFESSIONAL</div>
     <div class="professional-form">
       <div class="form-data">
         <div class="input-data">
@@ -280,7 +323,7 @@ const userChoiceClick = () => {
 
   <!-- USER SIGNUP -->
   <div class="user-choice signup" v-if="userChoice && !showConfirmEmailMessage">
-    <div class="subTitle">User</div>
+    <div class="subTitle">USER</div>
     <div class="user-form">
       <div class="form-data">
         <div class="input-data">
@@ -344,11 +387,10 @@ const userChoiceClick = () => {
       <div class="select">
         <select required class="text">
           <option selected disabled>Select your degree</option>
-          <option value="pdf">PDF</option>
-          <option value="txt">txt</option>
-          <option value="epub">ePub</option>
-          <option value="fb2">fb2</option>
-          <option value="mobi">mobi</option>
+          <option value="Associate degree">Associate degree</option>
+          <option value="Bachelor's degree">Bachelor's degree</option>
+          <option value="Master's degree">Master's degree</option>
+          <option value="Doctoral degree">Doctoral degree</option>
         </select>
       </div>
       <CircleButton text="Submit" @click="handleSubmitUser"></CircleButton>
@@ -557,71 +599,6 @@ textarea {
   gap: 5rem;
   justify-content: space-between;
   align-items: center;
-}
-
-.input-data {
-  height: 2.5rem;
-  width: 100%;
-  position: relative;
-}
-
-input {
-  height: 100%;
-  width: 100%;
-  border: none !important;
-  border-bottom: 2px solid silver;
-}
-
-input[type="text"],
-input[type="email"] {
-  background: transparent;
-  border: none !important;
-}
-
-input:focus ~ label,
-input:valid ~ label {
-  transform: translateY(-1.25rem);
-  color: rgb(81, 79, 79);
-}
-
-label {
-  position: absolute;
-  bottom: 0.626rem;
-  left: 0;
-  color: #00454f;
-  pointer-events: none;
-  transition: all 0.3s ease;
-}
-
-.underline {
-  position: absolute;
-  bottom: 0;
-  height: 0.125rem;
-  width: 100%;
-  background: #8f71be;
-}
-
-.underline:before {
-  position: absolute;
-  content: "";
-  height: 100%;
-  width: 100%;
-  background: #8f71be;
-  transition: transform 0.3s linear;
-  transform: scaleX(0);
-}
-
-input:focus ~ .underline:before,
-input:valid ~ .underline::before {
-  transform: scaleX(1);
-}
-
-.textarea:valid,
-.textarea:focus {
-  cursor: text;
-  color: #00454f;
-  background-color: white;
-  border-color: #8f71be;
 }
 
 @media (max-width: 512px) {

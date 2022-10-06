@@ -1,0 +1,64 @@
+.input-data {
+  height: 2.5rem;
+  width: 100%;
+  position: relative;
+}
+
+input {
+  height: 100%;
+  width: 100%;
+  border: none !important;
+  border-bottom: 2px solid silver;
+}
+
+input[type="text"],
+input[type="email"] {
+  background: transparent;
+  border: none !important;
+}
+
+input:focus ~ label,
+input:valid ~ label {
+  transform: translateY(-1.25rem);
+  color: rgb(81, 79, 79);
+}
+
+label {
+  position: absolute;
+  bottom: 0.626rem;
+  left: 0;
+  color: #00454f;
+  pointer-events: none;
+  transition: all 0.3s ease;
+}
+
+.underline {
+  position: absolute;
+  bottom: 0;
+  height: 0.125rem;
+  width: 100%;
+  background: #8f71be;
+}
+
+.underline:before {
+  position: absolute;
+  content: "";
+  height: 100%;
+  width: 100%;
+  background: #8f71be;
+  transition: transform 0.3s linear;
+  transform: scaleX(0);
+}
+
+input:focus ~ .underline:before,
+input:valid ~ .underline::before {
+  transform: scaleX(1);
+}
+
+.textarea:valid,
+.textarea:focus {
+  cursor: text;
+  color: #00454f;
+  background-color: white;
+  border-color: #8f71be;
+}
