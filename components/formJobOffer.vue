@@ -5,7 +5,25 @@ import { gsap } from "gsap";
 <template>
   <div class="formJobOffer">
     <div class="subTitle">CREATE YOUR OFFER</div>
-    
+    <div class="form-data">
+      <div class="input-data">
+        <input class="text" type="text" required />
+        <div class="underline"></div>
+        <label class="text">Job Title</label>
+      </div>
+      <div class="input-data">
+        <input class="text" type="text" required />
+        <div class="underline"></div>
+        <label class="text">Location</label>
+      </div>
+    </div>
+    <div class="form-data">
+      <div class="input-data">
+        <input class="text" type="text" required />
+        <div class="underline"></div>
+        <label class="text">Salary</label>
+      </div>
+    </div>
     <div class="formJobOffer-date">
       <div class="formJobOffer-info-row">
         <label for="dateStart" class="text">Start Date :</label>
@@ -16,6 +34,17 @@ import { gsap } from "gsap";
         <input type="date" class="text" id="dateEnd" />
       </div>
     </div>
+    <div class="select">
+      <select required class="text">
+        <option selected disabled>Minimum Degree</option>
+        <option value="Associate degree">Associate degree</option>
+        <option value="Bachelor's degree">Bachelor's degree</option>
+        <option value="Master's degree">Master's degree</option>
+        <option value="Doctoral degree">Doctoral degree</option>
+      </select>
+    </div>
+    <textarea class="text" placeholder="Description" />
+    <CircleButton text="Submit"></CircleButton>
   </div>
 </template>
 
@@ -23,7 +52,7 @@ import { gsap } from "gsap";
 .formJobOffer {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 2rem;
   align-items: center;
 }
 
@@ -55,5 +84,16 @@ import { gsap } from "gsap";
 .formJobOffer-date label {
   position: relative;
   bottom: 0 !important;
+}
+
+textarea {
+  max-width: 500px;
+}
+
+@media (max-width: 825px) {
+  .formJobOffer-date {
+    flex-direction: column;
+    gap: 1rem;
+  }
 }
 </style>

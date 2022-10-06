@@ -282,7 +282,6 @@ const checkValuesUser = () => {
           <input
             class="text"
             type="text"
-            name="name"
             required
             v-model="signUpProfessionnal.name"
           />
@@ -293,7 +292,6 @@ const checkValuesUser = () => {
           <input
             class="text"
             type="text"
-            name="siret"
             required
             v-model="signUpProfessionnal.siret"
           />
@@ -305,7 +303,6 @@ const checkValuesUser = () => {
         <input
           class="text"
           type="text"
-          name="location"
           required
           v-model="signUpProfessionnal.location"
         />
@@ -327,13 +324,7 @@ const checkValuesUser = () => {
     <div class="user-form">
       <div class="form-data">
         <div class="input-data">
-          <input
-            type="text"
-            name="email"
-            class="text"
-            required
-            v-model="signUpUser.email"
-          />
+          <input type="text" class="text" required v-model="signUpUser.email" />
           <div class="underline"></div>
           <label class="text">Email</label>
         </div>
@@ -341,7 +332,6 @@ const checkValuesUser = () => {
           <input
             class="text"
             type="text"
-            name="password"
             required
             v-model="signUpUser.password"
           />
@@ -354,7 +344,6 @@ const checkValuesUser = () => {
           <input
             class="text"
             type="text"
-            name="firstName"
             required
             v-model="signUpUser.firstName"
           />
@@ -365,7 +354,6 @@ const checkValuesUser = () => {
           <input
             class="text"
             type="text"
-            name="lastName"
             required
             v-model="signUpUser.lastName"
           />
@@ -377,7 +365,6 @@ const checkValuesUser = () => {
         <input
           class="text"
           type="text"
-          name="phone"
           required
           v-model="signUpUser.phoneNumber"
         />
@@ -452,54 +439,6 @@ const checkValuesUser = () => {
   z-index: 300;
 }
 
-/* SELECT */
-select {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  -ms-appearance: none;
-  appearance: none;
-  outline: 0;
-  box-shadow: none;
-  border: 0 !important;
-  background: white;
-  background-image: none;
-  flex: 1;
-  padding: 0 0.5em;
-  color: #fff;
-  cursor: pointer;
-  color: #00454f;
-}
-select::-ms-expand {
-  display: none;
-}
-.select {
-  margin-right: 2em;
-  margin-left: 2em;
-  position: relative;
-  display: flex;
-  width: 30em;
-  height: 3em;
-  line-height: 3;
-  background: white;
-  overflow: hidden;
-  border-radius: 0.25em;
-  border: #8f71be solid 1px;
-}
-.select::after {
-  content: "\25BC";
-  position: absolute;
-  top: 0;
-  right: 0;
-  padding: 0 1em;
-  background: #8f71be;
-  cursor: pointer;
-  pointer-events: none;
-  transition: 0.25s all ease;
-}
-.select:hover::after {
-  color: white;
-}
-
 /* EMAIL SEND */
 .email-send {
   display: flex;
@@ -515,17 +454,6 @@ p {
 }
 
 /* CHOICE PRO*/
-textarea {
-  background-color: white;
-  padding: 1em;
-  border-radius: 0.626rem;
-  border: 0.125rem solid #8f71be;
-  outline: none;
-  line-height: 1.4;
-  width: calc(100% - 2em);
-  min-height: 5rem;
-  transition: all 0.2s;
-}
 .professional-form {
   display: flex;
   flex-direction: column;
@@ -538,12 +466,6 @@ textarea {
   flex-direction: column;
   gap: 3rem;
   align-items: center;
-}
-
-.form-data {
-  display: flex;
-  flex-direction: row;
-  gap: 3rem;
 }
 
 .user-choice {
@@ -602,25 +524,9 @@ textarea {
 }
 
 @media (max-width: 512px) {
-  .form-data {
-    display: flex;
-    flex-direction: row;
-    gap: 1rem;
-  }
   .container-choice-button {
     flex-direction: column;
     gap: 3rem;
-  }
-
-  input,
-  textarea {
-    min-width: 150px;
-  }
-
-  .select {
-    margin-right: 0;
-    margin-left: 0;
-    width: 100%;
   }
 }
 
@@ -629,26 +535,12 @@ textarea {
     flex-direction: column;
     gap: 2rem;
   }
-
-  .select {
-    width: 20em;
-  }
-
-  input,
-  textarea {
-    min-width: 200px;
-  }
 }
 
 @media (min-width: 700px) and (max-width: 1370px) {
   .container-choice-button {
     flex-direction: column;
     gap: 2rem;
-  }
-
-  input,
-  textarea {
-    min-width: 300px;
   }
 }
 </style>
