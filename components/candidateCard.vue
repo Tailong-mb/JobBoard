@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { gsap } from "gsap";
+
 const infoCandidate = defineProps<{
   name: string;
   degree: string;
