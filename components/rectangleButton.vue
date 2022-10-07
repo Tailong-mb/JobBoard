@@ -55,12 +55,16 @@ const buttonText = defineProps<{ text: string }>();
   font-weight: 200;
   letter-spacing: 0.3rem;
 }
-@media screen and (max-width: 600px) {
+@media (max-width: 600px) {
+  .button-square-text {
+    letter-spacing: 0.1rem;
+  }
   .button {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    gap: 0.5rem;
     border-bottom: 1px solid #8f71be;
     padding: 0.5rem;
     margin: 0.1rem;
@@ -100,7 +104,7 @@ const buttonText = defineProps<{ text: string }>();
   }
 }
 
-@media screen and (min-width: 601px) {
+@media (min-width: 601px) {
   .button {
     display: flex;
     flex-direction: row;
@@ -146,7 +150,7 @@ const buttonText = defineProps<{ text: string }>();
   }
 }
 
-@media screen and (min-width: 993px) {
+@media (min-width: 993px) {
   .button {
     display: flex;
     flex-direction: row;
