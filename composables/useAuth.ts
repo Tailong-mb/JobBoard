@@ -34,6 +34,7 @@ const useAuth = () => {
       password,
     });
     if (error) throw error;
+    console.log(user);
     return u;
   };
 

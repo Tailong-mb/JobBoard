@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { gsap } from "gsap";
 
+const { signOut } = useAuth();
+
 let navBarState = false;
 
 const toggleNavBar = () => {
@@ -133,9 +135,9 @@ const leaveNavBarClose = () => {
 
   <div class="navbar">
     <div class="navbar-elements">
-      <NuxtLink class="subTitle navbar-element">HOME</NuxtLink>
-      <NuxtLink class="subTitle navbar-element">TEST</NuxtLink>
-      <div class="subTitle navbar-element">LOGOUT</div>
+      <div class="subTitle navbar-element">HOME</div>
+      <div class="subTitle navbar-element">TEST</div>
+      <div @click="signOut" class="subTitle navbar-element">LOGOUT</div>
     </div>
   </div>
 </template>
@@ -169,6 +171,8 @@ const leaveNavBarClose = () => {
   position: fixed;
   right: 2rem;
   top: 10rem;
+  z-index: 700;
+  cursor: pointer;
 }
 .navbar {
   gap: 2rem;
@@ -183,6 +187,7 @@ const leaveNavBarClose = () => {
   height: 100vh;
   width: 40rem;
   transform: translateX(40rem);
+  z-index: 700;
 }
 
 .navbar-line {
@@ -190,6 +195,7 @@ const leaveNavBarClose = () => {
   width: 2.5rem;
   background-color: #00454f;
   border-radius: 0.5rem;
+  z-index: 700;
 }
 
 @media screen and (max-width: 600px) {

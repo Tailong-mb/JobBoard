@@ -2,6 +2,8 @@ const useEmail = () => {
   // Connect to supabase
   const { supabase } = useSupabase();
 
+  const { user } = useAuth();
+
   const sendEmailResetPassword = async (email) => {
     const { error } = await supabase.auth.api.resetPasswordForEmail(email);
     if (error) throw error;
@@ -9,6 +11,7 @@ const useEmail = () => {
 
   const checkEmailResetPasswordEvent = async () => {
     supabase.auth.onAuthStateChange(async (event, session) => {
+      user.value = session?.user || null;
       if (event == "PASSWORD_RECOVERY") {
         const newPassword = prompt(
           "What would you like your new password to be?"

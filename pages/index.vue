@@ -7,7 +7,7 @@ checkEmailResetPasswordEvent();
 </script>
 
 <template>
-  <animation-load-home> </animation-load-home>
+  <animation-load-home style="pointer-events: none"> </animation-load-home>
 
   <div class="container">
     <div class="logo">
@@ -38,11 +38,6 @@ checkEmailResetPasswordEvent();
       <span class="epi">Epi<span class="steak">Steak</span></span
       >.
     </div>
-  </div>
-
-  <div class="bigTitle">
-    <div class="wordNear">NEAR</div>
-    <div class="wordYou">YOU</div>
   </div>
 </template>
 
