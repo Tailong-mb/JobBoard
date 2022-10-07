@@ -34,7 +34,6 @@ const useAuth = () => {
       password,
     });
     if (error) throw error;
-    console.log(user);
     return u;
   };
 
@@ -42,6 +41,11 @@ const useAuth = () => {
     const { error } = await supabase.auth.signOut();
     if (error) throw error;
     router.push("/");
+  };
+
+  const getMetadataRole = () => {
+    const role = supabase.auth.user().user_metadata.role;
+    return role;
   };
 
   const isLoggedIn = () => {
@@ -54,6 +58,7 @@ const useAuth = () => {
     signIn,
     signOut,
     isLoggedIn,
+    getMetadataRole,
   };
 };
 

@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { gsap } from "gsap";
-
 const jobOfferData = reactive({
   title: "",
   description: "",
