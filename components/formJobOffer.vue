@@ -1,5 +1,15 @@
 <script setup lang="ts">
 import { gsap } from "gsap";
+
+const jobOfferData = reactive({
+  title: "",
+  description: "",
+  salary: "",
+  location: "",
+  dateStart: Date,
+  dateEnd: Date,
+  degreeRequired: "",
+});
 </script>
 
 <template>
@@ -7,19 +17,29 @@ import { gsap } from "gsap";
     <div class="subTitle">CREATE YOUR OFFER</div>
     <div class="form-data">
       <div class="input-data">
-        <input class="text" type="text" required />
+        <input class="text" type="text" required v-model="jobOfferData.title" />
         <div class="underline"></div>
         <label class="text">Job Title</label>
       </div>
       <div class="input-data">
-        <input class="text" type="text" required />
+        <input
+          class="text"
+          type="text"
+          required
+          v-model="jobOfferData.location"
+        />
         <div class="underline"></div>
         <label class="text">Location</label>
       </div>
     </div>
     <div class="form-data">
       <div class="input-data">
-        <input class="text" type="text" required />
+        <input
+          class="text"
+          type="text"
+          required
+          v-model="jobOfferData.salary"
+        />
         <div class="underline"></div>
         <label class="text">Salary</label>
       </div>
@@ -27,15 +47,25 @@ import { gsap } from "gsap";
     <div class="formJobOffer-date">
       <div class="formJobOffer-info-row">
         <label for="dateStart" class="text">Start Date :</label>
-        <input type="date" id="dateStart" class="text" />
+        <input
+          type="date"
+          id="dateStart"
+          class="text"
+          v-model="jobOfferData.dateStart"
+        />
       </div>
       <div class="formJobOffer-info-row">
         <label for="dateEnd" class="text">End Date : </label>
-        <input type="date" class="text" id="dateEnd" />
+        <input
+          type="date"
+          class="text"
+          id="dateEnd"
+          v-model="jobOfferData.dateEnd"
+        />
       </div>
     </div>
     <div class="select">
-      <select required class="text">
+      <select required class="text" v-model="jobOfferData.degreeRequired">
         <option selected disabled>Minimum Degree</option>
         <option value="Associate degree">Associate degree</option>
         <option value="Bachelor's degree">Bachelor's degree</option>

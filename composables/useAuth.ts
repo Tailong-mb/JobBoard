@@ -4,7 +4,7 @@ const useAuth = () => {
 
   // Router
   const router = useRouter();
-  
+
   // Connect to supabase
   const { supabase } = useSupabase();
 

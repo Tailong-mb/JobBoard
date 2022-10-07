@@ -91,15 +91,14 @@ const triggerErrorMessage = () => {
 };
 
 const handleSubmitUser = async () => {
-  if (
-    !signUpUser.phoneNumber.match(
-      "^(?:(?:\+|00)33|0)\s*[1-9](?:[\s.-]*\d{2}){4}$"
-    )
-  ) {
+  const regXp = new RegExp(/^(?:(?:\+|00)33|0)\s*[1-9](?:[\s.-]*\d{2}){4}$/);
+  if (!regXp.test(signUpUser.phoneNumber)) {
     authError.value = "Invalid Phone Number";
     triggerErrorMessage();
     return;
   }
+
+  console.log(checkValuesUser());
 
   if (checkValuesUser()) return;
 
@@ -372,7 +371,7 @@ const checkValuesUser = () => {
         <label class="text">Phone</label>
       </div>
       <div class="select">
-        <select required class="text">
+        <select required class="text" v-model="signUpUser.degree">
           <option selected disabled>Select your degree</option>
           <option value="Associate degree">Associate degree</option>
           <option value="Bachelor's degree">Bachelor's degree</option>
