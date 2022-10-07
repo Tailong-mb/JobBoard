@@ -1,4 +1,34 @@
+.subTitle {
+  color: #00454f;
+}
+
+.bigTitle {
+  color: #00454f;
+}
+
+.subsubTitle {
+  color: #00454f;
+  font-family: "SuisseIntl";
+}
+
+h1 {
+  color: #00454f;
+}
+
+h2 {
+  color: #00454f;
+}
+
+.text {
+  color: #00454f;
+}
+
 @media screen and (max-width: 600px) {
+  .subsubTitle {
+    font-size: 1.5rem;
+    font-weight: 300;
+  }
+
   .bigTitle {
     font-family: "GT-America";
     font-size: 4rem;
@@ -25,7 +55,7 @@
 
   .text {
     font-family: "Staff";
-    font-size: 1.5rem;
+    font-size: 0.777rem;
     font-weight: 50;
   }
 }
@@ -37,6 +67,11 @@
     font-weight: 500;
   }
 
+  .subsubTitle {
+    font-size: 1.5rem;
+    font-weight: 300;
+  }
+
   h1 {
     font-family: "GT-America";
     font-size: 5rem;
@@ -57,7 +92,7 @@
 
   .text {
     font-family: "Staff";
-    font-size: 1.5rem;
+    font-size: 0.777rem;
     font-weight: 50;
   }
 }
@@ -67,6 +102,11 @@
     font-family: "GT-America";
     font-size: 10rem;
     font-weight: 500;
+  }
+
+  .subsubTitle {
+    font-size: 2rem;
+    font-weight: 300;
   }
 
   h1 {
@@ -89,7 +129,7 @@
 
   .text {
     font-family: "Staff";
-    font-size: 2rem;
+    font-size: 1rem;
     font-weight: 50;
   }
 }
@@ -119,9 +159,14 @@
     font-weight: 200;
   }
 
+  .subsubTitle {
+    font-size: 3rem;
+    font-weight: 300;
+  }
+
   .text {
     font-family: "Staff";
-    font-size: 3.5rem;
-    font-weight: 50;
+    font-size: 1.5rem;
+    font-weight: 100;
   }
 }

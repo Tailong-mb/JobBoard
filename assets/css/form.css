@@ -1,0 +1,167 @@
+/* SELECT */
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  appearance: none;
+  outline: 0;
+  box-shadow: none;
+  border: 0 !important;
+  background: white;
+  background-image: none;
+  flex: 1;
+  padding: 0 0.5em;
+  color: #fff;
+  cursor: pointer;
+  color: #00454f;
+}
+select::-ms-expand {
+  display: none;
+}
+.select {
+  margin-right: 2em;
+  margin-left: 2em;
+  position: relative;
+  display: flex;
+  width: 30em;
+  height: 3em;
+  line-height: 3;
+  background: white;
+  overflow: hidden;
+  border-radius: 0.25em;
+  border: #8f71be solid 1px;
+}
+.select::after {
+  content: "\25BC";
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 0 1em;
+  background: #8f71be;
+  cursor: pointer;
+  pointer-events: none;
+  transition: 0.25s all ease;
+}
+.select:hover::after {
+  color: white;
+}
+
+.form-data {
+  display: flex;
+  flex-direction: row;
+  gap: 3rem;
+}
+
+.input-data {
+  height: 2.5rem;
+  width: 100%;
+  position: relative;
+}
+
+input {
+  height: 100%;
+  width: 100%;
+  border: none !important;
+  border-bottom: 2px solid #8f71be;
+}
+
+input[type="text"],
+input[type="email"] {
+  background: transparent;
+  border: none !important;
+}
+
+input:focus ~ label,
+input:valid ~ label {
+  transform: translateY(-1.25rem);
+  color: #8f71be;
+}
+
+label {
+  position: absolute;
+  bottom: 0.626rem;
+  left: 0;
+  color: #00454f;
+  pointer-events: none;
+  transition: all 0.3s ease;
+}
+
+.underline {
+  position: absolute;
+  bottom: 0;
+  height: 0.125rem;
+  width: 100%;
+  background: #8f71be;
+}
+
+.underline:before {
+  position: absolute;
+  content: "";
+  height: 100%;
+  width: 100%;
+  background: #8f71be;
+  transition: transform 0.3s linear;
+  transform: scaleX(0);
+}
+
+input:focus ~ .underline:before,
+input:valid ~ .underline::before {
+  transform: scaleX(1);
+}
+
+.textarea:valid,
+.textarea:focus {
+  cursor: text;
+  color: #00454f;
+  background-color: white;
+  border-color: #8f71be;
+}
+
+textarea {
+  background-color: white;
+  padding: 1em;
+  border-radius: 0.626rem;
+  border: 0.125rem solid #8f71be;
+  outline: none;
+  line-height: 1.4;
+  width: calc(100% - 2em);
+  min-height: 5rem;
+  transition: all 0.2s;
+}
+
+@media (max-width: 512px) {
+  .form-data {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+  }
+
+  input,
+  textarea {
+    min-width: 150px;
+  }
+
+  .select {
+    margin-right: 0;
+    margin-left: 0;
+    width: 100%;
+  }
+}
+
+@media (min-width: 512px) and (max-width: 700px) {
+  .select {
+    width: 20em;
+  }
+
+  input,
+  textarea {
+    min-width: 200px;
+  }
+}
+
+@media (min-width: 700px) and (max-width: 1370px) {
+  input,
+  textarea {
+    min-width: 300px;
+  }
+}
