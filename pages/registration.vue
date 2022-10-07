@@ -98,8 +98,6 @@ const handleSubmitUser = async () => {
     return;
   }
 
-  console.log(checkValuesUser());
-
   if (checkValuesUser()) return;
 
   try {

@@ -1,39 +1,64 @@
 <script setup lang="ts">
+import { time } from "console";
+import { gsap } from "gsap";
+const { signIn } = useAuth();
 
-const {supabase} = useSupabase();
-const {signIn, user} = useAuth();
-const authState = ref("signIn");
+const forgetPassword = ref(false);
+
+onMounted(() => {
+  gsap.to(".user-choice", {
+    duration: 2,
+    opacity: 1,
+    ease: "power4.out",
+  });
+});
+
+const forgetPasswordClick = () => {
+  forgetPassword.value = true;
+
+  gsap.to(".user-choice", {
+    duration: 1,
+    opacity: 0,
+    ease: "power4.out",
+  });
+  gsap.to(".forgetPasswordContainer", {
+    duration: 1,
+    opacity: 1,
+  });
+};
 
 const authError = ref("");
 
-
 const input = reactive({
   password: "",
-  email: ""
+  email: "",
+  emailForgetPassword: "",
 });
 
-
-
-const handleSubmit = async() => {
-  try{
-    const signValues = await signIn({ email: input.email, password: input.password });
-    }
-    catch(err){
-      authError.value = err.message;
-    }
-  
-}
-
+// Handle The Submit Form
+const handleSubmit = async () => {
+  try {
+    const signValues = await signIn({
+      email: input.email,
+      password: input.password,
+    });
+  } catch (err) {
+    authError.value = err.message;
+    setTimeout(() => {
+      gsap.to(".error-message", { opacity: 0, duration: 1 });
+    }, 2000);
+    setTimeout(() => {
+      authError.value = "";
+    }, 3000);
+  }
+};
 </script>
 
-
 <template>
-<logo></logo>
+  <logo></logo>
 
   <!-- USER SIGNIN -->
-  <div
-    class="user-choice"
-  >
+  <div class="user-choice" v-if="!forgetPassword">
     <div class="subTitle">Sign In</div>
     <div class="user-form">
       <div class="user-form-data">
@@ -60,9 +85,28 @@ const handleSubmit = async() => {
           <label class="text">Password</label>
         </div>
       </div>
-      <div class="text passwordForgotten">Password forgotten ?</div>
-     
+      <div class="text passwordForgotten" @click="forgetPasswordClick">
+        Password forgotten ?
+      </div>
+
       <CircleButton text="Connect" @click="handleSubmit"></CircleButton>
+    </div>
+  </div>
+
+  <!-- PASSWORD FORGET -->
+  <div class="forgetPasswordContainer" v-if="forgetPassword">
+    <div class="subsubTitle">Forget Password</div>
+    <div class="user-form-data">
+      <div class="input-data">
+        <input
+          type="text"
+          class="text"
+          required
+          v-model="input.emailForgetPassword"
+        />
+        <div class="underline"></div>
+        <label class="text">Email</label>
+      </div>
     </div>
   </div>
 
@@ -77,187 +121,107 @@ const handleSubmit = async() => {
 </template>
 
 <style scoped>
-    .error-message {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: #f8d7da;
-      color: #721c24;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      z-index: 300;
-    }
-    .email-send {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 90vh;
-    }
-    
-    .user-form {
-      display: flex;
-      flex-direction: column;
-      gap: 3rem;
-      align-items: center;
-    }
-    
-    .user-form-data {
-      display: flex;
-      flex-direction: row;
-      gap: 3rem;
-    }
-    .user-choice {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 2rem;
-      margin-top: 2rem;
-      position: relative;
-      top: 7rem;
-      animation: 1s ease-in slideInFromLeft;
-    }
-    
-    @keyframes slideInFromLeft {
-      0% {
-        opacity: 0;
-        transform: translateX(-150%);
-      }
-      100% {
-        opacity: 1;
-        transform: translateX(0);
-      }
-    }
-    
-    .container-choice {
-      margin-top: 5rem;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 10rem;
-    }
-    
-    .container-choice-button {
-      display: flex;
-      flex-direction: row;
-      gap: 5rem;
-      justify-content: space-between;
-      align-items: center;
-    }
-    
-    .input-data {
-      height: 2.5rem;
-      width: 100%;
-      position: relative;
-    }
+.forgetPasswordContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  gap: 2rem;
+  min-height: 90vh;
+}
+.error-message {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #f8d7da;
+  color: #721c24;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 300;
+}
+.email-send {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 90vh;
+}
 
-    .passwordForgotten {
-      cursor: pointer;
-    }
-    
-    input {
-      height: 100%;
-      width: 100%;
-      border: none !important;
-      border-bottom: 2px solid silver;
-    }
-    
-    input[type="text"],
-    input[type="email"] {
-      background: transparent;
-      border: none !important;
-    }
-    
-    input:focus ~ label,
-    input:valid ~ label {
-      transform: translateY(-1.25rem);
-      color: rgb(81, 79, 79);
-    }
-    
-    label {
-      position: absolute;
-      bottom: 0.626rem;
-      left: 0;
-      color: #00454f;
-      pointer-events: none;
-      transition: all 0.3s ease;
-    }
-    
-    .underline {
-      position: absolute;
-      bottom: 0;
-      height: 0.125rem;
-      width: 100%;
-      background: #8f71be;
-    }
-    
-    .underline:before {
-      position: absolute;
-      content: "";
-      height: 100%;
-      width: 100%;
-      background: #8f71be;
-      transition: transform 0.3s linear;
-      transform: scaleX(0);
-    }
-    
-    input:focus ~ .underline:before,
-    input:valid ~ .underline::before {
-      transform: scaleX(1);
-    }
-    
-    .textarea {
-      background-color: #ddd;
-      color: #00454f;
-      border-radius: 0.626rem;
-      border: 0.125rem solid transparent;
-      outline: none;
-      line-height: 1.4;
-      width: 100%;
-      min-height: 12rem;
-      transition: all 0.2s;
-    }
-    
-    .textarea:valid,
-    .textarea:focus {
-      cursor: text;
-      color: #00454f;
-      background-color: white;
-      border-color: #8f71be;
-    }
-    
-    @media (max-width: 512px) {
-      .user-form-data {
-        display: flex;
-        flex-direction: row;
-        gap: 1rem;
-      }
-      .container-choice-button {
-        flex-direction: column;
-        gap: 3rem;
-      }
-    
-      input,
-      textarea {
-        min-width: 150px;
-      }
-    }
-    
-    @media (min-width: 512px) and (max-width: 700px) {
-      .container-choice-button {
-        flex-direction: column;
-        gap: 2rem;
-      }
-    
-      input,
-      textarea {
-        min-width: 200px;
-      }
-    }
+.user-form {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  align-items: center;
+}
 
+.user-form-data {
+  display: flex;
+  flex-direction: row;
+  gap: 3rem;
+}
+.user-choice {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  margin-top: 2rem;
+  position: relative;
+  top: 7rem;
+  opacity: 0;
+}
+
+.container-choice {
+  margin-top: 5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10rem;
+}
+
+.container-choice-button {
+  display: flex;
+  flex-direction: row;
+  gap: 5rem;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.passwordForgotten {
+  cursor: pointer;
+}
+
+@media (max-width: 512px) {
+  .user-form-data {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+  }
+  .container-choice-button {
+    flex-direction: column;
+    gap: 3rem;
+  }
+
+  input,
+  textarea {
+    min-width: 150px;
+  }
+}
+
+@media (min-width: 512px) and (max-width: 700px) {
+  .container-choice-button {
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  input,
+  textarea {
+    min-width: 200px;
+  }
+}
 </style>
