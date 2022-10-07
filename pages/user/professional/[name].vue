@@ -1,4 +1,4 @@
-<!-- candidate profil without edit profil -->
+<!-- candidate profil without edit profil with data json -->
 
 <script setup lang="ts">
 

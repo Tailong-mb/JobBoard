@@ -1,3 +1,5 @@
+<!-- component to edit user home page -->
+
 <script setup lang="ts">
 
 </script>

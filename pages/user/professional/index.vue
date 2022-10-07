@@ -1,4 +1,4 @@
-<!-- professional page with component candidate card -->
+<!-- professional page with component candidate card with data json -->
 
 <script setup lang="ts">
 

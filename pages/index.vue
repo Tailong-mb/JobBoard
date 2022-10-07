@@ -1,3 +1,5 @@
+<!-- home page -->
+
 <script setup lang="ts">
 import Logo1 from '~~/components/logo.vue';
 const { supabase } = useSupabase();

@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { catchClause } from '@babel/types';
 
-const {signIn,user} = useAuth();
+const {supabase} = useSupabase();
+const {signIn, user} = useAuth();
 const authState = ref("signIn");
 
 const authError = ref("");
@@ -17,7 +17,6 @@ const input = reactive({
 const handleSubmit = async() => {
   try{
     const signValues = await signIn({ email: input.email, password: input.password });
-  
     }
     catch(err){
       authError.value = err.message;
@@ -25,12 +24,12 @@ const handleSubmit = async() => {
   
 }
 
-console.log(user.value)
 </script>
 
 
 <template>
 <logo></logo>
+
   <!-- USER SIGNIN -->
   <div
     class="user-choice"
@@ -61,6 +60,7 @@ console.log(user.value)
           <label class="text">Password</label>
         </div>
       </div>
+      <div class="text passwordForgotten">Password forgotten ?</div>
      
       <CircleButton text="Connect" @click="handleSubmit"></CircleButton>
     </div>
@@ -154,6 +154,10 @@ console.log(user.value)
       height: 2.5rem;
       width: 100%;
       position: relative;
+    }
+
+    .passwordForgotten {
+      cursor: pointer;
     }
     
     input {

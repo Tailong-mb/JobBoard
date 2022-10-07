@@ -1,4 +1,4 @@
-<!-- profil candidate which can be edit -->
+<!-- profil candidate which can be edit with json data -->
 
 <script setup lang="ts">
 
