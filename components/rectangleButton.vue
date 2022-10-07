@@ -34,7 +34,7 @@ const buttonText = defineProps<{ text: string }>();
 
 <template>
   <div
-    class="button"
+    class="buttonRectangle"
     @mouseover="animationButton"
     @mouseleave="animationButtonReturn"
   >
@@ -55,11 +55,8 @@ const buttonText = defineProps<{ text: string }>();
   font-weight: 200;
   letter-spacing: 0.3rem;
 }
-@media (max-width: 600px) {
-  .button-square-text {
-    letter-spacing: 0.1rem;
-  }
-  .button {
+@media screen and (max-width: 600px) {
+  .buttonRectangle {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -104,8 +101,8 @@ const buttonText = defineProps<{ text: string }>();
   }
 }
 
-@media (min-width: 601px) {
-  .button {
+@media screen and (min-width: 601px) {
+  .buttonRectangle {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -150,8 +147,8 @@ const buttonText = defineProps<{ text: string }>();
   }
 }
 
-@media (min-width: 993px) {
-  .button {
+@media screen and (min-width: 993px) {
+  .buttonRectangle {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
