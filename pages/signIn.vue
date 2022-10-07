@@ -1,30 +1,31 @@
 <script setup lang="ts">
-import { time } from "console";
 import { gsap } from "gsap";
 const { signIn } = useAuth();
+const { sendEmailResetPassword } = useEmail();
 
 const forgetPassword = ref(false);
+const emailSend = ref(false);
 
-onMounted(() => {
-  gsap.to(".user-choice", {
-    duration: 2,
-    opacity: 1,
-    ease: "power4.out",
-  });
-});
-
-const forgetPasswordClick = () => {
-  forgetPassword.value = true;
-
-  gsap.to(".user-choice", {
-    duration: 1,
-    opacity: 0,
-    ease: "power4.out",
-  });
+const getBackToSignIn = () => {
   gsap.to(".forgetPasswordContainer", {
     duration: 1,
-    opacity: 1,
+    transform: "translateX(150%)",
+    ease: "power4.out",
   });
+  setTimeout(() => {
+    forgetPassword.value = false;
+  }, 1000);
+};
+
+const forgetPasswordClick = () => {
+  gsap.to(".user-choice", {
+    duration: 1,
+    transform: "translateX(150%)",
+    ease: "power4.out",
+  });
+  setTimeout(() => {
+    forgetPassword.value = true;
+  }, 1000);
 };
 
 const authError = ref("");
@@ -42,6 +43,30 @@ const handleSubmit = async () => {
       email: input.email,
       password: input.password,
     });
+  } catch (err) {
+    authError.value = err.message;
+    setTimeout(() => {
+      gsap.to(".error-message", { opacity: 0, duration: 1 });
+    }, 2000);
+    setTimeout(() => {
+      authError.value = "";
+    }, 3000);
+  }
+};
+
+const resetPassword = async () => {
+  if (input.emailForgetPassword === "") {
+    authError.value = "Please Enter Your Email";
+    setTimeout(() => {
+      gsap.to(".error-message", { opacity: 0, duration: 1 });
+    }, 2000);
+    setTimeout(() => {
+      authError.value = "";
+    }, 3000);
+  }
+  try {
+    await sendEmailResetPassword(input.emailForgetPassword);
+    emailSend.value = true;
   } catch (err) {
     authError.value = err.message;
     setTimeout(() => {
@@ -88,13 +113,16 @@ const handleSubmit = async () => {
       <div class="text passwordForgotten" @click="forgetPasswordClick">
         Password forgotten ?
       </div>
-
-      <CircleButton text="Connect" @click="handleSubmit"></CircleButton>
     </div>
+    <CircleButton text="Connect" @click="handleSubmit"></CircleButton>
   </div>
 
   <!-- PASSWORD FORGET -->
   <div class="forgetPasswordContainer" v-if="forgetPassword">
+    <!-- GO BACK -->
+    <div class="arrow" @click="getBackToSignIn">
+      <arrow></arrow>
+    </div>
     <div class="subsubTitle">Forget Password</div>
     <div class="user-form-data">
       <div class="input-data">
@@ -108,6 +136,7 @@ const handleSubmit = async () => {
         <label class="text">Email</label>
       </div>
     </div>
+    <CircleButton text="Send" @click="resetPassword()"></CircleButton>
   </div>
 
   <!-- ERROR MESSAGE -->
@@ -118,9 +147,34 @@ const handleSubmit = async () => {
       <p>{{ authError }}</p>
     </div>
   </div>
+
+  <!-- EMAIL SEND -->
+  <div class="emailSend" v-if="emailSend">
+    <div class="subTitle">Email Send</div>
+    <div class="text">
+      <p>
+        An email has been sent to you, please check your inbox and follow the
+        instructions.
+      </p>
+    </div>
+  </div>
 </template>
 
 <style scoped>
+.emailSend {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  z-index: 500;
+  background-color: white;
+}
 .forgetPasswordContainer {
   display: flex;
   flex-direction: column;
@@ -129,6 +183,14 @@ const handleSubmit = async () => {
   opacity: 0;
   gap: 2rem;
   min-height: 90vh;
+  animation: 1s fadeIn forwards;
+}
+
+.arrow {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 300;
 }
 .error-message {
   position: absolute;
@@ -173,6 +235,7 @@ const handleSubmit = async () => {
   position: relative;
   top: 7rem;
   opacity: 0;
+  animation: 1s fadeIn forwards;
 }
 
 .container-choice {
@@ -194,6 +257,15 @@ const handleSubmit = async () => {
 
 .passwordForgotten {
   cursor: pointer;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 @media (max-width: 512px) {

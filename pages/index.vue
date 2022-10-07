@@ -1,7 +1,9 @@
 <!-- home page -->
 
 <script setup lang="ts">
-const { supabase } = useSupabase();
+const { checkEmailResetPasswordEvent } = useEmail();
+
+checkEmailResetPasswordEvent();
 </script>
 
 <template>
