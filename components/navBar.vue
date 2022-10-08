@@ -61,7 +61,7 @@ const toggleNavBar = () => {
       .to(".navbar", {
         duration: 1.3,
         ease: "power4.out",
-        transform: "translateX(40rem)",
+        transform: "translateX(100vw)",
       })
       .to(
         ".navbar-line",
@@ -155,7 +155,7 @@ const leaveNavBarClose = () => {
   border-radius: 50%;
   padding: 1rem;
   border: 1px solid #00454f;
-  z-index: 100;
+  z-index: 900;
 }
 
 .navbar-element {
@@ -185,8 +185,8 @@ const leaveNavBarClose = () => {
     rgba(0, 69, 79, 1) 100%
   );
   height: 100vh;
-  width: 40rem;
-  transform: translateX(40rem);
+  width: 100vw;
+  transform: translateX(100vw);
   z-index: 700;
 }
 

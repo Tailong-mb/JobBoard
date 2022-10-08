@@ -2,9 +2,6 @@ const useAuth = () => {
   // Set an user state
   const user = useState("user", () => null);
 
-  // Router
-  const router = useRouter();
-
   // Connect to supabase
   const { supabase } = useSupabase();
 
@@ -34,13 +31,14 @@ const useAuth = () => {
       password,
     });
     if (error) throw error;
+    navigateTo("/home");
     return u;
   };
 
   const signOut = async () => {
     const { error } = await supabase.auth.signOut();
     if (error) throw error;
-    router.push("/");
+    navigateTo("/");
   };
 
   const getMetadataRole = () => {

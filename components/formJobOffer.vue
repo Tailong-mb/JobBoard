@@ -78,10 +78,25 @@ const jobOfferData = reactive({
 
 <style scoped>
 .formJobOffer {
+  position: absolute;
+  top: 0;
+  left: 0;
   display: flex;
   flex-direction: column;
   gap: 2rem;
   align-items: center;
+  width: 100%;
+  min-height: 100vh;
+  z-index: 500;
+  background: white;
+  transform: translateX(-100%);
+  animation: 1s slideInFromLeft 1s forwards;
+}
+
+@keyframes slideInFromLeft {
+  100% {
+    transform: translateX(0);
+  }
 }
 
 .formJobOffer-info-row {
