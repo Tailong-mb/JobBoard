@@ -10,8 +10,25 @@ const useDB = () => {
     return data;
   };
 
+  const insertOfferJob = async (offer, id) => {
+    const { error } = await supabase.from("joboffer").insert([
+      {
+        id_company: id,
+        title_job: offer.title,
+        description_job: offer.description,
+        salary: offer.salary,
+        location_job: offer.location,
+        datestart: offer.dateStart,
+        dateend: offer.dateEnd,
+        degree_job: offer.degreeRequired,
+      },
+    ]);
+    if (error) throw error;
+  };
+
   return {
     getCompanyById,
+    insertOfferJob,
   };
 };
 

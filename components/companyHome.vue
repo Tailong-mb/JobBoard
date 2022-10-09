@@ -51,7 +51,7 @@ const unShowCreateJobOffer = () => {
       <arrow @click="unShowCreateJobOffer"></arrow>
     </div>
     <div class="formJobOffer" v-if="createJobOffer">
-      <FormJobOffer></FormJobOffer>
+      <FormJobOffer :id="companyProps.id"></FormJobOffer>
     </div>
     <div class="company-presentation-container">
       <CompanyPresentation

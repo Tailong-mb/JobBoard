@@ -1,4 +1,10 @@
 <script setup lang="ts">
+const { insertOfferJob } = useDB();
+
+const offerJobProps = defineProps<{
+  id: string;
+}>();
+
 const jobOfferData = reactive({
   title: "",
   description: "",
@@ -8,6 +14,40 @@ const jobOfferData = reactive({
   dateEnd: Date,
   degreeRequired: "",
 });
+
+const checkValidDate = () => {
+  return jobOfferData.dateStart < jobOfferData.dateEnd;
+};
+
+const checkDataInput = () => {
+  if (
+    jobOfferData.title === "" ||
+    jobOfferData.description === "" ||
+    jobOfferData.salary === "" ||
+    jobOfferData.location === "" ||
+    jobOfferData.dateStart === null ||
+    jobOfferData.dateEnd === null ||
+    jobOfferData.degreeRequired === "" ||
+    !checkValidDate()
+  ) {
+    return false;
+  } else {
+    return true;
+  }
+};
+
+const submitJobOffer = async () => {
+  if (checkDataInput()) {
+    try {
+      const data = await insertOfferJob(jobOfferData, offerJobProps.id);
+      alert("Job offer added successfully");
+    } catch (err) {
+      alert("Error while adding job offer");
+    }
+  } else {
+    console.log("error");
+  }
+};
 </script>
 
 <template>
@@ -34,7 +74,7 @@ const jobOfferData = reactive({
       <div class="input-data">
         <input
           class="text"
-          type="text"
+          type="number"
           required
           v-model="jobOfferData.salary"
         />
@@ -71,8 +111,12 @@ const jobOfferData = reactive({
         <option value="Doctoral degree">Doctoral degree</option>
       </select>
     </div>
-    <textarea class="text" placeholder="Description" />
-    <CircleButton text="Submit"></CircleButton>
+    <textarea
+      class="text"
+      placeholder="Description"
+      v-model="jobOfferData.description"
+    />
+    <CircleButton text="Submit" @click="submitJobOffer"></CircleButton>
   </div>
 </template>
 
