@@ -26,9 +26,23 @@ const useDBCompany = () => {
     if (error) throw error;
   };
 
+  const insertNewLineCompany = async (company, id) => {
+    const { error } = await supabase.from("company").insert([
+      {
+        id_company: id,
+        name: company.name,
+        siret: company.siret,
+        location: company.location,
+        description: company.description,
+      },
+    ]);
+    return error;
+  };
+
   return {
     getCompanyById,
     insertOfferJob,
+    insertNewLineCompany
   };
 };
 

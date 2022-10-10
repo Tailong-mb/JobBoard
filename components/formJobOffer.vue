@@ -56,7 +56,7 @@ const submitJobOffer = async () => {
       const data = await insertOfferJob(jobOfferData, offerJobProps.id);
       if (data !== null) alert("Job offer added successfully");
     } catch (err) {
-      errorMessage.value = err;
+      errorMessage.value = err.message;
       triggerErrorMessage();
     }
   } else {

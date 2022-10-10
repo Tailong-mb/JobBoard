@@ -9,6 +9,7 @@ definePageMeta({
 // Composables
 const auth = useAuth();
 const { supabase } = useSupabase();
+const { insertNewLineCompany } = useDBCompany();
 
 const showConfirmEmailMessage = ref(false);
 const choiceSignUp = ref(true);
@@ -148,15 +149,7 @@ const insertIntoTableUser = async (userId) => {
   }
 };
 const insertIntoTableCompany = async (user) => {
-  const { error } = await supabase.from("company").insert([
-    {
-      id_company: user,
-      name: signUpProfessionnal.name,
-      siret: signUpProfessionnal.siret,
-      location: signUpProfessionnal.location,
-      description: signUpProfessionnal.description,
-    },
-  ]);
+  const error = await insertNewLineCompany(signUpProfessionnal, user);
   if (error !== null) {
     if (error.code === "23503" || error.code === "23505") {
       authError.value =

@@ -2,8 +2,6 @@ const useEmail = () => {
   // Connect to supabase
   const { supabase } = useSupabase();
 
-  const { user } = useAuth();
-
   const sendEmailResetPassword = async (email) => {
     const { error } = await supabase.auth.api.resetPasswordForEmail(email);
     if (error) throw error;

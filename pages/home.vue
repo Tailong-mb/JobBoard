@@ -1,8 +1,9 @@
 <script setup lang="ts">
+const { getMetadataRole, user } = useAuth();
+
 definePageMeta({
   middleware: "auth",
 });
-const { getMetadataRole, user } = useAuth();
 
 const role = ref("");
 const id = ref("");
@@ -12,7 +13,7 @@ setTimeout(() => {
   role.value = getMetadataRole();
   id.value = user.value.id;
   email.value = user.value.email;
-}, 0.000001);
+}, 0.00000001);
 </script>
 
 <template>

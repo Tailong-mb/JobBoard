@@ -18,7 +18,6 @@ const useAuth = () => {
       {
         data: {
           role: role,
-          redirectTo: `${window.location.origin}/home?source=email`,
         },
       }
     );
@@ -32,6 +31,7 @@ const useAuth = () => {
       password,
     });
     if (error) throw error;
+    navigateTo("/home");
 
     return u;
   };
@@ -51,6 +51,14 @@ const useAuth = () => {
     return !!user.value;
   };
 
+  const changePassword = async (password) => {
+    const { user: u, error } = await supabase.auth.update({
+      password: password,
+    });
+    if (error) throw error;
+    return u;
+  };
+
   return {
     user,
     signUp,
@@ -58,6 +66,7 @@ const useAuth = () => {
     signOut,
     isLoggedIn,
     getMetadataRole,
+    changePassword,
   };
 };
 
