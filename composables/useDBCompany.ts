@@ -1,4 +1,4 @@
-const useDB = () => {
+const useDBCompany = () => {
   const { supabase } = useSupabase();
 
   const getCompanyById = async (id) => {
@@ -32,4 +32,4 @@ const useDB = () => {
   };
 };
 
-export default useDB;
+export default useDBCompany;

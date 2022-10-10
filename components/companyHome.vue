@@ -5,7 +5,7 @@ const companyProps = defineProps<{
   email: string;
 }>();
 
-const { getCompanyById } = useDB();
+const { getCompanyById } = useDBCompany();
 const createJobOffer = ref(false);
 
 const data = await getCompanyById(companyProps.id);

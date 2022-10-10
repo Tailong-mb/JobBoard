@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const { insertOfferJob } = useDB();
+const { insertOfferJob } = useDBCompany();
 
 const offerJobProps = defineProps<{
   id: string;
@@ -40,7 +40,7 @@ const submitJobOffer = async () => {
   if (checkDataInput()) {
     try {
       const data = await insertOfferJob(jobOfferData, offerJobProps.id);
-      alert("Job offer added successfully");
+      if (data !== null) alert("Job offer added successfully");
     } catch (err) {
       alert("Error while adding job offer");
     }
