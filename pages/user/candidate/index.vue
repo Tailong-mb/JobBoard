@@ -2,31 +2,33 @@
 
 <script setup lang="ts">
 
-    import users from "@/data.json"
+    const {supabase} = useSupabase();
+    const {user} = useAuth();
 
-    const route = useRoute();
-    const name = route.params.name;
-    const user = users.find(r => r.name === name);
+    const workerId = ref();
 
+    // if(process.client){
+    //     workerId.value = await supabase.from("worker").select();
+    // }
 
-    
-    </script>
-    
-    <template>
+        console.log(user);
+</script>
+<template>
 
         <logo></logo>
         <div class="container">
             <div class="container-info">
                 <div class="header">
-                    <div class="subTitle">{{user.degree}}</div>
+                    <div class="subTitle">degree
+                    </div>
                     <div class="informations">
-                        <div class="text">{{user.mail}}</div>
-                        <div class="text">{{user.phone}}</div>
+                        <div class="text">mail</div>
+                        <div class="text">phone</div>
                     </div>
                     
                 </div>
-                <h2>{{user.name}}</h2>
-                <text class="text">{{user.description}}</text>
+                <h2>name</h2>
+                <text class="text"></text>
             </div>
             <rectangle-button class="button" text="edit" @click=""></rectangle-button>
             <rectangle-button class="confirm" text="confirm" @click=""></rectangle-button>
@@ -35,9 +37,9 @@
 
         <edit-profil-user class="edit-profil" ></edit-profil-user>
         
-    </template>
+</template>
     
-    <style scoped>
+<style scoped>
     .container{
         display: flex;
         flex-direction: column;
@@ -92,4 +94,4 @@
 
     }
 
-    </style>
+</style>

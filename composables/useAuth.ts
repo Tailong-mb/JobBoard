@@ -47,12 +47,18 @@ const useAuth = () => {
     return !!user.value;
   };
 
+  const getMetadataRole = () => {
+    const role = supabase.auth.user().user_metadata.role;
+    return role;
+  };
+
   return {
     user,
     signUp,
     signIn,
     signOut,
     isLoggedIn,
+    getMetadataRole,
   };
 };
 

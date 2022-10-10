@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import {gsap} from "gsap";
 
 const {supabase} = useSupabase();
 const {signIn, user} = useAuth();
@@ -12,11 +13,12 @@ const input = reactive({
   email: ""
 });
 
-
+const route = useRouter();
 
 const handleSubmit = async() => {
   try{
     const signValues = await signIn({ email: input.email, password: input.password });
+    route.push("/home");
     }
     catch(err){
       authError.value = err.message;
@@ -24,6 +26,13 @@ const handleSubmit = async() => {
   
 }
 
+onMounted(() => {
+  gsap.to(".user-choice", {
+    duration: 10,
+    opacity: 1,
+    ease: "power4.out",
+  });
+});
 </script>
 
 
@@ -119,19 +128,10 @@ const handleSubmit = async() => {
       margin-top: 2rem;
       position: relative;
       top: 7rem;
-      animation: 1s ease-in slideInFromLeft;
+      opacity: 0;
     }
     
-    @keyframes slideInFromLeft {
-      0% {
-        opacity: 0;
-        transform: translateX(-150%);
-      }
-      100% {
-        opacity: 1;
-        transform: translateX(0);
-      }
-    }
+    
     
     .container-choice {
       margin-top: 5rem;
