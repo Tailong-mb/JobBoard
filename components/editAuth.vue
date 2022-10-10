@@ -40,6 +40,7 @@ const clickChangePassword = async () => {
 
 <template>
   <div class="editAuth-container">
+    <div class="subTitle">Change Your Passeword</div>
     <div class="form-data">
       <div class="input-data">
         <input
@@ -78,6 +79,24 @@ const clickChangePassword = async () => {
 
 <style scoped>
 /* ERROR */
+
+.editAuth-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  transform: translateX(100%);
+  min-height: 100%;
+  width: 100%;
+  animation: 1 slideIn 1s forwards;
+}
+
+@keyframes slideIn {
+  100% {
+    transform: translateX(0);
+  }
+}
 .error-message {
   position: absolute;
   top: 0;

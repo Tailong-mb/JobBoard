@@ -42,7 +42,7 @@ const useDBCompany = () => {
   return {
     getCompanyById,
     insertOfferJob,
-    insertNewLineCompany
+    insertNewLineCompany,
   };
 };
 

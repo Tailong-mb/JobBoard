@@ -388,6 +388,7 @@ const checkValuesUser = () => {
         on the link in the email to complete your registration.
       </p>
     </div>
+    <a href="/signIn"><RectangleButton text="Sign In"></RectangleButton></a>
   </div>
 
   <!-- ERROR MESSAGE -->

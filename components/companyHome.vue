@@ -7,8 +7,18 @@ const companyProps = defineProps<{
 
 const { getCompanyById } = useDBCompany();
 const createJobOffer = ref(false);
+const changeAuth = ref(false);
 
 const data = await getCompanyById(companyProps.id);
+
+const showEditAuth = () => {
+  gsap.to(".company-presentation-container", {
+    transform: "translateX(100%)",
+    ease: "power4.out",
+    duration: 1,
+  });
+  changeAuth.value = true;
+};
 
 const showCreateJobOffer = () => {
   gsap.to(".company-presentation-container", {
@@ -53,6 +63,13 @@ const unShowCreateJobOffer = () => {
     <div class="formJobOffer" v-if="createJobOffer">
       <FormJobOffer :id="companyProps.id"></FormJobOffer>
     </div>
+
+    <div v-if="createJobOffer" class="arrow-company-container">
+      <arrow></arrow>
+    </div>
+    <div v-if="changeAuth" class="edit-auth-container">
+      <EditAuth></EditAuth>
+    </div>
     <div class="company-presentation-container">
       <CompanyPresentation
         :name="data[0].name"
@@ -66,7 +83,10 @@ const unShowCreateJobOffer = () => {
           text="Create a job"
           @click="showCreateJobOffer"
         ></CircleButton>
-        <RectangleButton text="Change My information"></RectangleButton>
+        <RectangleButton
+          text="Change My information"
+          @click="showEditAuth"
+        ></RectangleButton>
       </div>
     </div>
   </div>
@@ -86,6 +106,14 @@ const unShowCreateJobOffer = () => {
   100% {
     opacity: 1;
   }
+}
+
+.edit-auth-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
 .option-company-button {
   display: flex;

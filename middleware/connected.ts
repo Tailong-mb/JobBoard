@@ -3,7 +3,7 @@ export default defineNuxtRouteMiddleware(() => {
 
   setTimeout(() => {
     if (isLoggedIn()) {
-      navigateTo("/home");
+      navigateTo("/");
     }
   }, 0.00001);
 });
