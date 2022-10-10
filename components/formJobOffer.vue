@@ -5,6 +5,8 @@ const offerJobProps = defineProps<{
   id: string;
 }>();
 
+const errorMessage = ref("");
+
 const jobOfferData = reactive({
   title: "",
   description: "",
@@ -17,6 +19,18 @@ const jobOfferData = reactive({
 
 const checkValidDate = () => {
   return jobOfferData.dateStart < jobOfferData.dateEnd;
+};
+
+const triggerErrorMessage = () => {
+  setTimeout(() => {
+    errorMessage.value = "";
+  }, 4000);
+  setTimeout(() => {
+    gsap.to(".error-message", {
+      opacity: 0,
+      duration: 0.5,
+    });
+  }, 3000);
 };
 
 const checkDataInput = () => {
@@ -42,16 +56,24 @@ const submitJobOffer = async () => {
       const data = await insertOfferJob(jobOfferData, offerJobProps.id);
       if (data !== null) alert("Job offer added successfully");
     } catch (err) {
-      alert("Error while adding job offer");
+      errorMessage.value = err;
+      triggerErrorMessage();
     }
   } else {
-    console.log("error");
+    errorMessage.value = "Please fill all the fields with correct values";
+    triggerErrorMessage();
   }
 };
 </script>
 
 <template>
   <div class="formJobOffer">
+    <div class="error-message" v-if="errorMessage !== ''">
+      <div class="subTitle">Error</div>
+      <div class="text">
+        <p>{{ errorMessage }}</p>
+      </div>
+    </div>
     <div class="subTitle">CREATE YOUR OFFER</div>
     <div class="form-data">
       <div class="input-data">
@@ -121,6 +143,15 @@ const submitJobOffer = async () => {
 </template>
 
 <style scoped>
+.error-message {
+  background-color: red;
+  font-weight: bold;
+  text-align: center;
+  z-index: 1000;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
 .formJobOffer {
   position: absolute;
   top: 0;

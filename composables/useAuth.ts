@@ -18,6 +18,7 @@ const useAuth = () => {
       {
         data: {
           role: role,
+          redirectTo: `${window.location.origin}/home?source=email`,
         },
       }
     );
@@ -31,7 +32,7 @@ const useAuth = () => {
       password,
     });
     if (error) throw error;
-    navigateTo("/home");
+
     return u;
   };
 

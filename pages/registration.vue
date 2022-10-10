@@ -1,6 +1,11 @@
 <script setup lang="ts">
 import { gsap } from "gsap";
 
+//Middleware
+definePageMeta({
+  middleware: "connected",
+});
+
 // Composables
 const auth = useAuth();
 const { supabase } = useSupabase();

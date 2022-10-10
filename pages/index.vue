@@ -3,7 +3,7 @@
 <script setup lang="ts">
 const { checkEmailResetPasswordEvent } = useEmail();
 
-checkEmailResetPasswordEvent();
+await checkEmailResetPasswordEvent();
 </script>
 
 <template>
