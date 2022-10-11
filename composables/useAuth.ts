@@ -59,6 +59,14 @@ const useAuth = () => {
     return u;
   };
 
+  const changeEmail = async (email) => {
+    const { user: u, error } = await supabase.auth.update({
+      email: email,
+    });
+    if (error) throw error;
+    return u;
+  };
+
   return {
     user,
     signUp,
@@ -67,6 +75,7 @@ const useAuth = () => {
     isLoggedIn,
     getMetadataRole,
     changePassword,
+    changeEmail,
   };
 };
 

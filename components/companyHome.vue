@@ -6,10 +6,12 @@ const companyProps = defineProps<{
 }>();
 
 const { getCompanyById } = useDBCompany();
+const { getJobTitleByCompanyId } = useDBJob();
 const createJobOffer = ref(false);
 const changeAuth = ref(false);
 
-const data = await getCompanyById(companyProps.id);
+const dataCompany = await getCompanyById(companyProps.id);
+const dataJobOffer = await getJobTitleByCompanyId(companyProps.id);
 
 const showEditAuth = () => {
   gsap.to(".company-presentation-container", {
@@ -53,6 +55,31 @@ const unShowCreateJobOffer = () => {
     createJobOffer.value = false;
   }, 3000);
 };
+
+const unShowEditAuth = () => {
+  gsap.to(".edit-auth-container", {
+    transform: "translateX(100%)",
+    ease: "power4.out",
+    duration: 1,
+  });
+
+  gsap.to(".arrow-company-container", {
+    transform: "translateX(500%)",
+    ease: "power4.out",
+    duration: 1,
+  });
+
+  gsap.to(".company-presentation-container", {
+    transform: "translateX(0%)",
+    ease: "power4.out",
+    duration: 1,
+    delay: 1,
+  });
+
+  setTimeout(() => {
+    changeAuth.value = false;
+  }, 3000);
+};
 </script>
 
 <template>
@@ -64,18 +91,18 @@ const unShowCreateJobOffer = () => {
       <FormJobOffer :id="companyProps.id"></FormJobOffer>
     </div>
 
-    <div v-if="createJobOffer" class="arrow-company-container">
-      <arrow></arrow>
+    <div v-if="changeAuth" class="arrow-company-container">
+      <arrow @click="unShowEditAuth"></arrow>
     </div>
     <div v-if="changeAuth" class="edit-auth-container">
       <EditAuth></EditAuth>
     </div>
     <div class="company-presentation-container">
       <CompanyPresentation
-        :name="data[0].name"
-        :description="data[0].description"
-        :siret="data[0].siret"
-        :location="data[0].location"
+        :name="dataCompany[0].name"
+        :description="dataCompany[0].description"
+        :siret="dataCompany[0].siret"
+        :location="dataCompany[0].location"
         :email="companyProps.email"
       ></CompanyPresentation>
       <div class="option-company-button">
@@ -88,6 +115,8 @@ const unShowCreateJobOffer = () => {
           @click="showEditAuth"
         ></RectangleButton>
       </div>
+      <div class="subTitle">Your Current Job Offer</div>
+      <CardJobCompany :title="dataJobOffer[0]"></CardJobCompany>
     </div>
   </div>
 </template>
@@ -97,7 +126,7 @@ const unShowCreateJobOffer = () => {
   position: absolute;
   top: 3rem;
   left: 3rem;
-  z-index: 600;
+  z-index: 1200;
   opacity: 0;
   animation: 1s fadeIn 2s forwards;
 }

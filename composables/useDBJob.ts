@@ -1,7 +1,7 @@
 const useDBJob = () => {
   const { supabase } = useSupabase();
 
-  const getCompanyById = async (id) => {
+  const getJobByCompanyId = async (id) => {
     const { data, error } = await supabase
       .from("joboffer")
       .select("*")
@@ -10,8 +10,18 @@ const useDBJob = () => {
     return data;
   };
 
+  const getJobTitleByCompanyId = async (id) => {
+    const { data, error } = await supabase
+      .from("joboffer")
+      .select("title_job")
+      .eq("id_company", id);
+    if (error) throw error;
+    return data;
+  };
+
   return {
-    getCompanyById,
+    getJobByCompanyId,
+    getJobTitleByCompanyId,
   };
 };
 

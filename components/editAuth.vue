@@ -1,11 +1,16 @@
 <script setup lang="ts">
-const { changePassword } = useAuth();
+const { changePassword, changeEmail, user } = useAuth();
 
 const modifyAuth = reactive({
   password: "",
   confirmPassword: "",
   error: "",
+  email: "",
 });
+
+setTimeout(() => {
+  modifyAuth.email = user.value.email;
+}, 1000);
 
 const triggerErrorMessage = () => {
   setTimeout(() => {
@@ -23,10 +28,12 @@ const checkPasswordEqual = () => {
   return modifyAuth.password === modifyAuth.confirmPassword;
 };
 
-const clickChangePassword = async () => {
+const clickChangeAuth = async () => {
   if (checkPasswordEqual()) {
     try {
       await changePassword(modifyAuth.password);
+      await changeEmail(modifyAuth.email);
+      alert("Your auth has been changed");
     } catch (err) {
       modifyAuth.error = err.message;
       triggerErrorMessage();
@@ -40,7 +47,14 @@ const clickChangePassword = async () => {
 
 <template>
   <div class="editAuth-container">
-    <div class="subTitle">Change Your Passeword</div>
+    <div class="subTitle">Change Your Email and Password</div>
+    <div class="form-data">
+      <div class="input-data">
+        <input class="text" type="text" required v-model="modifyAuth.email" />
+        <div class="underline"></div>
+        <label class="text">Email</label>
+      </div>
+    </div>
     <div class="form-data">
       <div class="input-data">
         <input
@@ -65,7 +79,7 @@ const clickChangePassword = async () => {
     </div>
     <CircleButton
       text="Change My Password"
-      @click="clickChangePassword"
+      @click="clickChangeAuth"
     ></CircleButton>
 
     <div class="error-message" v-if="modifyAuth.error !== ''">
@@ -110,5 +124,9 @@ const clickChangePassword = async () => {
   justify-content: center;
   align-items: center;
   z-index: 300;
+}
+
+.editAuth-container > .subTitle {
+  text-align: center;
 }
 </style>
