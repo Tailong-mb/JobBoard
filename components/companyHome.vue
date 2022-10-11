@@ -116,12 +116,35 @@ const unShowEditAuth = () => {
         ></RectangleButton>
       </div>
       <div class="subTitle">Your Current Job Offer</div>
-      <CardJobCompany :title="dataJobOffer[0]"></CardJobCompany>
+      <div class="joboffer-card-container">
+        <div v-for="jobOffer in dataJobOffer">
+          <CardJobCompany
+            :title="jobOffer['title_job']"
+            :id="jobOffer['id_job']"
+          ></CardJobCompany>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <style scoped>
+.joboffer-card-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+  align-items: center;
+  align-content: center;
+  margin-top: 5rem;
+  width: 100%;
+}
+
+.joboffer-card-container > div {
+  min-width: calc(25% - 2rem);
+}
+
 .arrow-company-container {
   position: absolute;
   top: 3rem;
@@ -131,7 +154,14 @@ const unShowEditAuth = () => {
   animation: 1s fadeIn 2s forwards;
 }
 
+.company-home-container {
+  animation: 1s fadeIn forwards;
+}
+
 @keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
   100% {
     opacity: 1;
   }
@@ -145,6 +175,8 @@ const unShowEditAuth = () => {
   height: 100%;
 }
 .option-company-button {
+  margin-bottom: 5rem;
+  margin-top: 5rem;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -166,6 +198,8 @@ const unShowEditAuth = () => {
     align-items: center;
     justify-content: center;
     gap: 2rem;
+    margin-bottom: 3.5rem;
+    margin-top: 3.5rem;
   }
 }
 </style>

@@ -1,11 +1,6 @@
 <script setup lang="ts">
 import { gsap } from "gsap";
 
-//Middleware
-definePageMeta({
-  middleware: "connected",
-});
-
 const { signIn } = useAuth();
 const { sendEmailResetPassword } = useEmail();
 

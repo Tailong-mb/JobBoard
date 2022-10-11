@@ -1,19 +1,33 @@
 <script setup lang="ts">
 const titleProps = defineProps<{
   title: string;
+  id: string;
 }>();
+
+const { deleteJobById } = useDBJob();
+
+const clickDeleteCard = async () => {
+  try {
+    await deleteJobById(titleProps.id);
+    alert("Job deleted");
+  } catch (err) {
+    alert(err.message);
+  }
+};
 </script>
 
 <template>
   <div class="card-job-title">
     <div class="card-job-information-name-cross">
-      <div class="subsubTitle">{{ titleProps.title["title_job"] }}</div>
-      <div class="card-job-information-cross-container">
+      <div class="subsubTitle">{{ titleProps.title }}</div>
+      <div
+        class="card-job-information-cross-container"
+        @click="clickDeleteCard"
+      >
         <div class="card-job-cross card-job-cross-left"></div>
         <div class="card-job-cross card-job-cross-right"></div>
       </div>
     </div>
-
     <TriangleButton text="Show Appliant"></TriangleButton>
   </div>
 </template>
