@@ -1,7 +1,9 @@
 export default defineNuxtRouteMiddleware(() => {
   const { isLoggedIn } = useAuth();
 
-  if (!isLoggedIn()) {
-    navigateTo("/signIn");
-  }
+  setTimeout(() => {
+    if (!isLoggedIn()) {
+      navigateTo("/signIn");
+    }
+  }, 0.0001);
 });

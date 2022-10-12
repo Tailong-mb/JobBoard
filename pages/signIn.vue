@@ -7,6 +7,8 @@ const { sendEmailResetPassword } = useEmail();
 const forgetPassword = ref(false);
 const emailSend = ref(false);
 
+const router = useRouter();
+
 const getBackToSignIn = () => {
   gsap.to(".forgetPasswordContainer", {
     duration: 1,
@@ -44,6 +46,9 @@ const handleSubmit = async () => {
       email: input.email,
       password: input.password,
     });
+    if (signValues) {
+      router.push("/home");
+    }
   } catch (err) {
     authError.value = err.message;
     setTimeout(() => {
