@@ -1,84 +1,179 @@
 <!-- component to edit user home page -->
+<script setup lang="ts">
 
-<script setup lang="ts"></script>
+import {gsap} from "gsap";
+
+const {editWorker, getWorkerById} = useDBWorker();
+
+const {user} = useAuth();
+
+const router = useRouter();
+
+
+
+const data = await getWorkerById(user.value.id);
+
+const editWorkerData = reactive({
+    first_name: data[0].first_name,
+    last_name: data[0].last_name,
+    phone_number: data[0].phone_number,
+    degree: data[0].degree,
+});
+
+const checkDataWorker = () => {
+    if(editWorkerData.first_name === "" || editWorkerData.last_name === "" || editWorkerData.phone_number === "" || editWorkerData.degree === "" ){
+        return false;
+}
+    return true;
+}
+
+
+const timeline = gsap.timeline({defaults: {duration: 0.5}});
+
+const DataWorker = async () => {
+
+    if(checkDataWorker()) {
+        try{
+            const data = await editWorker(editWorkerData,  user.value.id);
+            if(data !== null) alert("Edit successful");
+        }
+        catch(err){
+            console.log(err);
+        }
+    }
+    setTimeout(() =>{
+        timeline.to(".container-edit-profil", {opacity: 0, display: "none"});
+
+    }, 100)
+
+    router.push("/home");
+
+}
+
+const deleteForm = () =>
+{
+    timeline.to(".container-edit-profil", {opacity: 0, display: "none"});
+    router.push("/home");
+}
+
+
+</script>
+
 
 <template>
-  <div class="container">
-    <div class="sign-in">
-      <div class="subTitle">Profil</div>
-      <div class="sign-in-form">
-        <div class="sign-in-form-data">
-          <div class="input-data">
-            <input type="text" name="email" class="text" required />
-            <div class="underline"></div>
-            <label class="text">Email</label>
-          </div>
-          <div class="input-data">
-            <input class="text" type="text" name="password" required />
-            <div class="underline"></div>
-            <label class="text">phone number</label>
-          </div>
-          <div class="input-data">
-            <input class="text" type="text" name="password" required />
-            <div class="underline"></div>
-            <label class="text">first name</label>
-          </div>
-          <div class="input-data">
-            <input class="text" type="text" name="password" required />
-            <div class="underline"></div>
-            <label class="text">last name</label>
-          </div>
-          <div class="input-data">
-            <input class="text" type="text" name="password" required />
-            <div class="underline"></div>
-            <label class="text">grade</label>
-          </div>
+
+    <div class="container-edit-profil">
+        <div
+        class="sign-in"  
+        >
+        <div class="text deleteForm" @click="deleteForm">X</div>
+        <div class="subTitle">Profil</div>
+        <div class="sign-in-form">
+            <div class="sign-in-form-data">
+                
+                <div class="input-data">
+                    <input
+                    class="text"
+                    type="text"
+                    name="password"
+                    required
+                    placeholder="phone number"
+                    v-model="editWorkerData.phone_number"
+                    />
+                    <div class="underline"></div>
+                    <label class="text"></label>
+                </div>
+                <div class="input-data">
+                    <input
+                    class="text"
+                    type="text"
+                    name="password"
+                    required
+                    placeholder="first Name"
+                    v-model="editWorkerData.first_name"
+            
+                    />
+                    <div class="underline"></div>
+                    <label class="text"></label>
+                </div>
+                <div class="input-data">
+                    <input
+                    class="text"
+                    type="text"
+                    name="password"
+                    required
+                    placeholder="last name"
+                    v-model="editWorkerData.last_name"
+                    />
+                    <div class="underline"></div>
+                    <label class="text"></label>
+                </div>
+                <div class="input-data">
+                    <input
+                    class="text"
+                    type="text"
+                    name="password"
+                    required
+                    placeholder="degree"
+                    v-model="editWorkerData.degree"
+                    />
+                    <div class="underline"></div>
+                    <label class="text"></label>
+                </div>
+            </div>
+            
         </div>
-      </div>
+
+        <div><RectangleButton class="confirm" text="confirm" @click="DataWorker"></RectangleButton></div>
+
     </div>
-  </div>
+    </div>
 </template>
 
+
+
 <style scoped>
-.container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-  gap: 3rem;
-  position: relative;
+.container-edit-profil{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    gap: 3rem;
+    margin-top: 3rem;
+    position: relative;
 }
 
 .sign-in {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  position: absolute;
-  top: 2rem;
-  gap: 2rem;
-  margin-top: 2rem;
-  padding: 2rem;
-  border: 2px;
-  border-color: #8f71be;
-  border-style: solid;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: absolute;
+    top: 2rem;
+    gap: 2rem;
+    margin-top: 2rem;
+    padding: 2rem;
+    border: 2px;
+    border-color: #8f71be;
+    border-style: solid;
 }
 
+
 .sign-in-form {
-  display: flex;
-  flex-direction: column;
-  gap: 3rem;
-  align-items: center;
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    align-items: center;
 }
 
 .sign-in-form-data {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
 }
 
-.subTitle {
-  top: 5rem;
+.subTitle{
+    top: 5rem;
 }
 
 .error-message {
@@ -96,8 +191,17 @@
   z-index: 1000;
 }
 
-.password-forgotten {
-  margin-top: 2rem;
-  cursor: pointer;
+.deleteForm{
+    position: absolute;
+    right: 0.5rem;
+    top: 0;
+    cursor: pointer;
 }
+
+.password-forgotten{
+    margin-top: 2rem;
+    cursor: pointer;
+}
+
+
 </style>
