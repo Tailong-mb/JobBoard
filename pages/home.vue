@@ -1,6 +1,10 @@
 <script setup lang="ts">
 const { getMetadataRole, user } = useAuth();
 
+definePageMeta({
+  middleware: ["auth"],
+});
+
 const role = ref("");
 const id = ref("");
 const email = ref("");

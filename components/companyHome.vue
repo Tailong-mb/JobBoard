@@ -64,7 +64,7 @@ const unShowEditAuth = () => {
   });
 
   gsap.to(".arrow-company-container", {
-    transform: "translateX(500%)",
+    transform: "translateX(-100%)",
     ease: "power4.out",
     duration: 1,
   });
