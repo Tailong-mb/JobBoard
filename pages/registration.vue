@@ -4,6 +4,7 @@ import { gsap } from "gsap";
 // Composables
 const auth = useAuth();
 const { supabase } = useSupabase();
+const { insertNewLineCompany } = useDBCompany();
 
 const showConfirmEmailMessage = ref(false);
 const choiceSignUp = ref(true);
@@ -98,8 +99,6 @@ const handleSubmitUser = async () => {
     return;
   }
 
-  console.log(checkValuesUser());
-
   if (checkValuesUser()) return;
 
   try {
@@ -145,15 +144,7 @@ const insertIntoTableUser = async (userId) => {
   }
 };
 const insertIntoTableCompany = async (user) => {
-  const { error } = await supabase.from("company").insert([
-    {
-      id_company: user,
-      name: signUpProfessionnal.name,
-      siret: signUpProfessionnal.siret,
-      location: signUpProfessionnal.location,
-      description: signUpProfessionnal.description,
-    },
-  ]);
+  const error = await insertNewLineCompany(signUpProfessionnal, user);
   if (error !== null) {
     if (error.code === "23503" || error.code === "23505") {
       authError.value =
@@ -392,6 +383,7 @@ const checkValuesUser = () => {
         on the link in the email to complete your registration.
       </p>
     </div>
+    <a href="/signIn"><RectangleButton text="Sign In"></RectangleButton></a>
   </div>
 
   <!-- ERROR MESSAGE -->

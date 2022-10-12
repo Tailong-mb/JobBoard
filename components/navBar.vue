@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { gsap } from "gsap";
 
+const { signOut } = useAuth();
+
 let navBarState = false;
 
 const toggleNavBar = () => {
@@ -59,7 +61,7 @@ const toggleNavBar = () => {
       .to(".navbar", {
         duration: 1.3,
         ease: "power4.out",
-        transform: "translateX(40rem)",
+        transform: "translateX(100vw)",
       })
       .to(
         ".navbar-line",
@@ -133,9 +135,9 @@ const leaveNavBarClose = () => {
 
   <div class="navbar">
     <div class="navbar-elements">
-      <NuxtLink class="subTitle navbar-element">HOME</NuxtLink>
-      <NuxtLink class="subTitle navbar-element">TEST</NuxtLink>
-      <div class="subTitle navbar-element">LOGOUT</div>
+      <div class="subTitle navbar-element">HOME</div>
+      <div class="subTitle navbar-element">TEST</div>
+      <div @click="signOut" class="subTitle navbar-element">LOGOUT</div>
     </div>
   </div>
 </template>
@@ -153,7 +155,7 @@ const leaveNavBarClose = () => {
   border-radius: 50%;
   padding: 1rem;
   border: 1px solid #00454f;
-  z-index: 100;
+  z-index: 900;
 }
 
 .navbar-element {
@@ -169,6 +171,8 @@ const leaveNavBarClose = () => {
   position: fixed;
   right: 2rem;
   top: 10rem;
+  z-index: 700;
+  cursor: pointer;
 }
 .navbar {
   gap: 2rem;
@@ -181,8 +185,9 @@ const leaveNavBarClose = () => {
     rgba(0, 69, 79, 1) 100%
   );
   height: 100vh;
-  width: 40rem;
-  transform: translateX(40rem);
+  width: 100vw;
+  transform: translateX(100vw);
+  z-index: 700;
 }
 
 .navbar-line {
@@ -190,6 +195,7 @@ const leaveNavBarClose = () => {
   width: 2.5rem;
   background-color: #00454f;
   border-radius: 0.5rem;
+  z-index: 700;
 }
 
 @media screen and (max-width: 600px) {

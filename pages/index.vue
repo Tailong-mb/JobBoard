@@ -1,11 +1,13 @@
 <!-- home page -->
 
 <script setup lang="ts">
-const { supabase } = useSupabase();
+const { checkEmailResetPasswordEvent } = useEmail();
+
+await checkEmailResetPasswordEvent();
 </script>
 
 <template>
-  <animation-load-home> </animation-load-home>
+  <animation-load-home style="pointer-events: none"> </animation-load-home>
 
   <div class="container">
     <div class="logo">
@@ -36,11 +38,6 @@ const { supabase } = useSupabase();
       <span class="epi">Epi<span class="steak">Steak</span></span
       >.
     </div>
-  </div>
-
-  <div class="bigTitle">
-    <div class="wordNear">NEAR</div>
-    <div class="wordYou">YOU</div>
   </div>
 </template>
 

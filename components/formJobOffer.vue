@@ -1,5 +1,11 @@
 <script setup lang="ts">
-import { gsap } from "gsap";
+const { insertOfferJob } = useDBCompany();
+
+const offerJobProps = defineProps<{
+  id: string;
+}>();
+
+const errorMessage = ref("");
 
 const jobOfferData = reactive({
   title: "",
@@ -10,10 +16,64 @@ const jobOfferData = reactive({
   dateEnd: Date,
   degreeRequired: "",
 });
+
+const checkValidDate = () => {
+  return jobOfferData.dateStart < jobOfferData.dateEnd;
+};
+
+const triggerErrorMessage = () => {
+  setTimeout(() => {
+    errorMessage.value = "";
+  }, 4000);
+  setTimeout(() => {
+    gsap.to(".error-message", {
+      opacity: 0,
+      duration: 0.5,
+    });
+  }, 3000);
+};
+
+const checkDataInput = () => {
+  if (
+    jobOfferData.title === "" ||
+    jobOfferData.description === "" ||
+    jobOfferData.salary === "" ||
+    jobOfferData.location === "" ||
+    jobOfferData.dateStart === null ||
+    jobOfferData.dateEnd === null ||
+    jobOfferData.degreeRequired === "" ||
+    !checkValidDate()
+  ) {
+    return false;
+  } else {
+    return true;
+  }
+};
+
+const submitJobOffer = async () => {
+  if (checkDataInput()) {
+    try {
+      const data = await insertOfferJob(jobOfferData, offerJobProps.id);
+      if (data !== null) alert("Job offer added successfully");
+    } catch (err) {
+      errorMessage.value = err.message;
+      triggerErrorMessage();
+    }
+  } else {
+    errorMessage.value = "Please fill all the fields with correct values";
+    triggerErrorMessage();
+  }
+};
 </script>
 
 <template>
   <div class="formJobOffer">
+    <div class="error-message" v-if="errorMessage !== ''">
+      <div class="subTitle">Error</div>
+      <div class="text">
+        <p>{{ errorMessage }}</p>
+      </div>
+    </div>
     <div class="subTitle">CREATE YOUR OFFER</div>
     <div class="form-data">
       <div class="input-data">
@@ -36,7 +96,7 @@ const jobOfferData = reactive({
       <div class="input-data">
         <input
           class="text"
-          type="text"
+          type="number"
           required
           v-model="jobOfferData.salary"
         />
@@ -73,17 +133,45 @@ const jobOfferData = reactive({
         <option value="Doctoral degree">Doctoral degree</option>
       </select>
     </div>
-    <textarea class="text" placeholder="Description" />
-    <CircleButton text="Submit"></CircleButton>
+    <textarea
+      class="text"
+      placeholder="Description"
+      v-model="jobOfferData.description"
+    />
+    <CircleButton text="Submit" @click="submitJobOffer"></CircleButton>
   </div>
 </template>
 
 <style scoped>
+.error-message {
+  background-color: red;
+  font-weight: bold;
+  text-align: center;
+  z-index: 1000;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
 .formJobOffer {
+  position: absolute;
+  top: 0;
+  left: 0;
   display: flex;
   flex-direction: column;
   gap: 2rem;
   align-items: center;
+  width: 100%;
+  min-height: 100vh;
+  z-index: 500;
+  background: white;
+  transform: translateX(-100%);
+  animation: 1s slideInFromLeft 1s forwards;
+}
+
+@keyframes slideInFromLeft {
+  100% {
+    transform: translateX(0);
+  }
 }
 
 .formJobOffer-info-row {

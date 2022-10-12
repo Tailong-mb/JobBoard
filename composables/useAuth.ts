@@ -2,9 +2,6 @@ const useAuth = () => {
   // Set an user state
   const user = useState("user", () => null);
 
-  // Router
-  const router = useRouter();
-
   // Connect to supabase
   const { supabase } = useSupabase();
 
@@ -34,17 +31,40 @@ const useAuth = () => {
       password,
     });
     if (error) throw error;
+    navigateTo("/home");
+
     return u;
   };
 
   const signOut = async () => {
     const { error } = await supabase.auth.signOut();
     if (error) throw error;
-    router.push("/");
+    navigateTo("/");
+  };
+
+  const getMetadataRole = () => {
+    const role = supabase.auth.user().user_metadata.role;
+    return role;
   };
 
   const isLoggedIn = () => {
     return !!user.value;
+  };
+
+  const changePassword = async (password) => {
+    const { user: u, error } = await supabase.auth.update({
+      password: password,
+    });
+    if (error) throw error;
+    return u;
+  };
+
+  const changeEmail = async (email) => {
+    const { user: u, error } = await supabase.auth.update({
+      email: email,
+    });
+    if (error) throw error;
+    return u;
   };
 
   return {
@@ -53,6 +73,9 @@ const useAuth = () => {
     signIn,
     signOut,
     isLoggedIn,
+    getMetadataRole,
+    changePassword,
+    changeEmail,
   };
 };
 
