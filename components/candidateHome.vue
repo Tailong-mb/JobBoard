@@ -16,7 +16,7 @@
 
     <div class="candidate-presentation">
         <CandidatePresentation
-        
+            :id="id"
             :firstName="data[0].first_name"
             :lastName="data[0].last_name"
             :phoneNumber="data[0].phone_number"

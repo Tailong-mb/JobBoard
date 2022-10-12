@@ -3,28 +3,30 @@
 
 import {gsap} from "gsap";
 
-const {editWorker} = useDBWorker();
+const {editWorker, getWorkerById} = useDBWorker();
 
 const {user} = useAuth();
 
 const router = useRouter();
 
+
+
+const data = await getWorkerById(user.value.id);
+
 const editWorkerData = reactive({
-    first_name: "",
-    last_name: "",
-    phone_number: "",
-    degree: "",
+    first_name: data[0].first_name,
+    last_name: data[0].last_name,
+    phone_number: data[0].phone_number,
+    degree: data[0].degree,
 });
 
 const checkDataWorker = () => {
-    if(editWorkerData.first_name === "" || 
-        editWorkerData.last_name === "" || 
-        editWorkerData.phone_number === "" || 
-        editWorkerData.degree === "") {
+    if(editWorkerData.first_name === "" || editWorkerData.last_name === "" || editWorkerData.phone_number === "" || editWorkerData.degree === "" ){
         return false;
-    }
-    else return true;
 }
+    return true;
+}
+
 
 const timeline = gsap.timeline({defaults: {duration: 0.5}});
 
@@ -39,9 +41,19 @@ const DataWorker = async () => {
             console.log(err);
         }
     }
+    setTimeout(() =>{
+        timeline.to(".container-edit-profil", {opacity: 0, display: "none"});
 
+    }, 100)
+
+    router.push("/home");
+
+}
+
+const deleteForm = () =>
+{
     timeline.to(".container-edit-profil", {opacity: 0, display: "none"});
-
+    router.push("/home");
 }
 
 
@@ -54,21 +66,11 @@ const DataWorker = async () => {
         <div
         class="sign-in"  
         >
-        <div class="subTitle deleteForm"></div>
+        <div class="text deleteForm" @click="deleteForm">X</div>
         <div class="subTitle">Profil</div>
         <div class="sign-in-form">
             <div class="sign-in-form-data">
-                <div class="input-data">
-                    <input
-                    type="text"
-                    name="email"
-                    class="text"
-                    required
-                    placeholder="email"
-                    />
-                    <div class="underline"></div>
-                    <label class="text"></label>
-                </div>
+                
                 <div class="input-data">
                     <input
                     class="text"
@@ -176,7 +178,7 @@ const DataWorker = async () => {
 
 .deleteForm{
     position: absolute;
-    right: 2rem;
+    right: 0.5rem;
     top: 0;
     cursor: pointer;
 }

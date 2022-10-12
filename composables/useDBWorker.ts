@@ -1,7 +1,6 @@
 const useDBWorker = () => {
     const {supabase} = useSupabase();
 
-    const {user} = useAuth();
 
     const getWorkerById = async (id) => {
         const {data, error} = await supabase
@@ -26,11 +25,22 @@ const useDBWorker = () => {
         if(error) throw error;
     }
 
+    const jobOffer = async(id) => {
+        const {data, error} = await supabase
+        .from("joboffer")
+        .select("*")
+        .eq("id_job", id);
+        if(error) throw error;
+        return data;
+    }
+
+
 
 
     return{
         getWorkerById,
-        editWorker
+        editWorker,
+        jobOffer,
     };
 };    
 
