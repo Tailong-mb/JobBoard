@@ -4,6 +4,8 @@ const titleProps = defineProps<{
   id: string;
 }>();
 
+const statutAppliant = ref(false);
+
 const { deleteJobById } = useDBJob();
 
 const clickDeleteCard = async () => {
@@ -14,6 +16,11 @@ const clickDeleteCard = async () => {
     alert(err.message);
   }
 };
+
+const showAppliant = () => {
+  statutAppliant.value = !statutAppliant.value;
+};
+
 </script>
 
 <template>

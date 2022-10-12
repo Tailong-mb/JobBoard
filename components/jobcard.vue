@@ -8,6 +8,9 @@ const jobCardValue = defineProps<{
   jobDescription: string;
   salary: string;
 }>();
+
+
+
 </script>
 
 <template>

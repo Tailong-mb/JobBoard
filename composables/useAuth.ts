@@ -31,7 +31,6 @@ const useAuth = () => {
       password,
     });
     if (error) throw error;
-    navigateTo("/home");
 
     return u;
   };
