@@ -16,6 +16,14 @@ const useDBCandidacy = () => {
     return data;
   };
 
+  const deleteCandidacyById = async (id) => {
+    const { error } = await supabase
+      .from("candidacies")
+      .delete()
+      .eq("id_candidacies", id);
+    if (error) throw error;
+  };
+
   const getCandidacyByUserId = async (id) => {
     const { data, error } = await supabase
       .from("candidacies")
@@ -31,6 +39,7 @@ const useDBCandidacy = () => {
         id_worker: candidacy.id_worker,
         id_job: candidacy.id_job,
         status: candidacy.status,
+        message_candidacies: candidacy.message,
       },
     ]);
     if (error) throw error;
@@ -39,7 +48,10 @@ const useDBCandidacy = () => {
   const updateStatusCandidacy = async (candidacy) => {
     const { error } = await supabase
       .from("candidacies")
-      .update({ status: candidacy.status })
+      .update({
+        status: candidacy.status,
+        message_candidacies: candidacy.message,
+      })
       .eq("id_worker", candidacy.id_worker)
       .eq("id_job", candidacy.id_job);
     if (error) throw error;
@@ -61,6 +73,7 @@ const useDBCandidacy = () => {
     insertCandidacy,
     updateStatusCandidacy,
     deleteCandidacy,
+    deleteCandidacyById,
   };
 };
 
