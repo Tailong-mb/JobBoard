@@ -24,10 +24,16 @@ const useDBJob = () => {
     if (error) throw error;
   };
 
+  const getAllJob = async () => {
+    const {  data, error } = await supabase.from("joboffer").select("*");
+    if (error) throw error;
+    return data;
+  };
   return {
     getJobByCompanyId,
     getJobTitleByCompanyId,
     deleteJobById,
+    getAllJob,
   };
 };
 

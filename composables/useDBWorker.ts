@@ -25,14 +25,7 @@ const useDBWorker = () => {
         if(error) throw error;
     }
 
-    const jobOffer = async(id) => {
-        const {data, error} = await supabase
-        .from("joboffer")
-        .select("*")
-        .eq("id_job", id);
-        if(error) throw error;
-        return data;
-    }
+    
 
 
 
@@ -40,7 +33,6 @@ const useDBWorker = () => {
     return{
         getWorkerById,
         editWorker,
-        jobOffer,
     };
 };    
 

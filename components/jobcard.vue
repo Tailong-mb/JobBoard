@@ -1,15 +1,41 @@
 <script setup lang="ts">
+
+import { gsap } from "gsap";
+
 const jobCardValue = defineProps<{
-  companyName: string;
-  date: string;
-  jobLocation: string;
-  degreeRequired: string;
-  jobTitle: string;
-  jobDescription: string;
+  id: string;
+  dateStart: string;
+  dateEnd: string;
+  degree: string;
+  location: string;
+  title: string;
+  description: string;
   salary: string;
+  idCompany: string;
 }>();
 
+const {getCompanyById} = useDBCompany();
 
+const companyName = await getCompanyById(jobCardValue.idCompany);
+
+const applyJob =  () => {
+
+  // hide the card
+
+  gsap.to(".job-card", {
+    duration: 0.5,
+    opacity: 0,
+    x: -100,
+    ease: "power2.inOut",
+  });
+
+  // if user applied to the job, create candidate card for the company
+
+
+
+  alert("Job applied");
+
+};
 
 </script>
 
@@ -20,23 +46,23 @@ const jobCardValue = defineProps<{
         <div class="square-logo"></div>
       </div>
       <div class="card-title-container">
-        <div class="subsubTitle">{{ jobTitle }}</div>
+        <div class="subsubTitle">{{ jobCardValue.title }}</div>
         <span class="subsubTitle">-</span>
-        <span class="subsubTitle">{{ companyName }}</span>
+        <span class="subsubTitle">{{ companyName[0].name }}</span>
       </div>
     </div>
     <div class="job-information-container">
       <div class="job-information">
-        <div class="text">Location : {{ jobLocation }}</div>
-        <div class="text">Date : {{ date }}</div>
+        <div class="text">Location : {{ jobCardValue.location }}</div>
+        <div class="text">Date : {{ jobCardValue.dateStart }} to {{jobCardValue.dateEnd}}</div>
       </div>
       <div class="job-information">
-        <div class="text">Degree Required : {{ degreeRequired }}</div>
-        <div class="text">Salary : {{ salary }}$/month</div>
+        <div class="text">Degree Required : {{ jobCardValue.degree }}</div>
+        <div class="text">Salary : {{ jobCardValue.salary }}$/month</div>
       </div>
     </div>
-    <p class="text">{{ jobDescription }}</p>
-    <RectangleButton text="Apply"></RectangleButton>
+    <p class="text">{{ jobCardValue.description }}</p>
+    <RectangleButton text="Apply" @click="applyJob"></RectangleButton>
   </div>
 </template>
 
