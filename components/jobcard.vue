@@ -14,9 +14,25 @@ const jobCardValue = defineProps<{
   idCompany: string;
 }>();
 
+const {getWorkerById} = useDBWorker();
+
+const {user} = useAuth();
+
+const workerId = await getWorkerById(user.value.id);
+
 const {getCompanyById} = useDBCompany();
 
 const companyName = await getCompanyById(jobCardValue.idCompany);
+
+const {insertCandidacy} = useDBCandidacy();
+
+
+const candidacy = {
+    id_worker: workerId[0].id_worker,
+    id_job: jobCardValue.id,
+    status: "pending",
+  }
+
 
 const applyJob =  () => {
 
@@ -31,6 +47,7 @@ const applyJob =  () => {
 
   // if user applied to the job, create candidate card for the company
 
+  insertCandidacy(candidacy);
 
 
   alert("Job applied");

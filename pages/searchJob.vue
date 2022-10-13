@@ -27,8 +27,12 @@ setTimeout(() => {
 
 <template>
 
+<div class="job-card-container">
+
     <jobcard
+
     v-if="role === 'user'"
+
     v-for="job in dataJobById"
 
 
@@ -44,6 +48,18 @@ setTimeout(() => {
     >
     </jobcard>
 
+</div>
 </template>
 
-<style scoped></style>
+<style scoped>
+
+.job-card-container{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+}
+
+</style>

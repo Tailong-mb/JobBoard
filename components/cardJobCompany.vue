@@ -6,6 +6,7 @@ const titleProps = defineProps<{
 
 const statutAppliant = ref(false);
 
+
 const { deleteJobById } = useDBJob();
 
 const clickDeleteCard = async () => {
@@ -16,6 +17,7 @@ const clickDeleteCard = async () => {
     alert(err.message);
   }
 };
+
 
 const showAppliant = () => {
   statutAppliant.value = !statutAppliant.value;
@@ -35,7 +37,9 @@ const showAppliant = () => {
         <div class="card-job-cross card-job-cross-right"></div>
       </div>
     </div>
-    <TriangleButton text="Show Appliant"></TriangleButton>
+    <TriangleButton text="Show Appliant" @click="showAppliant">
+
+    </TriangleButton>
   </div>
 </template>
 
