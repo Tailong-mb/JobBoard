@@ -5,21 +5,15 @@ const {getAllJob} = useDBJob();
 
 const dataJobById = await getAllJob();
 
-const { getMetadataRole, user } = useAuth();
+const { getMetadataRole } = useAuth();
 
-definePageMeta({
-    middleware: ["auth"],
-});
 
 const role = ref("");
-const id = ref("");
-const email = ref("");
 
 setTimeout(() => {
     if (process.client) {
     role.value = getMetadataRole();
-    id.value = user.value.id;
-    email.value = user.value.email;
+    console.log(role.value)
 }
 }, 1);
 
@@ -30,8 +24,6 @@ setTimeout(() => {
 <div class="job-card-container">
 
     <jobcard
-
-    v-if="role === 'user'"
 
     v-for="job in dataJobById"
 
@@ -45,10 +37,13 @@ setTimeout(() => {
     :location="job.location_job"
     :degree="job.degree"
     :idCompany="job.id_company"
+    :role="role"
     >
     </jobcard>
 
+
 </div>
+
 </template>
 
 <style scoped>

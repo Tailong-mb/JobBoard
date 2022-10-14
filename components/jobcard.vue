@@ -12,7 +12,12 @@ const jobCardValue = defineProps<{
   description: string;
   salary: string;
   idCompany: string;
+  role: string;
 }>();
+
+
+
+// call function 
 
 const {getWorkerById} = useDBWorker();
 
@@ -27,14 +32,9 @@ const companyName = await getCompanyById(jobCardValue.idCompany);
 const {insertCandidacy} = useDBCandidacy();
 
 
-const candidacy = {
-    id_worker: workerId[0].id_worker,
-    id_job: jobCardValue.id,
-    status: "pending",
-  }
 
 
-const applyJob =  () => {
+  const applyJob =  () => {
 
   // hide the card
 
@@ -45,14 +45,23 @@ const applyJob =  () => {
     ease: "power2.inOut",
   });
 
-  // if user applied to the job, create candidate card for the company
+  // if user applied to the job, add line in tableCandidacy create candidate card for the company
 
-  insertCandidacy(candidacy);
+  if(jobCardValue.role === 'user'){
 
+    const candidacy = {
+    id_worker: workerId[0].id_worker,
+    id_job: jobCardValue.id,
+    status: "pending",
+  }
+    insertCandidacy(candidacy);
+
+  }
 
   alert("Job applied");
 
 };
+
 
 </script>
 

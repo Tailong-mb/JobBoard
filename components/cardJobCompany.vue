@@ -1,13 +1,22 @@
 <script setup lang="ts">
+
+// take job id
+
 const titleProps = defineProps<{
   title: string;
   id: string;
 }>();
 
+
+
 const statutAppliant = ref(false);
 
 
 const { deleteJobById } = useDBJob();
+
+const {getCandidacyByJobId} = useDBCandidacy();
+
+const {getWorkerById} = useDBWorker();
 
 const clickDeleteCard = async () => {
   try {
@@ -23,10 +32,17 @@ const showAppliant = () => {
   statutAppliant.value = !statutAppliant.value;
 };
 
+// take table candidacy with id job
+
+const dataCandidacy = await getCandidacyByJobId(titleProps.id);
+
+
+console.log("dataCandidacy",dataCandidacy)
+
 </script>
 
 <template>
-  <div class="card-job-title">
+  <div class="card-job-title" v-if="statutAppliant === false">
     <div class="card-job-information-name-cross">
       <div class="subsubTitle">{{ titleProps.title }}</div>
       <div
@@ -38,8 +54,20 @@ const showAppliant = () => {
       </div>
     </div>
     <TriangleButton text="Show Appliant" @click="showAppliant">
-
+      
     </TriangleButton>
+
+    <!-- show card with all candidate for this job -->
+    
+  </div>
+
+  <div class="" v-if="statutAppliant === true">
+      <CandidateCard 
+      v-for="worker in dataCandidacy"
+      :id_worker="worker.id_worker"
+      :id_candidacy="worker.id_candidacies"
+      >
+      </CandidateCard>
   </div>
 </template>
 

@@ -39,7 +39,7 @@ const useDBCandidacy = () => {
     const updateStatusCandidacy = async (candidacy) => {
         const { error } = await supabase
             .from("candidacies")
-            .update({ status: candidacy.status })
+            .update({ status: candidacy.status})
             .eq("id_worker", candidacy.id_worker)
             .eq("id_job", candidacy.id_job);
         if (error) throw error;

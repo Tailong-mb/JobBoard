@@ -1,4 +1,4 @@
-<script setup lang="ts">
+ <script setup lang="ts">
 import { gsap } from "gsap";
 const companyProps = defineProps<{
   id: string;
