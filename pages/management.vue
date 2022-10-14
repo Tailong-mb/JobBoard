@@ -3,11 +3,31 @@ const { getAllcandidacy, insertCandidacy } = useDBCandidacy();
 const { getAllJob, insertJob } = useDBJob();
 const { getAllWorkers, insertWorker } = useDBWorker();
 const { getAllCompanies, insertNewLineCompany } = useDBCompany();
+const { getAllUsers, deleteUserById, createUser } = useDBAuth();
 
 const candidacyData = await getAllcandidacy();
 const jobData = await getAllJob();
 const workerData = await getAllWorkers();
 const companiesData = await getAllCompanies();
+const usersData = await getAllUsers();
+
+const deleteUserClick = async (id: string) => {
+  try {
+    await deleteUserById(id);
+    alert("Delete Success");
+  } catch (err) {
+    alert(err.message);
+  }
+};
+
+const createUserClick = async (email, password, role) => {
+  try {
+    await createUser(email, password, role);
+    alert("Create Success");
+  } catch (err) {
+    alert(err.message);
+  }
+};
 
 const insertCompanyClick = async () => {
   try {
@@ -78,11 +98,85 @@ const valuesCompany = reactive({
   location: "",
   description: "",
 });
+
+const authValues = reactive({
+  email: "",
+  password: "",
+  role: "",
+});
 </script>
 
 <template>
   <div class="subTitle">Manage Table Here</div>
   <div class="section">
+    <div class="subsubTitle">AuthTable</div>
+    <div class="section-row text">
+      <div class="section-row-data">id</div>
+      <div class="section-row-data">email</div>
+      <div class="section-row-data">role</div>
+    </div>
+    <div class="section-row" v-for="auth in usersData">
+      <div class="section-row text">
+        <div class="section-row-data">{{ auth.id }}</div>
+        <div class="section-row-data">{{ auth.email }}</div>
+        <div class="section-row-data">{{ auth.user_metadata.role }}</div>
+      </div>
+      <div class="text button-delete" @click="deleteUserClick(auth.id)">
+        Delete
+      </div>
+    </div>
+    <div class="form-user">
+      <div class="subsubTitle">Add An User</div>
+      <div class="form-data">
+        <div class="input-data">
+          <input
+            type="text"
+            name="email"
+            class="text"
+            required
+            v-model="authValues.email"
+          />
+          <div class="underline"></div>
+          <label class="text">Email</label>
+        </div>
+        <div class="input-data">
+          <input
+            class="text"
+            type="text"
+            name="password"
+            required
+            v-model="authValues.password"
+          />
+          <div class="underline"></div>
+          <label class="text">Password</label>
+        </div>
+      </div>
+      <div class="form-data">
+        <div class="input-data">
+          <input
+            type="text"
+            name="email"
+            class="text"
+            required
+            v-model="authValues.role"
+          />
+          <div class="underline"></div>
+          <label class="text">Role</label>
+        </div>
+      </div>
+      <CircleButton
+        text="Add"
+        @click="
+          createUserClick(
+            authValues.email,
+            authValues.password,
+            authValues.role
+          )
+        "
+      ></CircleButton>
+    </div>
+  </div>
+  <div class="section" v-if="false">
     <div class="subsubTitle">Companies</div>
     <div class="section-row text">
       <div class="section-row-data text">id_company</div>
@@ -238,6 +332,27 @@ const valuesCompany = reactive({
 </template>
 
 <style scoped>
+.form-user {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  gap: 2rem;
+}
+.button-delete {
+  border: 1px solid #8f71be;
+  border-radius: 50%;
+  margin: 5px;
+  cursor: pointer;
+  padding: 0.5rem;
+}
+
+.button-delete:hover {
+  background-color: red;
+  color: white;
+}
 .button-add {
   border: 1px solid #8f71be;
   border-radius: 50%;
@@ -251,7 +366,7 @@ const valuesCompany = reactive({
   cursor: pointer;
 }
 
-input {
+.section-row > input {
   border-left: solid 2px #8f71be !important;
   border-top: solid 2px #8f71be !important;
   border-bottom: solid 2px #8f71be !important;
@@ -259,7 +374,7 @@ input {
   padding: 0.3rem;
 }
 
-input:last-child {
+.section-row > input:last-child {
   border-right: solid 2px #8f71be !important;
 }
 
