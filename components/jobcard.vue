@@ -23,7 +23,6 @@ const {getWorkerById} = useDBWorker();
 
 const {user} = useAuth();
 
-const workerId = await getWorkerById(user.value.id);
 
 const {getCompanyById} = useDBCompany();
 
@@ -47,16 +46,17 @@ const {insertCandidacy} = useDBCandidacy();
 
   // if user applied to the job, add line in tableCandidacy create candidate card for the company
 
-  if(jobCardValue.role === 'user'){
+  // if(jobCardValue.role === 'user'){
 
-    const candidacy = {
-    id_worker: workerId[0].id_worker,
-    id_job: jobCardValue.id,
-    status: "pending",
-  }
-    insertCandidacy(candidacy);
 
-  }
+  //   const candidacy = {
+  //   id_worker: workerId[0].id_worker,
+  //   id_job: jobCardValue.id,
+  //   status: "pending",
+  // }
+  //   insertCandidacy(candidacy);
+
+  // }
 
   alert("Job applied");
 

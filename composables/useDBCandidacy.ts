@@ -25,6 +25,15 @@ const useDBCandidacy = () => {
         return data;
     };
 
+    const getCandidacyById = async (id) => {
+        const { data, error } = await supabase
+            .from("candidacies")
+            .select("*")
+            .eq("id_candidacies", id);
+        if (error) throw error;
+        return data;
+    };
+
     const insertCandidacy = async (candidacy) => {
         const { error } = await supabase.from("candidacies").insert([
             {
@@ -54,13 +63,23 @@ const useDBCandidacy = () => {
         if (error) throw error;
     };
 
+    const deleteCandidacyById = async (id) => {
+        const { error } = await supabase
+            .from("candidacies")
+            .delete()
+            .eq("id_candidacies", id);
+        if (error) throw error;
+    };
+
     return {
         getAllcandidacy,
         getCandidacyByJobId,
         getCandidacyByUserId,
+        getCandidacyById,
         insertCandidacy,
         updateStatusCandidacy,
         deleteCandidacy,
+        deleteCandidacyById,
     };
 };
 

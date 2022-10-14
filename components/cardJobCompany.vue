@@ -57,9 +57,10 @@ console.log("dataCandidacy",dataCandidacy)
       
     </TriangleButton>
 
-    <!-- show card with all candidate for this job -->
     
   </div>
+
+      <!-- show card with all candidate for this job -->
 
   <div class="" v-if="statutAppliant === true">
       <CandidateCard 

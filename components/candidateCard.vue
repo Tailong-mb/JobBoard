@@ -5,6 +5,7 @@ import { gsap } from "gsap";
 
 const infoCandidate = defineProps<{
   id_worker: string;
+  id_candidacy: string;
 }>();
 
 const {getWorkerById} = useDBWorker();
@@ -18,12 +19,22 @@ console.log(dataWorker)
 
 // delete candidacy 
 
-const {getCandidacyByJobId} = useDBCandidacy();
+const {getCandidacyById} = useDBCandidacy();
 
-const {deleteCandidacy} = useDBCandidacy();
+const {deleteCandidacyById} = useDBCandidacy();
 
-const candidacyById = await getCandidacyByJobId(infoCandidate.id_worker);
-console.log(candidacyById)
+const candidacyById = await getCandidacyById(infoCandidate.id_candidacy);
+
+const clickDeleteCandidacy = async () => {
+  try {
+    await deleteCandidacyById(candidacyById[0].id_candidacies);
+    alert("Candidacy deleted");
+  } catch (err) {
+    alert(err.message);
+  }
+};
+
+console.log("candidacyId", candidacyById)
 
 
 
@@ -93,15 +104,14 @@ const cardCandidateCrossClick = () => {
             @mouseenter="cardCandidateCrossEnter"
             @mouseleave="cardCandidateCrossLeave"
             @click="cardCandidateCrossClick"
+            
           >
-            <div class="card-candidate-cross card-candidate-cross-left"></div>
+            <div class="card-candidate-cross card-candidate-cross-left" @click="clickDeleteCandidacy"></div>
             <div class="card-candidate-cross card-candidate-cross-right"></div>
           </div>
         </div>
         <div class="text">{{ dataWorker[0].degree }}</div>
-        <a href="mailto: {{email}}" class="text send-email-candidate">{{
-          
-        }}</a>
+        <a href="mailto: {{email}}" class="text send-email-candidate"></a>
       </div>
       <div class="text">{{ dataWorker[0].phone_number }}</div>
       <div class="card-candidate-button">

@@ -25,6 +25,7 @@ setTimeout(() => {
 
     <jobcard
 
+
     v-for="job in dataJobById"
 
 
