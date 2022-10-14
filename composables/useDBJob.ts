@@ -10,6 +10,14 @@ const useDBJob = () => {
     return data;
   };
 
+  const deleteJobByCompanyId = async (id) => {
+    const { error } = await supabase
+      .from("joboffer")
+      .delete()
+      .eq("id_company", id);
+    if (error) throw error;
+  };
+
   const insertJob = async (job) => {
     const { error } = await supabase.from("joboffer").insert([
       {
@@ -71,6 +79,7 @@ const useDBJob = () => {
     updateJobOffer,
     getAllJob,
     insertJob,
+    deleteJobByCompanyId,
   };
 };
 

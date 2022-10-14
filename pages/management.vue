@@ -2,10 +2,21 @@
 const { getAllcandidacy, insertCandidacy } = useDBCandidacy();
 const { getAllJob, insertJob } = useDBJob();
 const { getAllWorkers, insertWorker } = useDBWorker();
+const { getAllCompanies, insertNewLineCompany } = useDBCompany();
 
 const candidacyData = await getAllcandidacy();
 const jobData = await getAllJob();
 const workerData = await getAllWorkers();
+const companiesData = await getAllCompanies();
+
+const insertCompanyClick = async () => {
+  try {
+    await insertNewLineCompany(valuesCompany, valuesCompany.id_company);
+    alert("Insert Success");
+  } catch (err) {
+    alert(err.message);
+  }
+};
 
 const insertCandidacyClick = async () => {
   try {
@@ -59,11 +70,49 @@ const valuesWorker = reactive({
   phone_number: "",
   degree: "",
 });
+
+const valuesCompany = reactive({
+  id_company: "",
+  name: "",
+  siret: "",
+  location: "",
+  description: "",
+});
 </script>
 
 <template>
   <div class="subTitle">Manage Table Here</div>
   <div class="section">
+    <div class="subsubTitle">Companies</div>
+    <div class="section-row text">
+      <div class="section-row-data text">id_company</div>
+      <div class="section-row-data text">name</div>
+      <div class="section-row-data text">siret</div>
+      <div class="section-row-data text">name</div>
+      <div class="section-row-data text">location</div>
+      <div class="section-row-data text">description</div>
+    </div>
+    <div class="section-data" v-for="company in companiesData">
+      <CompanyLine
+        :id_company="company.id_company"
+        :name="company.name"
+        :siret="company.siret"
+        :location="company.location"
+        :description="company.description"
+      ></CompanyLine>
+    </div>
+
+    <div class="text">Insert a new line here :</div>
+    <div class="section-row">
+      <input class="text" v-model="valuesCompany.id_company" />
+      <input class="text" v-model="valuesCompany.name" />
+      <input class="text" v-model="valuesCompany.siret" />
+      <input class="text" v-model="valuesCompany.location" />
+      <input class="text" v-model="valuesCompany.description" />
+    </div>
+    <div class="text button-add" @click="insertCompanyClick">Add</div>
+  </div>
+  <div class="section" v-if="false">
     <div class="subsubTitle">Worker</div>
     <div class="section-row text">
       <div class="section-row-data text">ID Worker</div>

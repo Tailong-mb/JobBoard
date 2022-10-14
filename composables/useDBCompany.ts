@@ -10,6 +10,34 @@ const useDBCompany = () => {
     return data;
   };
 
+  const getAllCompanies = async () => {
+    const { data, error } = await supabase.from("company").select("*");
+    if (error) throw error;
+    return data;
+  };
+
+  const deleteCompany = async (id) => {
+    const { error } = await supabase
+      .from("company")
+      .delete()
+      .eq("id_company", id);
+    if (error) throw error;
+  };
+
+  const updateCompany = async (data) => {
+    const { error } = await supabase
+      .from("company")
+      .update({
+        id_company: data.id_company,
+        siret: data.siret,
+        name: data.name,
+        location: data.location,
+        description: data.description,
+      })
+      .eq("id_company", data.id_company);
+    if (error) throw error;
+  };
+
   const insertOfferJob = async (offer, id) => {
     const { error } = await supabase.from("joboffer").insert([
       {
@@ -43,6 +71,9 @@ const useDBCompany = () => {
     getCompanyById,
     insertOfferJob,
     insertNewLineCompany,
+    getAllCompanies,
+    deleteCompany,
+    updateCompany,
   };
 };
 
