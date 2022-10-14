@@ -24,6 +24,14 @@ const useDBCandidacy = () => {
     if (error) throw error;
   };
 
+  const deleteCandidacyByIdCompany = async (id) => {
+    const { error } = await supabase
+      .from("candidacies")
+      .delete()
+      .eq("id_company", id);
+    if (error) throw error;
+  };
+
   const getCandidacyByUserId = async (id) => {
     const { data, error } = await supabase
       .from("candidacies")
@@ -74,6 +82,7 @@ const useDBCandidacy = () => {
     updateStatusCandidacy,
     deleteCandidacy,
     deleteCandidacyById,
+    deleteCandidacyByIdCompany,
   };
 };
 
