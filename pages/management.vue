@@ -1,13 +1,24 @@
 <script setup lang="ts">
 const { getAllcandidacy, insertCandidacy } = useDBCandidacy();
 const { getAllJob, insertJob } = useDBJob();
+const { getAllWorkers, insertWorker } = useDBWorker();
 
 const candidacyData = await getAllcandidacy();
 const jobData = await getAllJob();
+const workerData = await getAllWorkers();
 
 const insertCandidacyClick = async () => {
   try {
     await insertCandidacy(valuesCandidacy);
+    alert("Insert Success");
+  } catch (err) {
+    alert(err.message);
+  }
+};
+
+const insertWorkerClick = async () => {
+  try {
+    await insertWorker(valuesWorker);
     alert("Insert Success");
   } catch (err) {
     alert(err.message);
@@ -40,11 +51,54 @@ const valuesJob = reactive({
   location_job: "",
   degree_job: "",
 });
+
+const valuesWorker = reactive({
+  id_worker: "",
+  first_name: "",
+  last_name: "",
+  phone_number: "",
+  degree: "",
+});
 </script>
 
 <template>
   <div class="subTitle">Manage Table Here</div>
   <div class="section">
+    <div class="subsubTitle">Worker</div>
+    <div class="section-row text">
+      <div class="section-row-data text">ID Worker</div>
+      <div class="section-row-data text">First Name</div>
+      <div class="section-row-data text">Last Name</div>
+      <div class="section-row-data text">Phone</div>
+      <div class="section-row-data text">Degree</div>
+    </div>
+    <div class="section-data" v-for="worker in workerData">
+      <WorkerLine
+        :id_worker="worker.id_worker"
+        :first_name="worker.first_name"
+        :last_name="worker.last_name"
+        :phone_number="worker.phone_number"
+        :degree="worker.degree"
+      ></WorkerLine>
+    </div>
+    <div class="text">Insert a new line here :</div>
+    <div class="section-row" style="margin-bottom: 1rem">
+      <div class="section-row-data text">ID Worker</div>
+      <div class="section-row-data text">First Name</div>
+      <div class="section-row-data text">Last Name</div>
+      <div class="section-row-data text">Phone</div>
+      <div class="section-row-data text">Degree</div>
+    </div>
+    <div class="section-row">
+      <input class="text" v-model="valuesWorker.id_worker" />
+      <input class="text" v-model="valuesWorker.first_name" />
+      <input class="text" v-model="valuesWorker.last_name" />
+      <input class="text" v-model="valuesWorker.phone_number" />
+      <input class="text" v-model="valuesWorker.degree" />
+    </div>
+    <div class="text button-add" @click="insertWorkerClick">Add</div>
+  </div>
+  <div class="section" v-if="false">
     <div class="subsubTitle">Job Offer</div>
     <div class="section-row text">
       <div class="section-row-data text">ID Job</div>
@@ -97,7 +151,7 @@ const valuesJob = reactive({
       <input v-model="valuesJob.location_job" class="section-row-data" />
       <input v-model="valuesJob.degree_job" class="section-row-data" />
     </div>
-    <div class="text button-add" @click="insertJobClick()">Add</div>
+    <div class="text button-add" @click="insertJobClick">Add</div>
   </div>
   <div class="section" v-if="false">
     <div class="subsubTitle">Candidacy</div>

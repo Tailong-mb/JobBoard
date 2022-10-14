@@ -15,7 +15,7 @@ const useDBJob = () => {
       {
         id_company: job.id_company,
         title_job: job.title_job,
-        description_job: job.description,
+        description_job: job.description_job,
         salary: job.salary,
         location_job: job.location_job,
         dateend: job.dateend,
