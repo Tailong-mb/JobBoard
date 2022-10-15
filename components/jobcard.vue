@@ -1,8 +1,12 @@
 <script setup lang="ts">
 const { getCompanyNameById } = useDBCompany();
+const { isLoggedIn } = useAuth();
+
+const isConnected = isLoggedIn();
 
 const showMoreToggle = ref(false);
 const apply = ref(false);
+const applyNoUser = ref(false);
 
 const jobCardValue = defineProps<{
   date: string;
@@ -28,7 +32,11 @@ const clickShowMore = () => {
 };
 
 const clickApply = () => {
-  apply.value = !apply.value;
+  if (isConnected) {
+    apply.value = !apply.value;
+  } else {
+    applyNoUser.value = !applyNoUser.value;
+  }
 };
 </script>
 
@@ -63,7 +71,8 @@ const clickApply = () => {
       @click="clickShowMore"
     ></RectangleButton>
     <FormJobApplyUser :idJob="idJob" v-if="apply"></FormJobApplyUser>
-    <div class="arrow" v-if="apply">
+    <FormJobApplyNoUser :idJob="idJob" v-if="applyNoUser"></FormJobApplyNoUser>
+    <div class="arrow" v-if="apply || applyNoUser">
       <arrow @click="clickApply"></arrow>
     </div>
   </div>
