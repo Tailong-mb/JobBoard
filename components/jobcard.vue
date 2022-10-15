@@ -2,7 +2,11 @@
 const { getCompanyNameById } = useDBCompany();
 const { isLoggedIn } = useAuth();
 
-const isConnected = isLoggedIn();
+const isConnected = ref(false);
+
+setTimeout(() => {
+  isConnected.value = isLoggedIn();
+}, 1);
 
 const showMoreToggle = ref(false);
 const apply = ref(false);
