@@ -16,6 +16,8 @@ const editProfil = ref(false);
 
 const appliedCompany = ref(false);
 
+const editAuthentification = ref(false);
+
 const showEditProfil = () => {
     editProfil.value = !editProfil.value;
     setTimeout(() => {
@@ -53,6 +55,18 @@ const showAppliedCompany = () => {
     
 }
 
+const showAuthentification = () => {
+    editAuthentification.value = !editAuthentification.value;
+    setTimeout(() => {
+        
+        const timeline = gsap.timeline({defaults: {duration: 0.5}});
+        timeline.to(".container", {opacity: 0, display: "none"});
+        timeline.to(".edit-authentification", {opacity: 1, display: "flex"}, "-=0.5");
+    
+    }, 100);
+    
+}
+
 </script>
 
 <template>
@@ -73,12 +87,15 @@ const showAppliedCompany = () => {
         <div class="button">
             <rectangle-button class="" text="edit" @click="showEditProfil" v-if="editProfil === false"></rectangle-button>
             <rectangle-button class="" text="applied" @click="showAppliedCompany" v-if="editProfil === false"></rectangle-button>
+            <rectangle-button class="" text="change password" @click="showAuthentification" v-if="editAuthentification === false"></rectangle-button>
         </div>
     </div>
     <div class="edit-user-container" v-if="editProfil === true">
         <edit-profil-user :id="id" class="edit"></edit-profil-user>
     </div>
-
+    <div class="edit-user-container">
+        <edit-auth></edit-auth>
+    </div>
     <div class="applied-company" v-if="appliedCompany === true">
         <company-applied></company-applied>
     </div>

@@ -9,6 +9,7 @@ const { getCompanyById } = useDBCompany();
 const { getJobTitleByCompanyId } = useDBJob();
 const createJobOffer = ref(false);
 const changeAuth = ref(false);
+const changeProfil = ref(false);
 
 const dataCompany = await getCompanyById(companyProps.id);
 const dataJobOffer = await getJobTitleByCompanyId(companyProps.id);
@@ -29,6 +30,15 @@ const showCreateJobOffer = () => {
     duration: 1,
   });
   createJobOffer.value = true;
+};
+
+const showEditProfile = () => {
+  gsap.to(".company-presentation-container", {
+    transform: "translateX(0%)",
+    ease: "power4.out",
+    duration: 1,
+  });
+  changeProfil.value = false;
 };
 
 const unShowCreateJobOffer = () => {
@@ -80,6 +90,31 @@ const unShowEditAuth = () => {
     changeAuth.value = false;
   }, 3000);
 };
+
+const unShowEditProfile = () => {
+  gsap.to(".edit-profile-container", {
+    transform: "translateX(-100%)",
+    ease: "power4.out",
+    duration: 1,
+  });
+
+  gsap.to(".arrow-company-container", {
+    transform: "translateX(-100%)",
+    ease: "power4.out",
+    duration: 1,
+  });
+
+  gsap.to(".company-presentation-container", {
+    transform: "translateX(0%)",
+    ease: "power4.out",
+    duration: 1,
+    delay: 1,
+  });
+
+  setTimeout(() => {
+    changeProfil.value = false;
+  }, 3000);
+};
 </script>
 
 <template>
@@ -97,6 +132,13 @@ const unShowEditAuth = () => {
     <div v-if="changeAuth" class="edit-auth-container">
       <EditAuth></EditAuth>
     </div>
+
+    <div v-if="changeProfil">
+      <arrow @click="unShowEditProfile"></arrow>
+    </div>
+    <div v-if="changeProfil" class="edit-profil-user">
+      <EditProfilCompany></EditProfilCompany>
+    </div>
     <div class="company-presentation-container">
       <CompanyPresentation
         :name="dataCompany[0].name"
@@ -111,9 +153,14 @@ const unShowEditAuth = () => {
           @click="showCreateJobOffer"
         ></CircleButton>
         <RectangleButton
-          text="Change My information"
+          text="Change authentification"
           @click="showEditAuth"
         ></RectangleButton>
+        <CircleButton 
+        text="change information"
+        @click="showEditProfile"
+        >
+      </CircleButton>
       </div>
       <div class="subTitle">Your Current Job Offer</div>
       <div class="joboffer-card-container">
