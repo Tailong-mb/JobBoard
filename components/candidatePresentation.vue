@@ -61,7 +61,7 @@ const showAuthentification = () => {
         
         const timeline = gsap.timeline({defaults: {duration: 0.5}});
         timeline.to(".container", {opacity: 0, display: "none"});
-        timeline.to(".edit-authentification", {opacity: 1, display: "flex"}, "-=0.5");
+        timeline.to(".edit-user-container", {opacity: 1, display: "flex"}, "-=0.5");
     
     }, 100);
     
@@ -93,7 +93,7 @@ const showAuthentification = () => {
     <div class="edit-user-container" v-if="editProfil === true">
         <edit-profil-user :id="id" class="edit"></edit-profil-user>
     </div>
-    <div class="edit-user-container">
+    <div class="edit-user-container" v-if="editAuthentification === true">
         <edit-auth></edit-auth>
     </div>
     <div class="applied-company" v-if="appliedCompany === true">
@@ -137,7 +137,7 @@ const showAuthentification = () => {
     display: flex;
     flex-direction: column;
     position: absolute;
-    bottom: -15rem;
+    bottom: -18rem;
     gap: 2rem;
 }
 
@@ -163,6 +163,7 @@ h2{
     align-items: center;
     justify-content: center;
     gap: 3rem;
+    top: 10rem;
     position: relative;
 }
 

@@ -25,7 +25,7 @@ await checkEmailResetPasswordEvent();
             </div>
             <div class="signUp">
                 <a href="/registration">
-                    <CircleButton text="Sign Up"></CircleButton>
+                    <RectangleButton text="Sign Up"></RectangleButton>
                 </a>
             </div>
         </div>

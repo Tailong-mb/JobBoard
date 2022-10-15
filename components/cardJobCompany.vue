@@ -14,12 +14,13 @@ const statutAppliant = ref(false);
 
 const { deleteJobById } = useDBJob();
 
-const {getCandidacyByJobId} = useDBCandidacy();
+const {getCandidacyByJobId, deleteCandidacyByIdJob} = useDBCandidacy();
 
 const {getWorkerById} = useDBWorker();
 
 const clickDeleteCard = async () => {
   try {
+    await deleteCandidacyByIdJob(titleProps.id);
     await deleteJobById(titleProps.id);
     alert("Job deleted");
   } catch (err) {
@@ -38,6 +39,14 @@ const dataCandidacy = await getCandidacyByJobId(titleProps.id);
 
 
 console.log("dataCandidacy",dataCandidacy)
+
+
+// hide appliant
+
+const hideAppliant = () => {
+  statutAppliant.value = !statutAppliant.value;
+};
+
 
 </script>
 
@@ -69,7 +78,10 @@ console.log("dataCandidacy",dataCandidacy)
       :id_candidacy="worker.id_candidacies"
       >
       </CandidateCard>
+      <TriangleButton class="triangleButton" text="Hide Appliant" @click="hideAppliant">
+      </TriangleButton>
   </div>
+
 </template>
 
 <style scoped>
@@ -120,5 +132,9 @@ console.log("dataCandidacy",dataCandidacy)
 
 .card-job-cross-right {
   transform: translateX(1rem) translateY(-1.5rem) rotate(-45deg);
+}
+
+.triangleButton {
+  margin-top: 1rem;
 }
 </style>

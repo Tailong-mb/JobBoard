@@ -34,11 +34,11 @@ const showCreateJobOffer = () => {
 
 const showEditProfile = () => {
   gsap.to(".company-presentation-container", {
-    transform: "translateX(0%)",
+    transform: "translateX(100%)",
     ease: "power4.out",
     duration: 1,
   });
-  changeProfil.value = false;
+  changeProfil.value = true;
 };
 
 const unShowCreateJobOffer = () => {
@@ -139,6 +139,7 @@ const unShowEditProfile = () => {
     <div v-if="changeProfil" class="edit-profil-user">
       <EditProfilCompany></EditProfilCompany>
     </div>
+
     <div class="company-presentation-container">
       <CompanyPresentation
         :name="dataCompany[0].name"

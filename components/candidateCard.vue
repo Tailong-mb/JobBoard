@@ -74,7 +74,8 @@ const cardCandidateCrossLeave = () => {
   });
 };
 
-const cardCandidateCrossClick = () => {
+const cardCandidateCrossClick = async () => {
+  await clickDeleteCandidacy();
   const t1 = gsap.timeline();
 
   t1.to(".card-candidate", {
@@ -104,9 +105,10 @@ const cardCandidateCrossClick = () => {
             @mouseenter="cardCandidateCrossEnter"
             @mouseleave="cardCandidateCrossLeave"
             @click="cardCandidateCrossClick"
+
             
           >
-            <div class="card-candidate-cross card-candidate-cross-left" @click="clickDeleteCandidacy"></div>
+            <div class="card-candidate-cross card-candidate-cross-left" ></div>
             <div class="card-candidate-cross card-candidate-cross-right"></div>
           </div>
         </div>
@@ -114,6 +116,7 @@ const cardCandidateCrossClick = () => {
         <a href="mailto: {{email}}" class="text send-email-candidate"></a>
       </div>
       <div class="text">{{ dataWorker[0].phone_number }}</div>
+      <div class="text">{{ candidacyById[0].message_candidacies }}</div>
       <div class="card-candidate-button">
         <RectangleButton text="See more"></RectangleButton>
       </div>

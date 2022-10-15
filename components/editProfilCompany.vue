@@ -21,7 +21,10 @@ const editCompanyData = reactive({
 });
 
 const checkDataCompany = () => {
-    if(editCompanyData.siret === "" || editCompanyData.name === "" || editCompanyData.location === "" || editCompanyData.description === "" ){
+    if(editCompanyData.siret === "" 
+    || editCompanyData.name === "" 
+    || editCompanyData.location === "" 
+    || editCompanyData.description === "" ){
         return false;
 }
     return true;
@@ -124,7 +127,13 @@ const deleteForm = () =>
             
         </div>
 
-        <div><RectangleButton class="confirm" text="confirm" @click="dataCompany"></RectangleButton></div>
+        <div>
+            <RectangleButton 
+            class="confirm" 
+            text="confirm" 
+            @click="dataCompany">
+            </RectangleButton>
+    </div>
 
     </div>
     </div>

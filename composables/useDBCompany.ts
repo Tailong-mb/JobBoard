@@ -41,13 +41,13 @@ const useDBCompany = () => {
 
   const editCompany = async (editUser, id)  => {
 
-    const {error} = await supabase.from("worker").update({
+    const {error} = await supabase.from("company").update({
         siret: editUser.siret,
         name: editUser.name,
         location: editUser.location,
         description: editUser.description,
 
-    }).eq("id_worker", id); 
+    }).eq("id_company", id); 
     if(error) throw error;
 }
 
