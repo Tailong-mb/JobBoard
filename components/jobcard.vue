@@ -1,13 +1,35 @@
 <script setup lang="ts">
+const { getCompanyNameById } = useDBCompany();
+
+const showMoreToggle = ref(false);
+const apply = ref(false);
+
 const jobCardValue = defineProps<{
-  companyName: string;
   date: string;
   jobLocation: string;
   degreeRequired: string;
   jobTitle: string;
   jobDescription: string;
-  salary: string;
+  salary: number;
+  idCompany: string;
+  idJob: number;
 }>();
+
+const companyNameQuery = await getCompanyNameById(jobCardValue.idCompany);
+const buttonShowText = ref("Show More");
+
+const companyName = companyNameQuery[0].name;
+
+const jobDescriptionShorted = jobCardValue.jobDescription.slice(0, 50);
+
+const clickShowMore = () => {
+  showMoreToggle.value = !showMoreToggle.value;
+  buttonShowText.value = showMoreToggle.value ? "Show Less" : "Show More";
+};
+
+const clickApply = () => {
+  apply.value = !apply.value;
+};
 </script>
 
 <template>
@@ -22,22 +44,60 @@ const jobCardValue = defineProps<{
         <span class="subsubTitle">{{ companyName }}</span>
       </div>
     </div>
-    <div class="job-information-container">
+    <div class="job-information-container" v-if="showMoreToggle">
       <div class="job-information">
         <div class="text">Location : {{ jobLocation }}</div>
         <div class="text">Date : {{ date }}</div>
       </div>
-      <div class="job-information">
+      <div class="job-information" v-if="showMoreToggle">
         <div class="text">Degree Required : {{ degreeRequired }}</div>
         <div class="text">Salary : {{ salary }}$/month</div>
       </div>
     </div>
-    <p class="text">{{ jobDescription }}</p>
-    <RectangleButton text="Apply"></RectangleButton>
+
+    <p class="text" v-if="!showMoreToggle">{{ jobDescription }}</p>
+    <p class="text" v-if="showMoreToggle">{{ jobDescriptionShorted }}</p>
+    <div class="button-apply text" @click="clickApply">Apply</div>
+    <RectangleButton
+      :text="buttonShowText"
+      @click="clickShowMore"
+    ></RectangleButton>
+    <FormJobApplyUser :idJob="idJob" v-if="apply"></FormJobApplyUser>
+    <div class="arrow" v-if="apply">
+      <arrow @click="clickApply"></arrow>
+    </div>
   </div>
 </template>
 
 <style scoped>
+.arrow {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 1200;
+  animation: 2s ease-in-out fadeIn-animation;
+}
+
+@keyframes fadeIn-animation {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+.button-apply {
+  border: #8f71be 1px solid;
+  padding: 1rem;
+  border-radius: 0.333rem;
+}
+
+.button-apply:hover {
+  background-color: #8f71be;
+  color: white;
+  cursor: pointer;
+}
+
 /** LOGO */
 .square-logo {
   width: 0.5rem;

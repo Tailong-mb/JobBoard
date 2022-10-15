@@ -24,6 +24,16 @@ const useDBCompany = () => {
     if (error) throw error;
   };
 
+  const getCompanyNameById = async (id) => {
+    const { data, error } = await supabase
+      .from("company")
+      .select("name")
+      .eq("id_company", id);
+
+    if (error) throw error;
+    return data;
+  };
+
   const updateCompany = async (data) => {
     const { error } = await supabase
       .from("company")
@@ -74,6 +84,7 @@ const useDBCompany = () => {
     getAllCompanies,
     deleteCompany,
     updateCompany,
+    getCompanyNameById,
   };
 };
 

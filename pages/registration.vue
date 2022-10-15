@@ -401,7 +401,7 @@ const checkValuesUser = () => {
   position: absolute;
   top: 20px;
   right: 20px;
-  z-index: 300;
+  z-index: 1200;
   animation: 2s ease-in-out fadeIn-animation;
 }
 

@@ -61,6 +61,18 @@ const useDBCandidacy = () => {
     if (error) throw error;
   };
 
+  const insertCandidacyId = async (candidacy, id) => {
+    const { error } = await supabase.from("candidacies").insert([
+      {
+        id_worker: id,
+        id_job: candidacy.id_job,
+        status: candidacy.status,
+        message_candidacies: candidacy.message,
+      },
+    ]);
+    if (error) throw error;
+  };
+
   const updateStatusCandidacy = async (candidacy) => {
     const { error } = await supabase
       .from("candidacies")
@@ -92,6 +104,7 @@ const useDBCandidacy = () => {
     deleteCandidacyById,
     deleteCandidacyByIdCompany,
     deleteCandidacyByIdWorker,
+    insertCandidacyId,
   };
 };
 
