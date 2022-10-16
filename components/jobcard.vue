@@ -1,10 +1,12 @@
 <script setup lang="ts">
 const { getCompanyNameById } = useDBCompany();
-const { isLoggedIn, user } = useAuth();
-const {getCandidacyByUserId} = useDBCandidacy();
+const { isLoggedIn, user, getMetadataRole } = useAuth();
+const { getCandidacyByUserId } = useDBCandidacy();
 const isConnected = ref(false);
+const role = ref("");
 setTimeout(() => {
   isConnected.value = isLoggedIn();
+  role.value = getMetadataRole();
 }, 1);
 const showMoreToggle = ref(false);
 const apply = ref(false);
@@ -28,26 +30,24 @@ const clickShowMore = () => {
   buttonShowText.value = showMoreToggle.value ? "Show Less" : "Show More";
 };
 const checkCandidacy = async () => {
-  if(isConnected.value === false){
+  if (isConnected.value === false) {
     return false;
   }
-    
+
   const getCandidacy = await getCandidacyByUserId(user.value.id);
-  
+
   let bool = false;
   getCandidacy.forEach((candidacy) => {
-    
     if (candidacy.id_job === jobCardValue.idJob) {
-      
       bool = true;
       return;
     }
   });
   return bool;
-}
+};
 const clickApply = async () => {
   const alreadyApplied = await checkCandidacy();
-  if(alreadyApplied){
+  if (alreadyApplied) {
     alert("You already applied for this job");
     return;
   }
@@ -56,11 +56,21 @@ const clickApply = async () => {
   } else {
     applyNoUser.value = !applyNoUser.value;
   }
-  
+
+  document.documentElement.scrollTop = 0;
+};
+
+const clickArrowApply = () => {
+  if (isConnected.value === true) {
+    apply.value = !apply.value;
+  } else {
+    applyNoUser.value = !applyNoUser.value;
+  }
 };
 </script>
 
 <template>
+  <AnimationLoadPage></AnimationLoadPage>
   <div class="job-card">
     <div class="job-card-header">
       <div class="job-card-header-logo">
@@ -83,9 +93,15 @@ const clickApply = async () => {
       </div>
     </div>
 
-    <p class="text" v-if="!showMoreToggle">{{ jobDescription }}</p>
-    <p class="text" v-if="showMoreToggle">{{ jobDescriptionShorted }}</p>
-    <div class="button-apply text" @click="clickApply">Apply</div>
+    <p class="text" v-if="showMoreToggle">{{ jobDescription }}</p>
+    <p class="text" v-if="!showMoreToggle">{{ jobDescriptionShorted }}</p>
+    <div
+      class="button-apply text"
+      @click="clickApply"
+      v-if="role !== 'company'"
+    >
+      Apply
+    </div>
     <RectangleButton
       :text="buttonShowText"
       @click="clickShowMore"
@@ -93,7 +109,7 @@ const clickApply = async () => {
     <FormJobApplyUser :idJob="idJob" v-if="apply"></FormJobApplyUser>
     <FormJobApplyNoUser :idJob="idJob" v-if="applyNoUser"></FormJobApplyNoUser>
     <div class="arrow" v-if="apply || applyNoUser">
-      <arrow @click="clickApply"></arrow>
+      <arrow @click="clickArrowApply"></arrow>
     </div>
   </div>
 </template>

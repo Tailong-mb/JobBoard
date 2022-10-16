@@ -5,6 +5,7 @@ const jobData = await getAllJob();
 </script>
 
 <template>
+  <NavBar></NavBar>
   <div class="jobsearch-container">
     <div class="subTitle">Job Offers</div>
     <div class="joboffer-container" v-for="job in jobData">
