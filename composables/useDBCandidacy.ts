@@ -94,6 +94,14 @@ const useDBCandidacy = () => {
     if (error) throw error;
   };
 
+  const deleteCandidacyByIdJob = async (id) => {
+    const { error } = await supabase
+      .from("candidacies")
+      .delete()
+      .eq("id_job", id);
+    if (error) throw error;
+  };
+
   return {
     getAllcandidacy,
     getCandidacyByJobId,
@@ -105,16 +113,8 @@ const useDBCandidacy = () => {
     deleteCandidacyByIdCompany,
     deleteCandidacyByIdWorker,
     insertCandidacyId,
+    deleteCandidacyByIdJob,
   };
 };
 
 export default useDBCandidacy;
-
-        deleteCandidacyByIdJob,
-    const deleteCandidacyByIdJob = async (id) => {
-        const { error } = await supabase
-            .from("candidacies")
-            .delete()
-            .eq("id_job", id);
-        if (error) throw error;
-    };
