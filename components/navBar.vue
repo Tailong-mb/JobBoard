@@ -135,14 +135,20 @@ const leaveNavBarClose = () => {
 
   <div class="navbar">
     <div class="navbar-elements">
-      <div class="subTitle navbar-element">HOME</div>
-      <div class="subTitle navbar-element">TEST</div>
+      <a href="/home"><div class="subTitle navbar-element">HOME</div></a>
+      <a href="/jobsearch"
+        ><div class="subTitle navbar-element">SearchJob</div></a
+      >
       <div @click="signOut" class="subTitle navbar-element">LOGOUT</div>
     </div>
   </div>
 </template>
 
 <style scoped>
+a {
+  text-decoration: none;
+}
+
 .navbar-logo {
   display: flex;
   flex-direction: column;

@@ -136,15 +136,15 @@ const authValues = reactive({
     <div class="section" v-if="menu[4]">
       <div class="subsubTitle">AuthTable</div>
       <div class="section-row text">
-        <div class="section-row-data">id</div>
-        <div class="section-row-data">email</div>
-        <div class="section-row-data">role</div>
+        <div class="section-row-data-auth">id</div>
+        <div class="section-row-data-auth">email</div>
+        <div class="section-row-data-auth">role</div>
       </div>
       <div class="section-row" v-for="auth in usersData">
         <div class="section-row text">
-          <div class="section-row-data">{{ auth.id }}</div>
-          <div class="section-row-data">{{ auth.email }}</div>
-          <div class="section-row-data">{{ auth.user_metadata.role }}</div>
+          <div class="section-row-data-auth">{{ auth.id }}</div>
+          <div class="section-row-data-auth">{{ auth.email }}</div>
+          <div class="section-row-data-auth">{{ auth.user_metadata.role }}</div>
         </div>
         <div class="text button-delete" @click="deleteUserClick(auth.id)">
           Delete
@@ -205,9 +205,9 @@ const authValues = reactive({
       <div class="subsubTitle">Companies</div>
       <div class="section-row text">
         <div class="section-row-data text">id_company</div>
+
         <div class="section-row-data text">name</div>
         <div class="section-row-data text">siret</div>
-        <div class="section-row-data text">name</div>
         <div class="section-row-data text">location</div>
         <div class="section-row-data text">description</div>
       </div>
@@ -223,11 +223,17 @@ const authValues = reactive({
 
       <div class="text">Insert a new line here :</div>
       <div class="section-row">
-        <input class="text" v-model="valuesCompany.id_company" />
-        <input class="text" v-model="valuesCompany.name" />
-        <input class="text" v-model="valuesCompany.siret" />
-        <input class="text" v-model="valuesCompany.location" />
-        <input class="text" v-model="valuesCompany.description" />
+        <input
+          class="text section-row-data"
+          v-model="valuesCompany.id_company"
+        />
+        <input class="text section-row-data" v-model="valuesCompany.name" />
+        <input class="text section-row-data" v-model="valuesCompany.siret" />
+        <input class="text section-row-data" v-model="valuesCompany.location" />
+        <input
+          class="text section-row-data"
+          v-model="valuesCompany.description"
+        />
       </div>
       <div class="text button-add" @click="insertCompanyClick">Add</div>
     </div>
@@ -258,11 +264,17 @@ const authValues = reactive({
         <div class="section-row-data text">Degree</div>
       </div>
       <div class="section-row">
-        <input class="text" v-model="valuesWorker.id_worker" />
-        <input class="text" v-model="valuesWorker.first_name" />
-        <input class="text" v-model="valuesWorker.last_name" />
-        <input class="text" v-model="valuesWorker.phone_number" />
-        <input class="text" v-model="valuesWorker.degree" />
+        <input class="text section-row-data" v-model="valuesWorker.id_worker" />
+        <input
+          class="text section-row-data"
+          v-model="valuesWorker.first_name"
+        />
+        <input class="text section-row-data" v-model="valuesWorker.last_name" />
+        <input
+          class="text section-row-data"
+          v-model="valuesWorker.phone_number"
+        />
+        <input class="text section-row-data" v-model="valuesWorker.degree" />
       </div>
       <div class="text button-add" @click="insertWorkerClick">Add</div>
     </div>
@@ -278,7 +290,6 @@ const authValues = reactive({
         <div class="section-row-data text">datestart</div>
         <div class="section-row-data text">location</div>
         <div class="section-row-data text">degree</div>
-        <div class="section-row-data text">Message</div>
       </div>
       <div class="section-data" v-for="job in jobData">
         <JobOfferLine
@@ -351,10 +362,16 @@ const authValues = reactive({
         <div class="section-row-data text">Message</div>
       </div>
       <div class="section-row">
-        <input class="text" v-model="valuesCandidacy.id_job" />
-        <input class="text" v-model="valuesCandidacy.id_worder" />
-        <input class="text" v-model="valuesCandidacy.message" />
-        <input class="text" v-model="valuesCandidacy.status" />
+        <input class="text section-row-data" v-model="valuesCandidacy.id_job" />
+        <input
+          class="text section-row-data"
+          v-model="valuesCandidacy.id_worder"
+        />
+        <input
+          class="text section-row-data"
+          v-model="valuesCandidacy.message"
+        />
+        <input class="text section-row-data" v-model="valuesCandidacy.status" />
       </div>
       <div class="text button-add" @click="insertCandidacyClick">Add</div>
     </div>
@@ -439,14 +456,30 @@ const authValues = reactive({
 }
 
 .section-row-data {
+  overflow: hidden;
   border-left: solid 2px #8f71be !important;
   border-top: solid 2px #8f71be !important;
   border-bottom: solid 2px #8f71be !important;
   margin: 0;
   padding: 0.3rem;
+  width: 200px;
 }
 
 .section-row-data:last-child {
+  border-right: solid 2px #8f71be !important;
+}
+
+.section-row-data-auth {
+  overflow: hidden;
+  border-left: solid 2px #8f71be !important;
+  border-top: solid 2px #8f71be !important;
+  border-bottom: solid 2px #8f71be !important;
+  margin: 0;
+  padding: 0.3rem;
+  width: calc(33%-1rem);
+}
+
+.section-row-data-auth:last-child {
   border-right: solid 2px #8f71be !important;
 }
 </style>

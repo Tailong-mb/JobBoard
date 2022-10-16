@@ -104,6 +104,7 @@ const deleteCandidacy = async (id) => {
 }
 
 input {
+  width: 200px;
   border-left: solid 2px #8f71be !important;
   border-top: solid 2px #8f71be !important;
   border-bottom: solid 2px #8f71be !important;

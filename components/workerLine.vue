@@ -106,6 +106,7 @@ input {
   border-bottom: solid 2px #8f71be !important;
   margin: 0;
   padding: 0.3rem;
+  width: 200px;
 }
 
 input:last-child {
