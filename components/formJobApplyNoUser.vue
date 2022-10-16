@@ -35,7 +35,7 @@ const handleSubmitUser = async () => {
       password: signUpUser.password,
       role: "user",
     });
-    insertIntoTableUser(user.id);
+    await insertIntoTableUser(user.id);
     const candicacy = {
       message: signUpUser.message,
       id_job: idJob.idJob,
@@ -153,7 +153,7 @@ const insertIntoTableUser = async (userId) => {
   position: absolute;
   top: 0;
   left: 0;
-  margin-top: 5rem;
+  padding-top: 5rem;
   z-index: 1000;
   background: white;
   display: flex;

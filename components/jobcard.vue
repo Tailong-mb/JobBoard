@@ -6,7 +6,9 @@ const isConnected = ref(false);
 const role = ref("");
 setTimeout(() => {
   isConnected.value = isLoggedIn();
-  role.value = getMetadataRole();
+  if (isConnected.value) {
+    role.value = getMetadataRole();
+  }
 }, 1);
 const showMoreToggle = ref(false);
 const apply = ref(false);
