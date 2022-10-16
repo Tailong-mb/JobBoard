@@ -31,7 +31,6 @@ const useAuth = () => {
       password,
     });
     if (error) throw error;
-    await navigateTo("/home");
   };
 
   const signOut = async () => {
