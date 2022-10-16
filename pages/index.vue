@@ -42,7 +42,7 @@ await checkEmailResetPasswordEvent();
       <span class="epi">Epi<span class="steak">Steak</span></span
       >.
     </div>
-  </div>
+
 </template>
 
 <style scoped>

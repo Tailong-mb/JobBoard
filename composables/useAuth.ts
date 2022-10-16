@@ -31,6 +31,8 @@ const useAuth = () => {
       password,
     });
     if (error) throw error;
+
+    return u;
   };
 
   const signOut = async () => {

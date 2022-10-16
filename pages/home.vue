@@ -28,5 +28,10 @@ setTimeout(() => {
       :id="id"
       :email="email"
     ></CompanyHome>
+    <CandidateHome 
+    v-if="role === 'user'" 
+    :id="id" 
+    :email="email">
+    </CandidateHome>
   </div>
 </template>
