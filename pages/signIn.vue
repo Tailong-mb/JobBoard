@@ -164,6 +164,9 @@ const resetPassword = async () => {
 </template>
 
 <style scoped>
+a {
+  text-decoration: none;
+}
 .emailSend {
   position: absolute;
   top: 0;
