@@ -7,6 +7,9 @@ const candidateProps = defineProps<{
 }>();
 
 const { getWorkerById } = useDBWorker();
+const { getCandidacyByUserId } = useDBCandidacy();
+
+const candidacyData = await getCandidacyByUserId(candidateProps.id);
 
 const data = await getWorkerById(candidateProps.id);
 
@@ -71,15 +74,19 @@ const unShowEditProfile = () => {
       ease: "power4.out",
       transform: "translateX(0)",
     })
-    .to(".arrow-candidate-container", {
-      transform: "translateX(-100%)",
-      ease: "power4.out",
-      duration: 1,
-    });
+    .to(
+      ".arrow-candidate-container",
+      {
+        transform: "translateX(-100%)",
+        ease: "power4.out",
+        duration: 1,
+      },
+      "<1"
+    );
 
   setTimeout(() => {
     changeProfil.value = false;
-  }, 3000);
+  }, 1000);
 };
 </script>
 
@@ -99,67 +106,71 @@ const unShowEditProfile = () => {
       <EditProfilUser></EditProfilUser>
     </div>
     <div class="candidate-prensentation-container">
-      <div class="candidate-presentation">
-        <CandidatePresentation
-          :id="id"
-          :firstName="data[0].first_name"
-          :lastName="data[0].last_name"
-          :phoneNumber="data[0].phone_number"
-          :email="candidateProps.email"
-          :degree="data[0].degree"
-        >
-        </CandidatePresentation>
+      <CandidatePresentation
+        :id="id"
+        :firstName="data[0].first_name"
+        :lastName="data[0].last_name"
+        :phoneNumber="data[0].phone_number"
+        :email="candidateProps.email"
+        :degree="data[0].degree"
+      >
+      </CandidatePresentation>
+
+      <div class="button-container-worker">
+        <CircleButton text="Edit Profil" @click="showEditProfile">
+        </CircleButton>
+
+        <rectangle-button text="Change Authentification" @click="showEditAuth">
+        </rectangle-button>
       </div>
 
-      <div class="button">
-        <div class="button-edit">
-          <CircleButton text="Edit Profil" @click="showEditProfile">
-          </CircleButton>
-
-          <rectangle-button
-            text="Change Authentification"
-            @click="showEditAuth"
-          >
-          </rectangle-button>
-        </div>
+      <div class="subsubTitle">Your Job Applied</div>
+      <div class="jobApplied-container">
+        <JobUserApplied
+          v-for="candidacy in candidacyData"
+          :id_job="candidacy.id_job"
+          :id_worker="candidateProps.id"
+          :status="candidacy.status"
+        ></JobUserApplied>
       </div>
     </div>
   </div>
 </template>
 
 <style scoped>
-.home-candidate-container {
+.jobApplied-container {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+.button-container-worker {
+  display: flex;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
-  height: 100%;
-  width: 100%;
-  top: 3rem;
-  position: relative;
   gap: 3rem;
-  animation: 1s fadeIn 2s forwards;
 }
 
-.candidate-presentation {
+.candidate-prensentation-container {
   display: flex;
-  margin-bottom: 2rem;
-}
-.edit-user-container {
-  display: none;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 3rem;
-  top: 10rem;
-  position: relative;
+  gap: 4rem;
+}
+.edit-user-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
 
 .button {
   display: flex;
   flex-direction: column;
-  position: absolute;
-  bottom: -18rem;
+
   align-items: center;
   gap: 3rem;
 }
@@ -194,21 +205,5 @@ const unShowEditProfile = () => {
   left: 0;
   width: 100%;
   height: 100%;
-}
-
-@media screen and (max-width: 768px) {
-  .button {
-    display: flex;
-    flex-direction: column;
-    position: absolute;
-    bottom: -18rem;
-    gap: 3rem;
-  }
-
-  .button-edit {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
 }
 </style>

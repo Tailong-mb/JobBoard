@@ -1,103 +1,80 @@
 <script setup lang="ts">
-import { gsap} from "gsap";
-
 const candidateInformation = defineProps<{
-
-    firstName: string;
-    lastName: string;
-    phoneNumber : string;
-    email: string;
-    degree: string;
-    id: string;
-
+  firstName: string;
+  lastName: string;
+  phoneNumber: string;
+  email: string;
+  degree: string;
+  id: string;
 }>();
-
 </script>
 
 <template>
-
-    <div class="container">
-        <div class="container-info">
-            <div class="header">
-                <div class="subTitle">{{degree}}
-                </div>
-                <div class="informations">
-                    <div class="text">{{email}}</div>
-                    <div class="text">{{phoneNumber}}</div>
-                </div>
-                
-            </div>
-            <h2>{{firstName}} {{lastName}}</h2>
+  <div class="container">
+    <div class="container-info">
+      <div class="header">
+        <div class="subTitle">{{ degree }}</div>
+        <div class="informations">
+          <div class="text">{{ email }}</div>
+          <div class="text">{{ phoneNumber }}</div>
         </div>
+      </div>
+      <h2>{{ firstName }} {{ lastName }}</h2>
     </div>
-        
+  </div>
 </template>
 
 <style scoped>
-.container{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    width: 100%;
-    top: 5rem;
-    position: relative;
-    gap: 3rem;
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1rem;
+  height: 100%;
+  width: 100%;
+  top: 5rem;
+  gap: 3rem;
 }
 
-.subTitle{
-    padding-right: 1rem;
+.subTitle {
+  padding-right: 1rem;
 }
-.header{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-}
-
-.container-info{
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    align-items: center;
-    justify-content: center;
-    gap: 1rem;
+.header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  position: relative;
 }
 
-.edit{
-    display: flex;
-    opacity: 1;
-
+.container-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
 }
 
-h2{
-    color: #8f71be;
+.edit {
+  display: flex;
+  opacity: 1;
 }
 
-.confirm{
-    display: flex;
-    position: absolute;
-    bottom: -38rem;
+h2 {
+  color: #8f71be;
 }
-
-
-
-.text{
-    margin: 1rem;
+.text {
+  margin: 1rem;
 }
-
-
 
 @media screen and (min-width: 768px) {
-    .button{
-        display: flex;
-        flex-direction: row;
-        position: absolute;
-        bottom: -17rem;
-        gap: 3rem;
-    }
+  .button {
+    display: flex;
+    flex-direction: row;
+    position: absolute;
+    bottom: -17rem;
+    gap: 3rem;
+  }
 }
-
 </style>

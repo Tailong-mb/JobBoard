@@ -10,6 +10,15 @@ const useDBJob = () => {
     return data;
   };
 
+  const getTitleJobByJobId = async (id) => {
+    const { data, error } = await supabase
+      .from("joboffer")
+      .select("title_job")
+      .eq("id_job", id);
+    if (error) throw error;
+    return data;
+  };
+
   const deleteJobByCompanyId = async (id) => {
     const { error } = await supabase
       .from("joboffer")
@@ -75,6 +84,7 @@ const useDBJob = () => {
   return {
     getJobByCompanyId,
     getJobTitleByCompanyId,
+    getTitleJobByJobId,
     deleteJobById,
     updateJobOffer,
     getAllJob,

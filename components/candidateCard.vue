@@ -8,22 +8,21 @@ const infoCandidate = defineProps<{
   id_candidacy: string;
 }>();
 
-const {getWorkerById} = useDBWorker();
+const { getWorkerById } = useDBWorker();
 
 // take informations worker with id worker in cardJobCompany
 
 const dataWorker = await getWorkerById(infoCandidate.id_worker);
 
-console.log(dataWorker)
+console.log(dataWorker);
 
+// delete candidacy
 
-// delete candidacy 
+const { getCandidacyByJobId } = useDBCandidacy();
 
-const {getCandidacyById} = useDBCandidacy();
+const { deleteCandidacyById } = useDBCandidacy();
 
-const {deleteCandidacyById} = useDBCandidacy();
-
-const candidacyById = await getCandidacyById(infoCandidate.id_candidacy);
+const candidacyById = await getCandidacyByJobId(infoCandidate.id_candidacy);
 
 const clickDeleteCandidacy = async () => {
   try {
@@ -34,9 +33,7 @@ const clickDeleteCandidacy = async () => {
   }
 };
 
-console.log("candidacyId", candidacyById)
-
-
+console.log("candidacyId", candidacyById);
 
 // gsap
 
@@ -99,16 +96,16 @@ const cardCandidateCrossClick = async () => {
     <div class="card-candidate-right">
       <div class="card-candidate-information">
         <div class="card-candidate-information-name-cross">
-          <div class="subsubTitle">{{ dataWorker[0].first_name }} {{ dataWorker[0].last_name}}</div>
+          <div class="subsubTitle">
+            {{ dataWorker[0].first_name }} {{ dataWorker[0].last_name }}
+          </div>
           <div
             class="card-candidate-information-cross-container"
             @mouseenter="cardCandidateCrossEnter"
             @mouseleave="cardCandidateCrossLeave"
             @click="cardCandidateCrossClick"
-
-            
           >
-            <div class="card-candidate-cross card-candidate-cross-left" ></div>
+            <div class="card-candidate-cross card-candidate-cross-left"></div>
             <div class="card-candidate-cross card-candidate-cross-right"></div>
           </div>
         </div>
