@@ -179,7 +179,7 @@ h2{
         flex-direction: row;
         position: absolute;
         bottom: -17rem;
-        gap: 5rem;
+        gap: 3rem;
     }
 }
 

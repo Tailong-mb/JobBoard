@@ -7,8 +7,6 @@ const titleProps = defineProps<{
   id: string;
 }>();
 
-
-
 const statutAppliant = ref(false);
 
 

@@ -92,7 +92,7 @@ const unShowEditAuth = () => {
 };
 
 const unShowEditProfile = () => {
-  gsap.to(".edit-profile-container", {
+  gsap.to(".edit-profil-user", {
     transform: "translateX(-100%)",
     ease: "power4.out",
     duration: 1,
@@ -125,7 +125,7 @@ const unShowEditProfile = () => {
     <div class="formJobOffer" v-if="createJobOffer">
       <FormJobOffer :id="companyProps.id"></FormJobOffer>
     </div>
-
+    
     <div v-if="changeAuth" class="arrow-company-container">
       <arrow @click="unShowEditAuth"></arrow>
     </div>
@@ -133,7 +133,7 @@ const unShowEditProfile = () => {
       <EditAuth></EditAuth>
     </div>
 
-    <div v-if="changeProfil">
+    <div v-if="changeProfil" class="arrow-company-container">
       <arrow @click="unShowEditProfile"></arrow>
     </div>
     <div v-if="changeProfil" class="edit-profil-user">
@@ -153,19 +153,22 @@ const unShowEditProfile = () => {
           text="Create a job"
           @click="showCreateJobOffer"
         ></CircleButton>
-        <RectangleButton
+        <div class="edit-button-container">
+          <RectangleButton
           text="Change authentification"
           @click="showEditAuth"
         ></RectangleButton>
+          
         <CircleButton 
-        text="change information"
-        @click="showEditProfile"
-        >
-      </CircleButton>
+          text="change information"
+          @click="showEditProfile"
+          >
+        </CircleButton>
+        </div>
       </div>
       <div class="subTitle">Your Current Job Offer</div>
       <div class="joboffer-card-container">
-        <div v-for="jobOffer in dataJobOffer">
+        <div v-for="jobOffer in dataJobOffer" class="card-job-container">
           <CardJobCompany
             :title="jobOffer['title_job']"
             :id="jobOffer['id_job']"
@@ -226,12 +229,28 @@ const unShowEditProfile = () => {
   margin-bottom: 5rem;
   margin-top: 5rem;
   display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3rem;
+}
+.edit-button-container {
+  display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
   gap: 3rem;
 }
 .company-presentation-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.card-job-container {
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -248,6 +267,18 @@ const unShowEditProfile = () => {
     gap: 2rem;
     margin-bottom: 3.5rem;
     margin-top: 3.5rem;
+  }
+
+  .edit-button-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+  }
+
+  .company-presentation-container{
+    margin-top: 6rem;
   }
 }
 </style>

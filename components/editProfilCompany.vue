@@ -7,8 +7,6 @@ const {getCompanyById, editCompany} = useDBCompany();
 
 const {user} = useAuth();
 
-const router = useRouter();
-
 
 
 const data = await getCompanyById(user.value.id);
@@ -30,9 +28,6 @@ const checkDataCompany = () => {
     return true;
 }
 
-
-const timeline = gsap.timeline({defaults: {duration: 0.5}});
-
 const dataCompany = async () => {
 
     if(checkDataCompany()) {
@@ -44,20 +39,12 @@ const dataCompany = async () => {
             console.log(err);
         }
     }
-    setTimeout(() =>{
-        timeline.to(".container-edit-profil", {opacity: 0, display: "none"});
+    
 
-    }, 100)
-
-    router.push("/home");
 
 }
 
-const deleteForm = () =>
-{
-    timeline.to(".container-edit-profil", {opacity: 0, display: "none"});
-    router.push("/home");
-}
+
 
 
 </script>
@@ -69,7 +56,6 @@ const deleteForm = () =>
         <div
         class="sign-in"  
         >
-        <div class="text deleteForm" @click="deleteForm">X</div>
         <div class="subTitle">Profil</div>
         <div class="sign-in-form">
             <div class="sign-in-form-data">
@@ -148,9 +134,18 @@ const deleteForm = () =>
     align-items: center;
     width: 100%;
     height: 100%;
+    transform: translateX(100%) ;
     gap: 3rem;
     margin-top: 3rem;
     position: relative;
+    animation: 1 slideIn 1s forwards;
+
+}
+
+@keyframes slideIn {
+  100% {
+    transform: translateX(0);
+  }
 }
 
 .sign-in {
