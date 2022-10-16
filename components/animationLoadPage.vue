@@ -1,4 +1,11 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+setTimeout(() => {
+  const load = document.querySelector(".load-container");
+
+  // remove load from dom
+  load?.remove();
+}, 2500);
+</script>
 
 <template>
   <div class="load-container">
@@ -10,6 +17,9 @@
 </template>
 
 <style scoped>
+.display-none {
+  display: none;
+}
 .text-load-right {
   border: #00454f 1rem solid;
   border-right: none;

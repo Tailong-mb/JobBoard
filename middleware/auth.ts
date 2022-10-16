@@ -5,5 +5,5 @@ export default defineNuxtRouteMiddleware(() => {
     if (!isLoggedIn()) {
       navigateTo("/signIn");
     }
-  }, 0.0001);
+  }, 0.000001);
 });
