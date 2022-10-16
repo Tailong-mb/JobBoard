@@ -1,5 +1,30 @@
 <script setup lang="ts">
-const { changePassword, changeEmail, user } = useAuth();
+const { changePassword, changeEmail, user, getMetadataRole } = useAuth();
+const { supabaseService } = useSupabaseService();
+const { signOut } = useAuth();
+const { getJobByCompanyId, deleteJobByCompanyId } = useDBJob();
+const { deleteCandidacyByIdJob, deleteCandidacyByIdWorker } = useDBCandidacy();
+
+const clickDelete = async () => {
+  try {
+    await signOut();
+    if (getMetadataRole() === "company") {
+      const companyData = await getJobByCompanyId(user.value.id);
+      companyData.forEach(async (job) => {
+        await deleteCandidacyByIdJob(job.id_job);
+      });
+      await deleteJobByCompanyId(user.value.id);
+      supabaseService.auth.api.deleteUser(user.value.id);
+    } else {
+      await deleteCandidacyByIdWorker(user.value.id);
+      supabaseService.auth.api.deleteUser(user.value.id);
+    }
+    const router = useRouter();
+    router.push("/");
+  } catch (err) {
+    alert(err.message);
+  }
+};
 
 const modifyAuth = reactive({
   password: "",
@@ -81,6 +106,11 @@ const clickChangeAuth = async () => {
       text="Change My Password"
       @click="clickChangeAuth"
     ></CircleButton>
+
+    <RectangleButton
+      text="Suppress Account"
+      @click="clickDelete"
+    ></RectangleButton>
 
     <div class="error-message" v-if="modifyAuth.error !== ''">
       <div class="subTitle">Error</div>
