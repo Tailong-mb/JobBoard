@@ -115,9 +115,8 @@ const resetPassword = async () => {
         Password forgotten ?
       </div>
     </div>
-    <a href="/home">
-      <CircleButton text="Connect" @click="handleSubmit"></CircleButton>
-    </a>
+
+    <CircleButton text="Connect" @click="handleSubmit"></CircleButton>
   </div>
 
   <!-- PASSWORD FORGET -->
