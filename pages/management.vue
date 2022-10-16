@@ -7,7 +7,7 @@ const { getAllJob, insertJob } = useDBJob();
 const { getAllWorkers, insertWorker } = useDBWorker();
 const { getAllCompanies, insertNewLineCompany } = useDBCompany();
 const { getAllUsers, deleteUserById, createUser } = useDBAuth();
-const { getMetadataRole } = useAuth();
+const { getMetadataRole, signOut } = useAuth();
 const candidacyData = await getAllcandidacy();
 const jobData = await getAllJob();
 const workerData = await getAllWorkers();
@@ -18,8 +18,13 @@ setTimeout(() => {
   role.value = getMetadataRole();
 }, 0.0000001);
 const menu = ref([true, false, false, false, false]);
-const menuText = ["Candidacy", "Job", "Worker", "Company", "User"];
+const menuText = ["Candidacy", "Job", "Worker", "Company", "User", "Logout"];
 const menuClick = (index: number) => {
+  if (index === 5) {
+    signOut();
+    alert("You have been logged out");
+  }
+
   menu.value = [false, false, false, false, false];
   menu.value[index] = true;
 };
@@ -350,11 +355,11 @@ const authValues = reactive({
           class="text section-row-data"
           v-model="valuesCandidacy.id_worker"
         />
+        <input class="text section-row-data" v-model="valuesCandidacy.status" />
         <input
           class="text section-row-data"
-          v-model="valuesCandidacy.status"
+          v-model="valuesCandidacy.message"
         />
-        <input class="text section-row-data" v-model="valuesCandidacy.message" />
       </div>
       <div class="text button-add" @click="insertCandidacyClick">Add</div>
     </div>

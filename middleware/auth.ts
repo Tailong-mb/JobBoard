@@ -1,9 +1,13 @@
 export default defineNuxtRouteMiddleware(() => {
-  const { isLoggedIn } = useAuth();
+  const { isLoggedIn, getMetadataRole } = useAuth();
 
   setTimeout(() => {
     if (!isLoggedIn()) {
       navigateTo("/signIn");
+    }
+
+    if (isLoggedIn && getMetadataRole() === "admin") {
+      navigateTo("/management");
     }
   }, 0.000001);
 });
