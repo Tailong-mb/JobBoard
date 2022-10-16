@@ -1,9 +1,11 @@
 <script setup lang="ts">
 const { changePassword, changeEmail, user, getMetadataRole } = useAuth();
-const { supabaseService } = useSupabaseService();
 const { signOut } = useAuth();
 const { getJobByCompanyId, deleteJobByCompanyId } = useDBJob();
 const { deleteCandidacyByIdJob, deleteCandidacyByIdWorker } = useDBCandidacy();
+const { deleteUserById } = useDBAuth();
+const { deleteCompany } = useDBCompany();
+const { deleteWorker } = useDBWorker();
 
 const delet = ref("");
 
@@ -13,20 +15,20 @@ setTimeout(() => {
 
 const clickDelete = async () => {
   try {
-    await signOut();
     if (getMetadataRole() === "company") {
       const companyData = await getJobByCompanyId(delet.value);
       companyData.forEach(async (job) => {
         await deleteCandidacyByIdJob(job.id_job);
       });
       await deleteJobByCompanyId(delet.value);
-      await supabaseService.auth.api.deleteUser(delet.value);
+      await deleteCompany(delet.value);
     } else {
       await deleteCandidacyByIdWorker(delet.value);
-      await supabaseService.auth.api.deleteUser(delet.value);
+      await deleteWorker(delet.value);
     }
-    const router = useRouter();
-    router.push("/");
+    await deleteUserById(delet.value);
+    // await signOut();
+    alert("Accound Delete");
   } catch (err) {
     alert(err.message);
   }
