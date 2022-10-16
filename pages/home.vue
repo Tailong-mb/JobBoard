@@ -20,6 +20,7 @@ setTimeout(() => {
 
 <template>
   <div>
+    <AnimationLoadPage></AnimationLoadPage>
     <logo></logo>
     <NavBar></NavBar>
     <CompanyHome

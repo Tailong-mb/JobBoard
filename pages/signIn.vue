@@ -7,8 +7,6 @@ const { sendEmailResetPassword } = useEmail();
 const forgetPassword = ref(false);
 const emailSend = ref(false);
 
-const router = useRouter();
-
 const getBackToSignIn = () => {
   gsap.to(".forgetPasswordContainer", {
     duration: 1,
@@ -42,13 +40,10 @@ const input = reactive({
 // Handle The Submit Form
 const handleSubmit = async () => {
   try {
-    const signValues = await signIn({
+    await signIn({
       email: input.email,
       password: input.password,
     });
-    if (signValues) {
-      router.push("/home");
-    }
   } catch (err) {
     authError.value = err.message;
     setTimeout(() => {
@@ -120,7 +115,9 @@ const resetPassword = async () => {
         Password forgotten ?
       </div>
     </div>
-    <CircleButton text="Connect" @click="handleSubmit"></CircleButton>
+    <a href="/home">
+      <CircleButton text="Connect" @click="handleSubmit"></CircleButton>
+    </a>
   </div>
 
   <!-- PASSWORD FORGET -->
