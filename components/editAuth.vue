@@ -27,8 +27,8 @@ const clickDelete = async () => {
       await deleteWorker(delet.value);
     }
     await deleteUserById(delet.value);
-    // await signOut();
     alert("Accound Delete");
+    await signOut();
   } catch (err) {
     alert(err.message);
   }
