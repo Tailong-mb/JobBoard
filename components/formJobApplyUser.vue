@@ -47,7 +47,12 @@ textarea {
   align-items: center;
   justify-content: center;
   width: 100%;
+  height: 1000px;
   min-height: 100vh;
   gap: 2rem;
 }
+
+
+
+
 </style>

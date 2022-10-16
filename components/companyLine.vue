@@ -20,7 +20,6 @@ const companyValues = reactive({
 
 const updateCompanyClick = async () => {
   try {
-    await deleteCandidacyByIdCompany(companyValues.id_company);
     await updateCompany(companyValues);
     alert("Update Success");
   } catch (err) {

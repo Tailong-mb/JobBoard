@@ -154,6 +154,7 @@ const submitJobOffer = async () => {
 }
 .formJobOffer {
   position: absolute;
+  padding-top: 8rem;
   top: 0;
   left: 0;
   display: flex;

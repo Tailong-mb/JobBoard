@@ -154,10 +154,10 @@ const unShowEditProfile = () => {
           @click="showCreateJobOffer"
         ></CircleButton>
         <div class="edit-button-container">
-          <RectangleButton
+          <CircleButton
           text="Change authentification"
           @click="showEditAuth"
-        ></RectangleButton>
+        ></CircleButton>
           
         <CircleButton 
           text="change information"

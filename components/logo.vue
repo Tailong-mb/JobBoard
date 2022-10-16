@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { gsap } from "gsap";
 
+const router = useRouter();
+
 const mouseEnter = () => {
   gsap.to(".letter", {
     transform: "rotate(180deg)",
@@ -29,10 +31,14 @@ const mouseOut = () => {
     delay: 0.2,
   });
 };
+
+const pushHome = ( ) => {
+  router.push("/");
+};
 </script>
 
 <template>
-  <div class="logo-container" @mouseenter="mouseEnter" @mouseleave="mouseOut">
+  <div class="logo-container" @mouseenter="mouseEnter" @mouseleave="mouseOut" @click="pushHome">
     <div class="letter">N</div>
     <div class="letter">E</div>
     <div class="letter">A</div>

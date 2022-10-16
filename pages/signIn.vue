@@ -1,11 +1,14 @@
 <script setup lang="ts">
 import { gsap } from "gsap";
+import { routerKey } from "vue-router";
 
 const { signIn } = useAuth();
 const { sendEmailResetPassword } = useEmail();
 
 const forgetPassword = ref(false);
 const emailSend = ref(false);
+
+const router = useRouter();
 
 const getBackToSignIn = () => {
   gsap.to(".forgetPasswordContainer", {
@@ -44,6 +47,9 @@ const handleSubmit = async () => {
       email: input.email,
       password: input.password,
     });
+    
+      router.push("/home");
+    
   } catch (err) {
     authError.value = err.message;
     setTimeout(() => {
@@ -115,9 +121,8 @@ const resetPassword = async () => {
         Password forgotten ?
       </div>
     </div>
-    <a href="/home">
+    
       <CircleButton text="Connect" @click="handleSubmit"></CircleButton>
-    </a>
   </div>
 
   <!-- PASSWORD FORGET -->
@@ -256,6 +261,10 @@ const resetPassword = async () => {
   gap: 5rem;
   justify-content: space-between;
   align-items: center;
+}
+
+a {
+  text-decoration: none;
 }
 
 .passwordForgotten {

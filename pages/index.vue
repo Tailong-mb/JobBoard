@@ -7,9 +7,7 @@ const router = useRouter();
 
 await checkEmailResetPasswordEvent();
 
-const buttonEnter = () => {
-  router.push('/searchJob');
-};
+
 
 </script>
 
@@ -21,18 +19,7 @@ const buttonEnter = () => {
       <logo></logo>
     </div>
 
-    <div class="subscribe">
-      <div clas="signIn">
-        <a href="/signIn">
-          <CircleButton text="Sign In"></CircleButton>
-        </a>
-      </div>
-      <div class="signUp">
-        <a href="/registration">
-          <CircleButton text="Sign Up"></CircleButton>
-        </a>
-      </div>
-    </div>
+    
 
     <div class="bigTitle">
       <div class="wordNear">NEAR</div>
@@ -68,7 +55,9 @@ const buttonEnter = () => {
             In partnership with <span class="epi">Epi<span class="steak">Steak</span></span>.
         </div>
         <div class="button-enter">
-            <ButtonEnter text="Enter" @click="buttonEnter"></ButtonEnter>
+          <a href="/jobsearch">
+            <ButtonEnter text="Enter"></ButtonEnter>
+          </a>
         </div>
     </div>
 
@@ -141,11 +130,13 @@ const buttonEnter = () => {
   font-style: italic;
 }
 
-
-    .button-enter{
-        position: absolute;
-        top: 5rem;
-    }
+a {
+  text-decoration: none;
+}
+.button-enter{
+  position: absolute;
+  top: 5rem;
+}
 @media screen and (min-width: 600px) {
   .container {
     display: flex;
@@ -159,7 +150,7 @@ const buttonEnter = () => {
 
   .logo {
     position: absolute;
-    right: 5rem;
+    right: 7rem;
   }
 
   .bigTitle {

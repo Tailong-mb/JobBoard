@@ -37,7 +37,7 @@ const updateJob = async () => {
 
 const deleteJob = async () => {
   try {
-    await candidacyDB.deleteCandidacyByIdCompany(valuesLineJob.id_company);
+    await candidacyDB.deleteCandidacyByIdJob(valuesLineJob.id_job);
     await jobOfferDB.deleteJobById(valuesLineJob.id_job);
     alert("Job deleted");
   } catch (err) {

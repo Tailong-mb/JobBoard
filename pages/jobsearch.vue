@@ -6,6 +6,7 @@ const jobData = await getAllJob();
 
 <template>
   <div class="jobsearch-container">
+    
     <div class="subTitle">Job Offers</div>
     <div class="joboffer-container" v-for="job in jobData">
       <Jobcard
@@ -27,9 +28,9 @@ const jobData = await getAllJob();
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  width: 100%;
   min-height: 100vh;
   padding: 20px;
 }
+
+
 </style>

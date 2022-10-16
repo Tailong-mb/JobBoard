@@ -1,12 +1,14 @@
 <script setup lang="ts">
 const { getCompanyNameById } = useDBCompany();
-const { isLoggedIn } = useAuth();
+const { isLoggedIn, user } = useAuth();
+const {getCandidacyByUserId} = useDBCandidacy();
 
 const isConnected = ref(false);
 
 setTimeout(() => {
   isConnected.value = isLoggedIn();
 }, 1);
+
 
 const showMoreToggle = ref(false);
 const apply = ref(false);
@@ -30,18 +32,46 @@ const companyName = companyNameQuery[0].name;
 
 const jobDescriptionShorted = jobCardValue.jobDescription.slice(0, 50);
 
+
+
 const clickShowMore = () => {
   showMoreToggle.value = !showMoreToggle.value;
   buttonShowText.value = showMoreToggle.value ? "Show Less" : "Show More";
 };
 
-const clickApply = () => {
-  if (isConnected) {
+const checkCandidacy = async () => {
+
+  const getCandidacy = await getCandidacyByUserId(user.value.id);
+  
+  let bool = false;
+  getCandidacy.forEach((candidacy) => {
+    
+    if (candidacy.id_job === jobCardValue.idJob) {
+      
+      bool = true;
+      return;
+    }
+  });
+  return bool;
+
+}
+
+
+const clickApply = async () => {
+  const alreadyApplied = await checkCandidacy();
+  if(alreadyApplied){
+    alert("You already applied for this job");
+    return;
+  }
+
+  if (isConnected.value === true) {
     apply.value = !apply.value;
   } else {
     applyNoUser.value = !applyNoUser.value;
   }
+  
 };
+
 </script>
 
 <template>

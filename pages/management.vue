@@ -86,7 +86,7 @@ const insertJobClick = async () => {
 
 const valuesCandidacy = reactive({
   id_job: 0,
-  id_worder: "",
+  id_worker: "",
   message: "",
   status: "",
 });
@@ -356,7 +356,7 @@ const authValues = reactive({
       </div>
       <div class="text">Insert a new line here :</div>
       <div class="section-row" style="margin-bottom: 1rem">
-        <div class="section-row-data text">ID Candidacy</div>
+        <div class="section-row-data text">ID Job</div>
         <div class="section-row-data text">ID User</div>
         <div class="section-row-data text">Status</div>
         <div class="section-row-data text">Message</div>
@@ -365,13 +365,13 @@ const authValues = reactive({
         <input class="text section-row-data" v-model="valuesCandidacy.id_job" />
         <input
           class="text section-row-data"
-          v-model="valuesCandidacy.id_worder"
+          v-model="valuesCandidacy.id_worker"
         />
         <input
           class="text section-row-data"
-          v-model="valuesCandidacy.message"
+          v-model="valuesCandidacy.status"
         />
-        <input class="text section-row-data" v-model="valuesCandidacy.status" />
+        <input class="text section-row-data" v-model="valuesCandidacy.message" />
       </div>
       <div class="text button-add" @click="insertCandidacyClick">Add</div>
     </div>

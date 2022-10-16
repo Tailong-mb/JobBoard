@@ -38,7 +38,6 @@ const useDBJob = () => {
     const { error } = await supabase
       .from("joboffer")
       .update({
-        id_job: job.id_job,
         id_company: job.id_company,
         title_job: job.title_job,
         description_job: job.description_job,
@@ -48,7 +47,7 @@ const useDBJob = () => {
         location_job: job.location_job,
         degree_job: job.degree_job,
       })
-      .eq("id_joboffer", job.id_joboffer);
+      .eq("id_job", job.id_job);
     if (error) throw error;
   };
 
