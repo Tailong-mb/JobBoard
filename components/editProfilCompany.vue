@@ -3,38 +3,36 @@
 
 import {gsap} from "gsap";
 
-const {editWorker, getWorkerById} = useDBWorker();
+const {getCompanyById, editCompany} = useDBCompany();
 
 const {user} = useAuth();
 
-const router = useRouter();
 
 
+const data = await getCompanyById(user.value.id);
 
-const data = await getWorkerById(user.value.id);
-
-const editWorkerData = reactive({
-    first_name: data[0].first_name,
-    last_name: data[0].last_name,
-    phone_number: data[0].phone_number,
-    degree: data[0].degree,
+const editCompanyData = reactive({
+    siret: data[0].siret,
+    name: data[0].name,
+    location: data[0].location,
+    description: data[0].description,
 });
 
-const checkDataWorker = () => {
-    if(editWorkerData.first_name === "" || editWorkerData.last_name === "" || editWorkerData.phone_number === "" || editWorkerData.degree === "" ){
+const checkDataCompany = () => {
+    if(editCompanyData.siret === "" 
+    || editCompanyData.name === "" 
+    || editCompanyData.location === "" 
+    || editCompanyData.description === "" ){
         return false;
 }
     return true;
 }
 
+const dataCompany = async () => {
 
-const timeline = gsap.timeline({defaults: {duration: 0.5}});
-
-const DataWorker = async () => {
-
-    if(checkDataWorker()) {
+    if(checkDataCompany()) {
         try{
-            const data = await editWorker(editWorkerData,  user.value.id);
+            const data = await editCompany(editCompanyData,  user.value.id);
             if(data !== null) alert("Edit successful");
         }
         catch(err){
@@ -43,7 +41,11 @@ const DataWorker = async () => {
     }
     
 
+
 }
+
+
+
 
 </script>
 
@@ -65,7 +67,7 @@ const DataWorker = async () => {
                     name="password"
                     required
                     placeholder="phone number"
-                    v-model="editWorkerData.phone_number"
+                    v-model="editCompanyData.siret"
                     />
                     <div class="underline"></div>
                     <label class="text"></label>
@@ -77,7 +79,7 @@ const DataWorker = async () => {
                     name="password"
                     required
                     placeholder="first Name"
-                    v-model="editWorkerData.first_name"
+                    v-model="editCompanyData.name"
             
                     />
                     <div class="underline"></div>
@@ -90,7 +92,7 @@ const DataWorker = async () => {
                     name="password"
                     required
                     placeholder="last name"
-                    v-model="editWorkerData.last_name"
+                    v-model="editCompanyData.location"
                     />
                     <div class="underline"></div>
                     <label class="text"></label>
@@ -102,7 +104,7 @@ const DataWorker = async () => {
                     name="password"
                     required
                     placeholder="degree"
-                    v-model="editWorkerData.degree"
+                    v-model="editCompanyData.description"
                     />
                     <div class="underline"></div>
                     <label class="text"></label>
@@ -111,7 +113,13 @@ const DataWorker = async () => {
             
         </div>
 
-        <div><RectangleButton class="confirm" text="confirm" @click="DataWorker"></RectangleButton></div>
+        <div>
+            <RectangleButton 
+            class="confirm" 
+            text="confirm" 
+            @click="dataCompany">
+            </RectangleButton>
+    </div>
 
     </div>
     </div>
@@ -126,11 +134,12 @@ const DataWorker = async () => {
     align-items: center;
     width: 100%;
     height: 100%;
+    transform: translateX(100%) ;
     gap: 3rem;
     margin-top: 3rem;
     position: relative;
-    transform: translateX(100%);
     animation: 1 slideIn 1s forwards;
+
 }
 
 @keyframes slideIn {

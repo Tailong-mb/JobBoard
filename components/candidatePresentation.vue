@@ -12,47 +12,6 @@ const candidateInformation = defineProps<{
 
 }>();
 
-const editProfil = ref(false);
-
-const appliedCompany = ref(false);
-
-const showEditProfil = () => {
-    editProfil.value = !editProfil.value;
-    setTimeout(() => {
-        
-        const timeline = gsap.timeline({defaults: {duration: 0.5}});
-        timeline.to(".container", {opacity: 0, display: "none"});
-        timeline.to(".edit-user-container", {opacity: 1, display: "flex"}, "-=0.5");
-    
-    }, 100);
-    
-}
-
-const hideEditProfil = () => {
-    editProfil.value = !editProfil.value;
-
-    setTimeout(() => {
-    const timeline = gsap.timeline({defaults: {duration: 0.5}});
-    timeline.to(".edit-user-container", {opacity: 0, display: "none"});
-    timeline.to(".container", {opacity: 1, display: "flex"}, "-=0.5");
-        
-    }, 100);
-    
-    
-}
-
-const showAppliedCompany = () => {
-    appliedCompany.value = !appliedCompany.value;
-    setTimeout(() => {
-        
-        const timeline = gsap.timeline({defaults: {duration: 0.5}});
-        timeline.to(".container", {opacity: 0, display: "none"});
-        timeline.to(".applied-company", {opacity: 1, display: "flex"}, "-=0.5");
-    
-    }, 100);
-    
-}
-
 </script>
 
 <template>
@@ -70,18 +29,8 @@ const showAppliedCompany = () => {
             </div>
             <h2>{{firstName}} {{lastName}}</h2>
         </div>
-        <div class="button">
-            <rectangle-button class="" text="edit" @click="showEditProfil" v-if="editProfil === false"></rectangle-button>
-            <rectangle-button class="" text="applied" @click="showAppliedCompany" v-if="editProfil === false"></rectangle-button>
-        </div>
     </div>
-    <div class="edit-user-container" v-if="editProfil === true">
-        <edit-profil-user :id="id" class="edit"></edit-profil-user>
-    </div>
-
-    <div class="applied-company" v-if="appliedCompany === true">
-        <company-applied></company-applied>
-    </div>
+        
 </template>
 
 <style scoped>
@@ -116,13 +65,6 @@ const showAppliedCompany = () => {
     justify-content: center;
     gap: 1rem;
 }
-.button{
-    display: flex;
-    flex-direction: column;
-    position: absolute;
-    bottom: -15rem;
-    gap: 2rem;
-}
 
 .edit{
     display: flex;
@@ -140,14 +82,7 @@ h2{
     bottom: -38rem;
 }
 
-.edit-user-container{
-    display: none;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 3rem;
-    position: relative;
-}
+
 
 .text{
     margin: 1rem;
@@ -161,7 +96,7 @@ h2{
         flex-direction: row;
         position: absolute;
         bottom: -17rem;
-        gap: 5rem;
+        gap: 3rem;
     }
 }
 

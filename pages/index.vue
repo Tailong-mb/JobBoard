@@ -3,7 +3,14 @@
 <script setup lang="ts">
 const { checkEmailResetPasswordEvent } = useEmail();
 
+const router = useRouter();
+
 await checkEmailResetPasswordEvent();
+
+const buttonEnter = () => {
+  router.push('/searchJob');
+};
+
 </script>
 
 <template>
@@ -32,15 +39,37 @@ await checkEmailResetPasswordEvent();
       <div class="wordYou">YOU</div>
     </div>
 
-    <div class="text">
-      <span class="nearYou">Near <span class="you">You</span></span> is the
-      first platform in numerics allowing meetings between companies and
-      encoders.<br />
-      Average hiring rate lower than three weeks and average salary is equal to
-      50k$ per year.<br />
-      In partnership with
-      <span class="epi">Epi<span class="steak">Steak</span></span
-      >.
+        <div class="subscribe">
+
+            <div clas="signIn">
+                <a href="/signIn">
+                    <CircleButton text="Sign In"></CircleButton>
+                </a>
+            </div>
+            <div class="signUp">
+                <a href="/registration">
+                    <RectangleButton text="Sign Up"></RectangleButton>
+                </a>
+            </div>
+        </div>
+
+        <div class="bigTitle">
+            <div class="wordNear">
+                NEAR
+            </div>
+            <div class="wordYou">
+                YOU
+            </div>
+        </div>
+
+        <div class="text">
+            <span class="nearYou">Near <span class="you">You</span></span> is the first platform in numerics allowing meetings between companies and encoders.<br />
+            Average hiring rate lower than three weeks and average salary is equal to 50k$ per year.<br />
+            In partnership with <span class="epi">Epi<span class="steak">Steak</span></span>.
+        </div>
+        <div class="button-enter">
+            <ButtonEnter text="Enter" @click="buttonEnter"></ButtonEnter>
+        </div>
     </div>
 
 </template>
@@ -112,6 +141,11 @@ await checkEmailResetPasswordEvent();
   font-style: italic;
 }
 
+
+    .button-enter{
+        position: absolute;
+        top: 5rem;
+    }
 @media screen and (min-width: 600px) {
   .container {
     display: flex;
@@ -149,13 +183,19 @@ await checkEmailResetPasswordEvent();
     color: #00454f;
   }
 
-  .text {
-    display: block;
-    position: absolute;
-    right: 5rem;
-    top: 20rem;
-    width: 20rem;
-  }
+    .text{
+        display: block;
+        position: absolute;
+        right: 5rem;
+        top: 20rem;
+        width: 20rem;
+    }
+
+    .button-enter{
+        position: absolute;
+        top: 5rem;
+        right: 5rem;
+    }   
 }
 
 a {

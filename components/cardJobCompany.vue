@@ -1,4 +1,7 @@
 <script setup lang="ts">
+
+// take job id
+
 const titleProps = defineProps<{
   title: string;
   id: string;
@@ -6,10 +9,16 @@ const titleProps = defineProps<{
 
 const statutAppliant = ref(false);
 
+
 const { deleteJobById } = useDBJob();
+
+const {getCandidacyByJobId, deleteCandidacyByIdJob} = useDBCandidacy();
+
+const {getWorkerById} = useDBWorker();
 
 const clickDeleteCard = async () => {
   try {
+    await deleteCandidacyByIdJob(titleProps.id);
     await deleteJobById(titleProps.id);
     alert("Job deleted");
   } catch (err) {
@@ -17,14 +26,30 @@ const clickDeleteCard = async () => {
   }
 };
 
+
 const showAppliant = () => {
   statutAppliant.value = !statutAppliant.value;
 };
 
+// take table candidacy with id job
+
+const dataCandidacy = await getCandidacyByJobId(titleProps.id);
+
+
+console.log("dataCandidacy",dataCandidacy)
+
+
+// hide appliant
+
+const hideAppliant = () => {
+  statutAppliant.value = !statutAppliant.value;
+};
+
+
 </script>
 
 <template>
-  <div class="card-job-title">
+  <div class="card-job-title" v-if="statutAppliant === false">
     <div class="card-job-information-name-cross">
       <div class="subsubTitle">{{ titleProps.title }}</div>
       <div
@@ -35,8 +60,26 @@ const showAppliant = () => {
         <div class="card-job-cross card-job-cross-right"></div>
       </div>
     </div>
-    <TriangleButton text="Show Appliant"></TriangleButton>
+    <TriangleButton text="Show Appliant" @click="showAppliant">
+      
+    </TriangleButton>
+
+    
   </div>
+
+      <!-- show card with all candidate for this job -->
+
+  <div class="" v-if="statutAppliant === true">
+      <CandidateCard 
+      v-for="worker in dataCandidacy"
+      :id_worker="worker.id_worker"
+      :id_candidacy="worker.id_candidacies"
+      >
+      </CandidateCard>
+      <TriangleButton class="triangleButton" text="Hide Appliant" @click="hideAppliant">
+      </TriangleButton>
+  </div>
+
 </template>
 
 <style scoped>
@@ -87,5 +130,9 @@ const showAppliant = () => {
 
 .card-job-cross-right {
   transform: translateX(1rem) translateY(-1.5rem) rotate(-45deg);
+}
+
+.triangleButton {
+  margin-top: 1rem;
 }
 </style>

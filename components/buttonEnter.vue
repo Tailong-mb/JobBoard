@@ -1,72 +1,77 @@
 <script setup lang="ts">
+import { gsap } from "gsap";
+
+const animationButton = () => {
+  const timeline = gsap.timeline({ defaults: { duration: 0.6 } });
+
+  timeline.to(".circle", { opacity: "1", ease: "power1" });
+  timeline.to(".button-text", { x: "2rem", ease: "power1" }, "-=0.6");
+};
+
+const animationButtonReturn = () => {
+  const timeline = gsap.timeline({ defaults: { duration: 0.6 } });
+
+  timeline.to(".circle", { opacity: "0.4", ease: "power1" });
+  timeline.to(".button-text", { x: "0rem", ease: "power1" }, "-=0.6");
+};
+
+const buttonText = defineProps<{ text: string }>();
 
 </script>
 
 <template>
-
-    <div class="container">
-        <div class="text">
-            Enter
-        </div>
-        <div class="circleContainer">
-            <div class="firstCircle" style="--fill:20%">
-
-            </div>
-            <div class="secondCircle">
-
-            </div>
-        </div>
-    
+  <div
+    class="container"
+    @mouseover="animationButton"
+    @mouseleave="animationButtonReturn"
+  >
+    <div class="circle"></div>
+    <div class="text button-text">
+        {{ text }}
     </div>
-
+  </div>
 </template>
 
 <style scoped>
-.container{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    height: 10rem;
-    width: 10rem;
-    opacity: 1;
+.container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
 }
 
-.text{
-    position: absolute;
-    left: 1rem;
+.circle {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+  border-color: #8f71be;
+  opacity: 0.4;
+  border-style: solid;
+  border-width: 1px;
 }
 
-.circleContainer{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-    height: 10rem;
-    width: 10rem;
+.button-text {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  margin-left: 1rem;
+  right: 2.5rem;
 }
 
-.firstCircle{
-    position: absolute;
-    height: 4rem;
-    width: 4rem;
-    border-radius: 50%;
-    border-color: #8F71BE;
-    border: 1;
-    border-style: solid;
-    opacity: 1;
-}
 
-.secondCircle{
-    position: absolute;
-    height: 5rem;
-    width: 5rem;
-    border-radius: 50%;
-    border-color: #8F71BE;
-    border: 1;
-    border-style: solid;    
-    opacity: 0.5;
+
+
+
+@media (max-width: 700px) {
+  
+
+  .circle {
+    width: 3rem;
+    height: 3rem;
+  }
 }
 </style>

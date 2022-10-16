@@ -1,12 +1,44 @@
+<!-- card for candidate who apply to the job -->
+
 <script setup lang="ts">
 import { gsap } from "gsap";
 
 const infoCandidate = defineProps<{
-  name: string;
-  degree: string;
-  email: string;
-  description: string;
+  id_worker: string;
+  id_candidacy: string;
 }>();
+
+const {getWorkerById} = useDBWorker();
+
+// take informations worker with id worker in cardJobCompany
+
+const dataWorker = await getWorkerById(infoCandidate.id_worker);
+
+console.log(dataWorker)
+
+
+// delete candidacy 
+
+const {getCandidacyById} = useDBCandidacy();
+
+const {deleteCandidacyById} = useDBCandidacy();
+
+const candidacyById = await getCandidacyById(infoCandidate.id_candidacy);
+
+const clickDeleteCandidacy = async () => {
+  try {
+    await deleteCandidacyById(candidacyById[0].id_candidacies);
+    alert("Candidacy deleted");
+  } catch (err) {
+    alert(err.message);
+  }
+};
+
+console.log("candidacyId", candidacyById)
+
+
+
+// gsap
 
 const cardCandidateCrossEnter = () => {
   gsap.to(".card-candidate-cross", {
@@ -42,7 +74,8 @@ const cardCandidateCrossLeave = () => {
   });
 };
 
-const cardCandidateCrossClick = () => {
+const cardCandidateCrossClick = async () => {
+  await clickDeleteCandidacy();
   const t1 = gsap.timeline();
 
   t1.to(".card-candidate", {
@@ -66,23 +99,24 @@ const cardCandidateCrossClick = () => {
     <div class="card-candidate-right">
       <div class="card-candidate-information">
         <div class="card-candidate-information-name-cross">
-          <div class="subsubTitle">{{ name }}</div>
+          <div class="subsubTitle">{{ dataWorker[0].first_name }} {{ dataWorker[0].last_name}}</div>
           <div
             class="card-candidate-information-cross-container"
             @mouseenter="cardCandidateCrossEnter"
             @mouseleave="cardCandidateCrossLeave"
             @click="cardCandidateCrossClick"
+
+            
           >
-            <div class="card-candidate-cross card-candidate-cross-left"></div>
+            <div class="card-candidate-cross card-candidate-cross-left" ></div>
             <div class="card-candidate-cross card-candidate-cross-right"></div>
           </div>
         </div>
-        <div class="text">{{ degree }}</div>
-        <a href="mailto: {{email}}" class="text send-email-candidate">{{
-          email
-        }}</a>
+        <div class="text">{{ dataWorker[0].degree }}</div>
+        <a href="mailto: {{email}}" class="text send-email-candidate"></a>
       </div>
-      <div class="text">{{ description }}</div>
+      <div class="text">{{ dataWorker[0].phone_number }}</div>
+      <div class="text">{{ candidacyById[0].message_candidacies }}</div>
       <div class="card-candidate-button">
         <RectangleButton text="See more"></RectangleButton>
       </div>

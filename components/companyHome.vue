@@ -1,4 +1,4 @@
-<script setup lang="ts">
+ <script setup lang="ts">
 import { gsap } from "gsap";
 const companyProps = defineProps<{
   id: string;
@@ -9,6 +9,7 @@ const { getCompanyById } = useDBCompany();
 const { getJobTitleByCompanyId } = useDBJob();
 const createJobOffer = ref(false);
 const changeAuth = ref(false);
+const changeProfil = ref(false);
 
 const dataCompany = await getCompanyById(companyProps.id);
 const dataJobOffer = await getJobTitleByCompanyId(companyProps.id);
@@ -29,6 +30,15 @@ const showCreateJobOffer = () => {
     duration: 1,
   });
   createJobOffer.value = true;
+};
+
+const showEditProfile = () => {
+  gsap.to(".company-presentation-container", {
+    transform: "translateX(100%)",
+    ease: "power4.out",
+    duration: 1,
+  });
+  changeProfil.value = true;
 };
 
 const unShowCreateJobOffer = () => {
@@ -80,6 +90,31 @@ const unShowEditAuth = () => {
     changeAuth.value = false;
   }, 3000);
 };
+
+const unShowEditProfile = () => {
+  gsap.to(".edit-profil-user", {
+    transform: "translateX(-100%)",
+    ease: "power4.out",
+    duration: 1,
+  });
+
+  gsap.to(".arrow-company-container", {
+    transform: "translateX(-100%)",
+    ease: "power4.out",
+    duration: 1,
+  });
+
+  gsap.to(".company-presentation-container", {
+    transform: "translateX(0%)",
+    ease: "power4.out",
+    duration: 1,
+    delay: 1,
+  });
+
+  setTimeout(() => {
+    changeProfil.value = false;
+  }, 3000);
+};
 </script>
 
 <template>
@@ -90,13 +125,21 @@ const unShowEditAuth = () => {
     <div class="formJobOffer" v-if="createJobOffer">
       <FormJobOffer :id="companyProps.id"></FormJobOffer>
     </div>
-
+    
     <div v-if="changeAuth" class="arrow-company-container">
       <arrow @click="unShowEditAuth"></arrow>
     </div>
     <div v-if="changeAuth" class="edit-auth-container">
       <EditAuth></EditAuth>
     </div>
+
+    <div v-if="changeProfil" class="arrow-company-container">
+      <arrow @click="unShowEditProfile"></arrow>
+    </div>
+    <div v-if="changeProfil" class="edit-profil-user">
+      <EditProfilCompany></EditProfilCompany>
+    </div>
+
     <div class="company-presentation-container">
       <CompanyPresentation
         :name="dataCompany[0].name"
@@ -110,14 +153,22 @@ const unShowEditAuth = () => {
           text="Create a job"
           @click="showCreateJobOffer"
         ></CircleButton>
-        <RectangleButton
-          text="Change My information"
+        <div class="edit-button-container">
+          <RectangleButton
+          text="Change authentification"
           @click="showEditAuth"
         ></RectangleButton>
+          
+        <CircleButton 
+          text="change information"
+          @click="showEditProfile"
+          >
+        </CircleButton>
+        </div>
       </div>
       <div class="subTitle">Your Current Job Offer</div>
       <div class="joboffer-card-container">
-        <div v-for="jobOffer in dataJobOffer">
+        <div v-for="jobOffer in dataJobOffer" class="card-job-container">
           <CardJobCompany
             :title="jobOffer['title_job']"
             :id="jobOffer['id_job']"
@@ -178,12 +229,28 @@ const unShowEditAuth = () => {
   margin-bottom: 5rem;
   margin-top: 5rem;
   display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3rem;
+}
+.edit-button-container {
+  display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
   gap: 3rem;
 }
 .company-presentation-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.card-job-container {
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -200,6 +267,18 @@ const unShowEditAuth = () => {
     gap: 2rem;
     margin-bottom: 3.5rem;
     margin-top: 3.5rem;
+  }
+
+  .edit-button-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+  }
+
+  .company-presentation-container{
+    margin-top: 6rem;
   }
 }
 </style>

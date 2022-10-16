@@ -51,15 +51,15 @@ const clickApply = () => {
         <div class="square-logo"></div>
       </div>
       <div class="card-title-container">
-        <div class="subsubTitle">{{ jobTitle }}</div>
+        <div class="subsubTitle">{{ jobCardValue.title }}</div>
         <span class="subsubTitle">-</span>
-        <span class="subsubTitle">{{ companyName }}</span>
+        <span class="subsubTitle">{{ companyName[0].name }}</span>
       </div>
     </div>
     <div class="job-information-container" v-if="showMoreToggle">
       <div class="job-information">
-        <div class="text">Location : {{ jobLocation }}</div>
-        <div class="text">Date : {{ date }}</div>
+        <div class="text">Location : {{ jobCardValue.location }}</div>
+        <div class="text">Date : {{ jobCardValue.dateStart }} to {{jobCardValue.dateEnd}}</div>
       </div>
       <div class="job-information" v-if="showMoreToggle">
         <div class="text">Degree Required : {{ degreeRequired }}</div>
