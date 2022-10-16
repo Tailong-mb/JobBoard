@@ -9,5 +9,5 @@ export default defineNuxtRouteMiddleware(() => {
     if (isLoggedIn && getMetadataRole() === "admin") {
       navigateTo("/management");
     }
-  }, 0.000001);
+  }, 0.00001);
 });
