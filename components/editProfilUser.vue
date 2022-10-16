@@ -41,21 +41,9 @@ const DataWorker = async () => {
             console.log(err);
         }
     }
-    setTimeout(() =>{
-        timeline.to(".container-edit-profil", {opacity: 0, display: "none"});
-
-    }, 100)
-
-    router.push("/home");
+    
 
 }
-
-const deleteForm = () =>
-{
-    timeline.to(".container-edit-profil", {opacity: 0, display: "none"});
-    router.push("/home");
-}
-
 
 </script>
 
@@ -66,7 +54,6 @@ const deleteForm = () =>
         <div
         class="sign-in"  
         >
-        <div class="text deleteForm" @click="deleteForm">X</div>
         <div class="subTitle">Profil</div>
         <div class="sign-in-form">
             <div class="sign-in-form-data">
@@ -142,6 +129,14 @@ const deleteForm = () =>
     gap: 3rem;
     margin-top: 3rem;
     position: relative;
+    transform: translateX(100%);
+    animation: 1 slideIn 1s forwards;
+}
+
+@keyframes slideIn {
+  100% {
+    transform: translateX(0);
+  }
 }
 
 .sign-in {
