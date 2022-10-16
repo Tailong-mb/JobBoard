@@ -5,19 +5,25 @@ const { signOut } = useAuth();
 const { getJobByCompanyId, deleteJobByCompanyId } = useDBJob();
 const { deleteCandidacyByIdJob, deleteCandidacyByIdWorker } = useDBCandidacy();
 
+const delet = ref("");
+
+setTimeout(() => {
+  delet.value = user.value.id;
+}, 1);
+
 const clickDelete = async () => {
   try {
     await signOut();
     if (getMetadataRole() === "company") {
-      const companyData = await getJobByCompanyId(user.value.id);
+      const companyData = await getJobByCompanyId(delet.value);
       companyData.forEach(async (job) => {
         await deleteCandidacyByIdJob(job.id_job);
       });
-      await deleteJobByCompanyId(user.value.id);
-      supabaseService.auth.api.deleteUser(user.value.id);
+      await deleteJobByCompanyId(delet.value);
+      await supabaseService.auth.api.deleteUser(delet.value);
     } else {
-      await deleteCandidacyByIdWorker(user.value.id);
-      supabaseService.auth.api.deleteUser(user.value.id);
+      await deleteCandidacyByIdWorker(delet.value);
+      await supabaseService.auth.api.deleteUser(delet.value);
     }
     const router = useRouter();
     router.push("/");

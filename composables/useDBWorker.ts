@@ -14,8 +14,8 @@ const useDBWorker = () => {
     const { error } = await supabase.from("worker").insert([
       {
         id_worker: worker.id_worker,
-        first_name: worker.name,
-        last_name: worker.surname,
+        first_name: worker.first_name,
+        last_name: worker.last_name,
         phone_number: worker.phone_number,
         degree: worker.degree,
       },

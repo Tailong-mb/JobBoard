@@ -2,9 +2,7 @@
 const { supabase } = useSupabase();
 const { signUp } = useAuth();
 const { insertCandidacyId } = useDBCandidacy();
-
 const idJob = defineProps<{ idJob: number }>();
-
 const signUpUser = reactive({
   email: "",
   password: "",
@@ -14,7 +12,6 @@ const signUpUser = reactive({
   phoneNumber: "",
   message: "",
 });
-
 const checkValuesUser = () => {
   return (
     signUpUser.email === "" ||
@@ -25,16 +22,13 @@ const checkValuesUser = () => {
     signUpUser.phoneNumber === ""
   );
 };
-
 const handleSubmitUser = async () => {
   const regXp = new RegExp(/^(?:(?:\+|00)33|0)\s*[1-9](?:[\s.-]*\d{2}){4}$/);
   if (!regXp.test(signUpUser.phoneNumber)) {
     alert("Invalid Phone Number");
     return;
   }
-
   if (checkValuesUser()) return;
-
   try {
     const user = await signUp({
       email: signUpUser.email,
@@ -53,7 +47,6 @@ const handleSubmitUser = async () => {
     alert(err.message);
   }
 };
-
 const insertIntoTableUser = async (userId) => {
   const { error } = await supabase.from("worker").insert([
     {
@@ -156,7 +149,6 @@ const insertIntoTableUser = async (userId) => {
   gap: 3rem;
   align-items: center;
 }
-
 .formJob-apply-no-user {
   position: absolute;
   top: 0;
@@ -172,7 +164,6 @@ const insertIntoTableUser = async (userId) => {
   height: 100%;
   gap: 2rem;
 }
-
 textarea {
   max-width: 50rem;
 }

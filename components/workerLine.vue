@@ -1,7 +1,6 @@
 <script setup lang="ts">
 const { deleteWorker, updateWorker } = useDBWorker();
 const { deleteCandidacyByIdWorker } = useDBCandidacy();
-
 const workerProps = defineProps<{
   id_worker: string;
   first_name: string;
@@ -9,7 +8,6 @@ const workerProps = defineProps<{
   phone_number: string;
   degree: string;
 }>();
-
 const workerValues = reactive({
   id_worker: workerProps.id_worker,
   first_name: workerProps.first_name,
@@ -17,7 +15,6 @@ const workerValues = reactive({
   phone_number: workerProps.phone_number,
   degree: workerProps.degree,
 });
-
 const updateWorkerClick = async () => {
   try {
     await deleteCandidacyByIdWorker(workerValues.id_worker);
@@ -27,7 +24,6 @@ const updateWorkerClick = async () => {
     alert(err.message);
   }
 };
-
 const deleteWorkerClick = async () => {
   try {
     await deleteWorker(workerValues.id_worker);
@@ -66,7 +62,6 @@ const deleteWorkerClick = async () => {
   gap: 1rem;
   align-items: center;
 }
-
 .workerLineData {
   display: flex;
   flex-direction: row;
@@ -74,7 +69,6 @@ const deleteWorkerClick = async () => {
   flex-wrap: nowrap;
   gap: 0rem;
 }
-
 .button-job {
   border: 1px solid #8f71be;
   border-radius: 50%;
@@ -82,12 +76,10 @@ const deleteWorkerClick = async () => {
   cursor: pointer;
   padding: 0.5rem;
 }
-
 .red-hover:hover {
   background-color: red;
   color: white;
 }
-
 .green-hover:hover {
   background-color: #00454f;
   color: white;
@@ -99,7 +91,6 @@ const deleteWorkerClick = async () => {
   flex-wrap: nowrap;
   gap: 2rem;
 }
-
 input {
   border-left: solid 2px #8f71be !important;
   border-top: solid 2px #8f71be !important;
@@ -108,7 +99,6 @@ input {
   padding: 0.3rem;
   width: 200px;
 }
-
 input:last-child {
   border-right: solid 2px #8f71be !important;
 }

@@ -1,6 +1,5 @@
 <script setup lang="ts">
 const candidacyDB = useDBCandidacy();
-
 const valuesLineCandidaciesProps = defineProps<{
   status: string;
   id_job: number;
@@ -8,7 +7,6 @@ const valuesLineCandidaciesProps = defineProps<{
   id_user: string;
   message: string;
 }>();
-
 const valuesLineCandidacies = reactive({
   status: valuesLineCandidaciesProps.status,
   id_job: valuesLineCandidaciesProps.id_job,
@@ -16,7 +14,6 @@ const valuesLineCandidacies = reactive({
   id_worker: valuesLineCandidaciesProps.id_user,
   message: valuesLineCandidaciesProps.message,
 });
-
 const updateCandidacy = async (candidacyData) => {
   try {
     await candidacyDB.updateStatusCandidacy(candidacyData);
@@ -25,7 +22,6 @@ const updateCandidacy = async (candidacyData) => {
     alert(err.message);
   }
 };
-
 const deleteCandidacy = async (id) => {
   try {
     await candidacyDB.deleteCandidacyById(id);
@@ -71,12 +67,10 @@ const deleteCandidacy = async (id) => {
   cursor: pointer;
   padding: 0.5rem;
 }
-
 .red-hover:hover {
   background-color: red;
   color: white;
 }
-
 .green-hover:hover {
   background-color: #00454f;
   color: white;
@@ -102,7 +96,6 @@ const deleteCandidacy = async (id) => {
   flex-wrap: nowrap;
   gap: 0rem;
 }
-
 input {
   width: 200px;
   border-left: solid 2px #8f71be !important;
@@ -111,7 +104,6 @@ input {
   margin: 0;
   padding: 0.3rem;
 }
-
 input:last-child {
   border-right: solid 2px #8f71be !important;
 }

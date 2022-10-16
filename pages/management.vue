@@ -2,34 +2,27 @@
 definePageMeta({
   middleware: ["admin"],
 });
-
 const { getAllcandidacy, insertCandidacy } = useDBCandidacy();
 const { getAllJob, insertJob } = useDBJob();
 const { getAllWorkers, insertWorker } = useDBWorker();
 const { getAllCompanies, insertNewLineCompany } = useDBCompany();
 const { getAllUsers, deleteUserById, createUser } = useDBAuth();
 const { getMetadataRole } = useAuth();
-
 const candidacyData = await getAllcandidacy();
 const jobData = await getAllJob();
 const workerData = await getAllWorkers();
 const companiesData = await getAllCompanies();
 const usersData = await getAllUsers();
-
 const role = ref("");
-
 setTimeout(() => {
   role.value = getMetadataRole();
 }, 0.0000001);
-
 const menu = ref([true, false, false, false, false]);
 const menuText = ["Candidacy", "Job", "Worker", "Company", "User"];
-
 const menuClick = (index: number) => {
   menu.value = [false, false, false, false, false];
   menu.value[index] = true;
 };
-
 const deleteUserClick = async (id: string) => {
   try {
     await deleteUserById(id);
@@ -38,7 +31,6 @@ const deleteUserClick = async (id: string) => {
     alert(err.message);
   }
 };
-
 const createUserClick = async (email, password, role) => {
   try {
     await createUser(email, password, role);
@@ -47,7 +39,6 @@ const createUserClick = async (email, password, role) => {
     alert(err.message);
   }
 };
-
 const insertCompanyClick = async () => {
   try {
     await insertNewLineCompany(valuesCompany, valuesCompany.id_company);
@@ -56,7 +47,6 @@ const insertCompanyClick = async () => {
     alert(err.message);
   }
 };
-
 const insertCandidacyClick = async () => {
   try {
     await insertCandidacy(valuesCandidacy);
@@ -65,7 +55,6 @@ const insertCandidacyClick = async () => {
     alert(err.message);
   }
 };
-
 const insertWorkerClick = async () => {
   try {
     await insertWorker(valuesWorker);
@@ -74,7 +63,6 @@ const insertWorkerClick = async () => {
     alert(err.message);
   }
 };
-
 const insertJobClick = async () => {
   try {
     await insertJob(valuesJob);
@@ -83,14 +71,12 @@ const insertJobClick = async () => {
     alert(err.message);
   }
 };
-
 const valuesCandidacy = reactive({
   id_job: 0,
-  id_worder: "",
+  id_worker: "",
   message: "",
   status: "",
 });
-
 const valuesJob = reactive({
   id_company: "",
   title_job: "",
@@ -101,7 +87,6 @@ const valuesJob = reactive({
   location_job: "",
   degree_job: "",
 });
-
 const valuesWorker = reactive({
   id_worker: "",
   first_name: "",
@@ -109,7 +94,6 @@ const valuesWorker = reactive({
   phone_number: "",
   degree: "",
 });
-
 const valuesCompany = reactive({
   id_company: "",
   name: "",
@@ -117,7 +101,6 @@ const valuesCompany = reactive({
   location: "",
   description: "",
 });
-
 const authValues = reactive({
   email: "",
   password: "",
@@ -356,7 +339,7 @@ const authValues = reactive({
       </div>
       <div class="text">Insert a new line here :</div>
       <div class="section-row" style="margin-bottom: 1rem">
-        <div class="section-row-data text">ID Candidacy</div>
+        <div class="section-row-data text">ID Job</div>
         <div class="section-row-data text">ID User</div>
         <div class="section-row-data text">Status</div>
         <div class="section-row-data text">Message</div>
@@ -365,13 +348,13 @@ const authValues = reactive({
         <input class="text section-row-data" v-model="valuesCandidacy.id_job" />
         <input
           class="text section-row-data"
-          v-model="valuesCandidacy.id_worder"
+          v-model="valuesCandidacy.id_worker"
         />
         <input
           class="text section-row-data"
-          v-model="valuesCandidacy.message"
+          v-model="valuesCandidacy.status"
         />
-        <input class="text section-row-data" v-model="valuesCandidacy.status" />
+        <input class="text section-row-data" v-model="valuesCandidacy.message" />
       </div>
       <div class="text button-add" @click="insertCandidacyClick">Add</div>
     </div>
@@ -390,7 +373,6 @@ const authValues = reactive({
   padding: 2rem;
   color: #8f71be;
 }
-
 .menu-management > div {
   cursor: pointer;
 }
@@ -410,7 +392,6 @@ const authValues = reactive({
   cursor: pointer;
   padding: 0.5rem;
 }
-
 .button-delete:hover {
   background-color: red;
   color: white;
@@ -427,7 +408,6 @@ const authValues = reactive({
   margin: 10px;
   cursor: pointer;
 }
-
 .section-row > input {
   border-left: solid 2px #8f71be !important;
   border-top: solid 2px #8f71be !important;
@@ -435,11 +415,9 @@ const authValues = reactive({
   margin: 0;
   padding: 0.3rem;
 }
-
 .section-row > input:last-child {
   border-right: solid 2px #8f71be !important;
 }
-
 .button-add:hover {
   background-color: #00454f;
   color: white;
@@ -454,7 +432,6 @@ const authValues = reactive({
   flex-wrap: nowrap;
   gap: 0rem;
 }
-
 .section-row-data {
   overflow: hidden;
   border-left: solid 2px #8f71be !important;
@@ -464,11 +441,9 @@ const authValues = reactive({
   padding: 0.3rem;
   width: 200px;
 }
-
 .section-row-data:last-child {
   border-right: solid 2px #8f71be !important;
 }
-
 .section-row-data-auth {
   overflow: hidden;
   border-left: solid 2px #8f71be !important;
@@ -478,8 +453,8 @@ const authValues = reactive({
   padding: 0.3rem;
   width: calc(33%-1rem);
 }
-
 .section-row-data-auth:last-child {
   border-right: solid 2px #8f71be !important;
 }
 </style>
+Footer

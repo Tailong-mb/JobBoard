@@ -1,7 +1,6 @@
 <script setup lang="ts">
 const candidacyDB = useDBCandidacy();
 const jobOfferDB = useDBJob();
-
 const valuesLineJobProps = defineProps<{
   id_job: number;
   id_company: string;
@@ -13,7 +12,6 @@ const valuesLineJobProps = defineProps<{
   location_job: string;
   degree_job: string;
 }>();
-
 const valuesLineJob = reactive({
   id_job: valuesLineJobProps.id_job,
   id_company: valuesLineJobProps.id_company,
@@ -25,7 +23,6 @@ const valuesLineJob = reactive({
   location_job: valuesLineJobProps.location_job,
   degree_job: valuesLineJobProps.degree_job,
 });
-
 const updateJob = async () => {
   try {
     await jobOfferDB.updateJobOffer(valuesLineJob);
@@ -34,10 +31,9 @@ const updateJob = async () => {
     alert(err.message);
   }
 };
-
 const deleteJob = async () => {
   try {
-    await candidacyDB.deleteCandidacyByIdCompany(valuesLineJob.id_company);
+    await candidacyDB.deleteCandidacyByIdJob(valuesLineJob.id_job);
     await jobOfferDB.deleteJobById(valuesLineJob.id_job);
     alert("Job deleted");
   } catch (err) {
@@ -77,12 +73,10 @@ const deleteJob = async () => {
   cursor: pointer;
   padding: 0.5rem;
 }
-
 .red-hover:hover {
   background-color: red;
   color: white;
 }
-
 .green-hover:hover {
   background-color: #00454f;
   color: white;
@@ -108,7 +102,6 @@ const deleteJob = async () => {
   flex-wrap: nowrap;
   gap: 0rem;
 }
-
 input {
   border-left: solid 2px #8f71be !important;
   border-top: solid 2px #8f71be !important;
@@ -117,7 +110,6 @@ input {
   padding: 0.3rem;
   width: 200px;
 }
-
 input:last-child {
   border-right: solid 2px #8f71be !important;
 }

@@ -1,12 +1,11 @@
 <script setup lang="ts">
 import { gsap } from "gsap";
-
+import { routerKey } from "vue-router";
 const { signIn } = useAuth();
 const { sendEmailResetPassword } = useEmail();
-
 const forgetPassword = ref(false);
 const emailSend = ref(false);
-
+const router = useRouter();
 const getBackToSignIn = () => {
   gsap.to(".forgetPasswordContainer", {
     duration: 1,
@@ -17,7 +16,6 @@ const getBackToSignIn = () => {
     forgetPassword.value = false;
   }, 1000);
 };
-
 const forgetPasswordClick = () => {
   gsap.to(".user-choice", {
     duration: 1,
@@ -28,15 +26,12 @@ const forgetPasswordClick = () => {
     forgetPassword.value = true;
   }, 1000);
 };
-
 const authError = ref("");
-
 const input = reactive({
   password: "",
   email: "",
   emailForgetPassword: "",
 });
-
 // Handle The Submit Form
 const handleSubmit = async () => {
   try {
@@ -44,6 +39,9 @@ const handleSubmit = async () => {
       email: input.email,
       password: input.password,
     });
+    
+      router.push("/home");
+    
   } catch (err) {
     authError.value = err.message;
     setTimeout(() => {
@@ -54,7 +52,6 @@ const handleSubmit = async () => {
     }, 3000);
   }
 };
-
 const resetPassword = async () => {
   if (input.emailForgetPassword === "") {
     authError.value = "Please Enter Your Email";
@@ -115,8 +112,8 @@ const resetPassword = async () => {
         Password forgotten ?
       </div>
     </div>
-
-    <CircleButton text="Connect" @click="handleSubmit"></CircleButton>
+    
+      <CircleButton text="Connect" @click="handleSubmit"></CircleButton>
   </div>
 
   <!-- PASSWORD FORGET -->
@@ -187,7 +184,6 @@ const resetPassword = async () => {
   min-height: 90vh;
   animation: 1s fadeIn forwards;
 }
-
 .arrow {
   position: absolute;
   top: 20px;
@@ -215,14 +211,12 @@ const resetPassword = async () => {
   justify-content: center;
   height: 90vh;
 }
-
 .user-form {
   display: flex;
   flex-direction: column;
   gap: 3rem;
   align-items: center;
 }
-
 .user-form-data {
   display: flex;
   flex-direction: row;
@@ -239,7 +233,6 @@ const resetPassword = async () => {
   opacity: 0;
   animation: 1s fadeIn forwards;
 }
-
 .container-choice {
   margin-top: 5rem;
   display: flex;
@@ -248,7 +241,6 @@ const resetPassword = async () => {
   justify-content: center;
   gap: 10rem;
 }
-
 .container-choice-button {
   display: flex;
   flex-direction: row;
@@ -256,11 +248,12 @@ const resetPassword = async () => {
   justify-content: space-between;
   align-items: center;
 }
-
+a {
+  text-decoration: none;
+}
 .passwordForgotten {
   cursor: pointer;
 }
-
 @keyframes fadeIn {
   0% {
     opacity: 0;
@@ -269,7 +262,6 @@ const resetPassword = async () => {
     opacity: 1;
   }
 }
-
 @media (max-width: 512px) {
   .user-form-data {
     display: flex;
@@ -280,19 +272,16 @@ const resetPassword = async () => {
     flex-direction: column;
     gap: 3rem;
   }
-
   input,
   textarea {
     min-width: 150px;
   }
 }
-
 @media (min-width: 512px) and (max-width: 700px) {
   .container-choice-button {
     flex-direction: column;
     gap: 2rem;
   }
-
   input,
   textarea {
     min-width: 200px;

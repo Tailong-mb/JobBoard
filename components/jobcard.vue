@@ -1,17 +1,14 @@
 <script setup lang="ts">
 const { getCompanyNameById } = useDBCompany();
-const { isLoggedIn } = useAuth();
-
+const { isLoggedIn, user } = useAuth();
+const {getCandidacyByUserId} = useDBCandidacy();
 const isConnected = ref(false);
-
 setTimeout(() => {
   isConnected.value = isLoggedIn();
 }, 1);
-
 const showMoreToggle = ref(false);
 const apply = ref(false);
 const applyNoUser = ref(false);
-
 const jobCardValue = defineProps<{
   date: string;
   jobLocation: string;
@@ -22,25 +19,40 @@ const jobCardValue = defineProps<{
   idCompany: string;
   idJob: number;
 }>();
-
 const companyNameQuery = await getCompanyNameById(jobCardValue.idCompany);
 const buttonShowText = ref("Show More");
-
 const companyName = companyNameQuery[0].name;
-
 const jobDescriptionShorted = jobCardValue.jobDescription.slice(0, 50);
-
 const clickShowMore = () => {
   showMoreToggle.value = !showMoreToggle.value;
   buttonShowText.value = showMoreToggle.value ? "Show Less" : "Show More";
 };
-
-const clickApply = () => {
-  if (isConnected) {
+const checkCandidacy = async () => {
+  const getCandidacy = await getCandidacyByUserId(user.value.id);
+  
+  let bool = false;
+  getCandidacy.forEach((candidacy) => {
+    
+    if (candidacy.id_job === jobCardValue.idJob) {
+      
+      bool = true;
+      return;
+    }
+  });
+  return bool;
+}
+const clickApply = async () => {
+  const alreadyApplied = await checkCandidacy();
+  if(alreadyApplied){
+    alert("You already applied for this job");
+    return;
+  }
+  if (isConnected.value === true) {
     apply.value = !apply.value;
   } else {
     applyNoUser.value = !applyNoUser.value;
   }
+  
 };
 </script>
 
@@ -90,7 +102,6 @@ const clickApply = () => {
   z-index: 1200;
   animation: 2s ease-in-out fadeIn-animation;
 }
-
 @keyframes fadeIn-animation {
   0% {
     opacity: 0;
@@ -104,13 +115,11 @@ const clickApply = () => {
   padding: 1rem;
   border-radius: 0.333rem;
 }
-
 .button-apply:hover {
   background-color: #8f71be;
   color: white;
   cursor: pointer;
 }
-
 /** LOGO */
 .square-logo {
   width: 0.5rem;
@@ -120,17 +129,14 @@ const clickApply = () => {
   transform: rotate(45deg);
   animation: 10s infinite squareRotationIn;
 }
-
 .job-information {
   display: flex;
   flex-direction: column;
 }
-
 .job-card-header-logo {
   border: 2px solid #8f71be;
   animation: 10s linear infinite squareRotationOut;
 }
-
 @keyframes squareRotationOut {
   0% {
     transform: rotate(0);
@@ -139,7 +145,6 @@ const clickApply = () => {
     transform: rotate(360deg);
   }
 }
-
 @keyframes squareRotationIn {
   0% {
     transform: rotate(45deg);
@@ -148,7 +153,6 @@ const clickApply = () => {
     transform: rotate(405deg);
   }
 }
-
 /** CARD HEADER */
 .job-card-header {
   display: flex;
@@ -156,7 +160,6 @@ const clickApply = () => {
   gap: 1rem;
   align-items: center;
 }
-
 .card-title-container {
   display: flex;
   flex-direction: row;
@@ -165,11 +168,9 @@ const clickApply = () => {
   text-transform: uppercase;
   flex-wrap: wrap;
 }
-
 p {
   text-align: justify;
 }
-
 /* GLOBAL CARD */
 .job-card {
   display: flex;
@@ -183,32 +184,27 @@ p {
   max-width: 800px;
 }
 /** CARD INFORMATION */
-
 .job-information-container {
   display: flex;
   flex-direction: row;
   gap: 5rem;
   align-items: center;
 }
-
 @media (max-width: 650px) {
   .job-card {
     max-width: 400px;
   }
 }
-
 @media (min-width: 651px) and (max-width: 900px) {
   .job-card {
     max-width: 500px;
   }
 }
-
 @media (min-width: 901px) and (max-width: 1200px) {
   .job-card {
     max-width: 600px;
   }
 }
-
 @media (min-width: 1367px) {
   .square-logo {
     width: 0.77rem;

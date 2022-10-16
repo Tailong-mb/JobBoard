@@ -1,15 +1,12 @@
 <script setup lang="ts">
 const { user } = useAuth();
 const { insertCandidacyId } = useDBCandidacy();
-
 const idJob = defineProps<{ idJob: number }>();
-
 const applyValuesConnected = reactive({
   message: "",
   id_job: idJob.idJob,
   status: "pending",
 });
-
 const applyClick = async () => {
   try {
     await insertCandidacyId(applyValuesConnected, user.value.id);
@@ -47,7 +44,9 @@ textarea {
   align-items: center;
   justify-content: center;
   width: 100%;
+  height: 1000px;
   min-height: 100vh;
   gap: 2rem;
 }
 </style>
+

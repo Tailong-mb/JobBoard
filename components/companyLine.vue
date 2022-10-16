@@ -1,7 +1,6 @@
 <script setup lang="ts">
 const { deleteCompany, updateCompany } = useDBCompany();
 const { deleteCandidacyByIdCompany } = useDBCandidacy();
-
 const companyProps = defineProps<{
   id_company: string;
   name: string;
@@ -9,7 +8,6 @@ const companyProps = defineProps<{
   location: string;
   description: string;
 }>();
-
 const companyValues = reactive({
   id_company: companyProps.id_company,
   name: companyProps.name,
@@ -17,17 +15,14 @@ const companyValues = reactive({
   location: companyProps.location,
   description: companyProps.description,
 });
-
 const updateCompanyClick = async () => {
   try {
-    await deleteCandidacyByIdCompany(companyValues.id_company);
     await updateCompany(companyValues);
     alert("Update Success");
   } catch (err) {
     alert(err.message);
   }
 };
-
 const deleteCompanyClick = async () => {
   try {
     await deleteCompany(companyValues.id_company);
@@ -66,7 +61,6 @@ const deleteCompanyClick = async () => {
   gap: 1rem;
   align-items: center;
 }
-
 .companyLineData {
   display: flex;
   flex-direction: row;
@@ -74,7 +68,6 @@ const deleteCompanyClick = async () => {
   flex-wrap: nowrap;
   gap: 0rem;
 }
-
 .button-job {
   border: 1px solid #8f71be;
   border-radius: 50%;
@@ -82,12 +75,10 @@ const deleteCompanyClick = async () => {
   cursor: pointer;
   padding: 0.5rem;
 }
-
 .red-hover:hover {
   background-color: red;
   color: white;
 }
-
 .green-hover:hover {
   background-color: #00454f;
   color: white;
@@ -99,7 +90,6 @@ const deleteCompanyClick = async () => {
   flex-wrap: nowrap;
   gap: 2rem;
 }
-
 input {
   width: 200px;
   border-left: solid 2px #8f71be !important;
@@ -108,7 +98,6 @@ input {
   margin: 0;
   padding: 0.3rem;
 }
-
 input:last-child {
   border-right: solid 2px #8f71be !important;
 }
