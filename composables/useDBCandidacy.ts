@@ -85,6 +85,8 @@ const useDBCandidacy = () => {
     if (error) throw error;
   };
 
+  
+
   const deleteCandidacy = async (candidacy) => {
     const { error } = await supabase
       .from("candidacies")

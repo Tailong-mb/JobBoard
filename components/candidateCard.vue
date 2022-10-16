@@ -14,15 +14,27 @@ const { getWorkerById } = useDBWorker();
 
 const dataWorker = await getWorkerById(infoCandidate.id_worker);
 
-console.log(dataWorker);
-
 // delete candidacy
 
-const { getCandidacyByJobId } = useDBCandidacy();
-
-const { deleteCandidacyById } = useDBCandidacy();
+const { getCandidacyByJobId, deleteCandidacyById, updateStatusCandidacy } =
+  useDBCandidacy();
 
 const candidacyById = await getCandidacyByJobId(infoCandidate.id_candidacy);
+
+const clickAccept = async () => {
+  try {
+    const candidacyValues = {
+      id_worker: infoCandidate.id_worker,
+      id_candidacy: infoCandidate.id_candidacy,
+      status: "accepted",
+      message_candidacy: candidacyById[0].message_candidacy,
+    };
+    await updateStatusCandidacy(candidacyValues);
+    alert("Candidacy accepted");
+  } catch (err) {
+    alert(err.message);
+  }
+};
 
 const clickDeleteCandidacy = async () => {
   try {
@@ -115,7 +127,7 @@ const cardCandidateCrossClick = async () => {
       <div class="text">{{ dataWorker[0].phone_number }}</div>
       <div class="text">{{ candidacyById[0].message_candidacies }}</div>
       <div class="card-candidate-button">
-        <RectangleButton text="See more"></RectangleButton>
+        <RectangleButton text="Accept" @click="clickAccept"></RectangleButton>
       </div>
     </div>
   </div>
