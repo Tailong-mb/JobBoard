@@ -28,6 +28,10 @@ const clickShowMore = () => {
   buttonShowText.value = showMoreToggle.value ? "Show Less" : "Show More";
 };
 const checkCandidacy = async () => {
+  if(isConnected.value === false){
+    return false;
+  }
+    
   const getCandidacy = await getCandidacyByUserId(user.value.id);
   
   let bool = false;

@@ -158,6 +158,7 @@ const submitJobOffer = async () => {
   left: 0;
   display: flex;
   flex-direction: column;
+  margin-top: 10rem;
   gap: 2rem;
   align-items: center;
   width: 100%;

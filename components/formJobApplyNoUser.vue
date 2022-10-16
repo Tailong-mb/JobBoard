@@ -153,6 +153,7 @@ const insertIntoTableUser = async (userId) => {
   position: absolute;
   top: 0;
   left: 0;
+  margin-top: 5rem;
   z-index: 1000;
   background: white;
   display: flex;

@@ -206,4 +206,19 @@ const unShowEditProfile = () => {
   width: 100%;
   height: 100%;
 }
+
+@media (max-width: 768px) {
+  .button-container-worker {
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .candidate-prensentation-container{
+    margin-top: 4rem;
+  }
+
+  .edit-profil-user{
+    margin-top: 4rem;
+  }
+}
 </style>

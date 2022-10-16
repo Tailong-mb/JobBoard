@@ -202,5 +202,7 @@ a {
     bottom: -60rem;
     color: #00454f;
   }
+  
 }
+
 </style>
